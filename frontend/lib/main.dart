@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/screen.dart';
+import 'package:frontend/Screens/auth/login_screen.dart';
+import 'package:frontend/Screens/dashboard.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "CZ2006 Project",
       debugShowCheckedModeBanner: true,
-      home: SplashScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -6,7 +6,13 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: CircularProgressIndicator(),
+      child: Center(
+        child: SizedBox(
+          height: 40,
+          width: 40,
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }
