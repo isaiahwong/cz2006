@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Screens/dashboard.dart';
+import 'package:frontend/app/routes/routes.dart';
+import 'package:frontend/app/screens/dashboard.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -7,6 +8,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -20,6 +22,11 @@ class LoginScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Get.offAll(() => Dashboard()),
               child: Text("Login"),
+            ),
+            Divider(),
+            GestureDetector(
+              onTap: () => Get.toNamed(RoutePaths.REGISTER),
+              child: Text("Register now"),
             )
           ],
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Controllers/controller.dart';
-import 'package:frontend/Screens/screen1/push_screen.dart';
+import 'package:frontend/app/screens/screen1/push_screen.dart';
+import 'package:frontend/app/controllers/controllers.dart';
 import 'package:get/get.dart';
 
 class Screen1 extends StatelessWidget {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Screens/screen.dart';
 import 'package:get/get.dart';
-import 'package:frontend/Controllers/controller.dart';
+
+import 'package:frontend/app/screens/screens.dart';
+import 'package:frontend/app/controllers/controllers.dart';
 
 class Dashboard extends StatelessWidget {
   static List<BottomNavigationBarItem> _barItems = [

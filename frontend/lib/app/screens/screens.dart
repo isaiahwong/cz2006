@@ -1,10 +1,5 @@
-/**
- * Export all dart within this directory
- */
-export "splash.dart";
-
+export 'splash/splash.dart';
 export 'dashboard.dart';
-
 export "auth/auth.dart";
 
 export "profile/profile.dart";

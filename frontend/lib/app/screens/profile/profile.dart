@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Screens/auth/auth.dart';
+import 'package:frontend/app/screens/auth/auth.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {

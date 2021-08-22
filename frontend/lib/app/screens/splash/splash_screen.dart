@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
         child: SizedBox(
           height: 40,
           width: 40,
-          child: CircularProgressIndicator(),
+          child: Text("Fitness"),
         ),
       ),
     );
