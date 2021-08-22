@@ -1,34 +1,32 @@
 import 'package:frontend/app/routes/routes.dart';
+import 'package:frontend/repo/user/model.dart';
+import 'package:frontend/repo/user/repo.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 
 class AuthController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _store = FirebaseFirestore.instance;
-  Rxn<User> firebaseUser = Rxn<User>();
+  static AuthController to = Get.find();
 
-  // Firebase user one-time fetch
-  Future<User> get getUser async => _auth.currentUser!;
+  UserRepo userRepo = UserRepo();
 
-  // Firebase user a realtime stream
-  Stream<User?> get user => _auth.authStateChanges();
+  Rxn<User> user = Rxn<User>();
 
   @override
   void onReady() async {
     //run every time auth state changes
-    ever(firebaseUser, handleAuthChanged);
-    firebaseUser.bindStream(user);
+    ever(user, handleAuthChanged);
+
+    user.bindStream(userRepo.onAuthChanged());
     super.onReady();
   }
 
-  handleAuthChanged(_firebaseUser) async {
+  handleAuthChanged(User? user) async {
     //get user data from firestore
     // if (_firebaseUser?.uid != null) {
     //   firestoreUser.bindStream(streamFirestoreUser());
     // }
 
-    if (_firebaseUser == null) {
+    if (user == null) {
       Get.offAllNamed(RoutePaths.LOGIN);
     } else {}
   }
