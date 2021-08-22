@@ -1,36 +1,34 @@
 import 'package:frontend/app/routes/routes.dart';
-import 'package:frontend/repo/user/model.dart';
-import 'package:frontend/repo/user/repo.dart';
+import 'package:frontend/repo/repo.dart';
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 
 class AuthController extends GetxController {
   static AuthController to = Get.find();
+  // final UserRepo _userRepo;
+  final AuthRepo _authRepo;
 
-  UserRepo userRepo = UserRepo();
+  Rxn<Auth> currentAuth = Rxn<Auth>();
+  // Rxn<User> currentUser = Rxn<User>();
 
-  Rxn<User> user = Rxn<User>();
+  AuthController({required AuthRepo authRepo}) : _authRepo = authRepo;
 
   @override
   void onReady() async {
     //run every time auth state changes
-    ever(user, handleAuthChanged);
+    ever(currentAuth, handleAuthChanged);
+    currentAuth.bindStream(_authRepo.onAuthChanged());
 
-    user.bindStream(userRepo.onAuthChanged());
     super.onReady();
   }
 
-  handleAuthChanged(User? user) async {
-    //get user data from firestore
-    // if (_firebaseUser?.uid != null) {
-    //   firestoreUser.bindStream(streamFirestoreUser());
-    // }
-
-    if (user == null) {
+  handleAuthChanged(Auth? auth) async {
+    if (auth == null) {
       Get.offAllNamed(RoutePaths.LOGIN);
-    } else {}
+      return;
+    }
+    // if (user.uid != null) {
+    //   currentUser.bindStream(_userRepo.streamUser(user.uid));
+    // }
+    Get.offAllNamed(RoutePaths.DASHBOARD);
   }
-
-  // User registration using email and password
-  registerWithEmailAndPassword() async {}
 }

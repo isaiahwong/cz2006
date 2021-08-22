@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/app/controllers/user/user_controller.dart';
 import 'package:frontend/app/routes/routes.dart';
+import 'package:frontend/repo/repo.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/app/controllers/controllers.dart';
@@ -12,7 +14,15 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await Firebase.initializeApp();
-  Get.put<AuthController>(AuthController());
+
+  UserRepo userRepo = UserRepo();
+  AuthRepo authRepo = AuthRepo(userRepo: userRepo);
+
+  Get.put<AuthController>(AuthController(authRepo: authRepo));
+  Get.put<UserController>(UserController(userRepo: userRepo));
+  Get.put<UserRepo>(userRepo);
+  Get.put<AuthRepo>(authRepo);
+
   runApp(App());
 }
 

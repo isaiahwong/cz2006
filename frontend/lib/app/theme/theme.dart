@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final pagePadding = EdgeInsets.only(left: 12, right: 12);
+final screenPadding = EdgeInsets.only(left: 12, right: 12);
 
 final borderRadius = BorderRadius.only(
     topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0));
