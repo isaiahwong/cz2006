@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/app/screens/diet/diet_screen.dart';
 import 'package:get/get.dart';
 
 import 'package:frontend/app/screens/screens.dart';
 import 'package:frontend/app/controllers/controllers.dart';
 
-class Dashboard extends StatelessWidget {
+class BaseScreen extends StatelessWidget {
   static List<BottomNavigationBarItem> _barItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Screen 1"),
-    BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Screen 2"),
-    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Profile"),
+    BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Workout"),
+    BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Schedule"),
+    BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Diet"),
+    BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Me"),
   ];
   static List<Widget> _screens = [
-    Screen1(),
-    Screen2(),
+    WorkoutScreen(),
+    ScheduleScreen(),
+    DietScreen(),
     ProfileScreen(),
   ];
 

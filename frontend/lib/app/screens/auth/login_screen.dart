@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/app/routes/routes.dart';
-import 'package:frontend/app/screens/dashboard.dart';
+import 'package:frontend/app/screens/basescreen.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
               decoration: InputDecoration(hintText: "Password"),
             ),
             ElevatedButton(
-              onPressed: () => Get.offAll(() => Dashboard()),
+              onPressed: () => Get.offAll(() => BaseScreen()),
               child: Text("Login"),
             ),
             Divider(),
