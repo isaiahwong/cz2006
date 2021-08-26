@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/repo/repo.dart';
-import 'package:frontend/repo/user/repo.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {

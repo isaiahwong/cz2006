@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'model.dart';
 
@@ -12,7 +11,7 @@ class UserRepo {
     return _store.doc('/users/${user.id}').set(user.toJson());
   }
 
-  Future<User> getFirestoreUser(String id) {
+  Future<User> getUser(String id) {
     return _store
         .doc('/users/$id')
         .get()

@@ -5,20 +5,17 @@ import 'package:frontend/app/controllers/controllers.dart';
 import 'package:get/get.dart';
 
 class Screen1 extends StatelessWidget {
-  UserController userController = UserController.to;
-
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<Screen1Controller>(
-      init: Screen1Controller(),
-      builder: (_) {
+    return GetBuilder<UserController>(
+      builder: (state) {
         return Container(
           child: Column(
             children: [
               Spacer(
                 flex: 2,
               ),
-              Text(userController.user.value!.name),
+              Text(state.user.value!.name),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
