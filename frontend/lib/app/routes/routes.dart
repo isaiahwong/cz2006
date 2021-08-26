@@ -18,6 +18,6 @@ class Routes {
         name: RoutePaths.REGISTER,
         page: () => RegisterScreen(),
         binding: RegisterUserBindings()),
-    GetPage(name: RoutePaths.DASHBOARD, page: () => Dashboard())
+    GetPage(name: RoutePaths.DASHBOARD, page: () => BaseScreen())
   ];
 }
