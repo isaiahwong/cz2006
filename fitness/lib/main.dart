@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/helper.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,10 +17,6 @@ void main() async {
 
   UserRepo userRepo = UserRepo();
   AuthRepo authRepo = AuthRepo(userRepo: userRepo);
-
-  final secret =
-      await SecretLoader(path: "secrets.json", alt: "secrets.example.json")
-          .load();
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));

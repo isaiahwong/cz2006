@@ -29,6 +29,13 @@ class AuthRepo {
     return _userRepo.createUser(newUser);
   }
 
+  Future<void> signin({
+    required String email,
+    required String password,
+  }) async {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
   Stream<Auth?> onAuthChanged() {
     return _auth.authStateChanges().asyncMap<Auth?>((fireUser) async {
       if (fireUser == null) return null;

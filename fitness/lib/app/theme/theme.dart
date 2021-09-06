@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final screenPadding = EdgeInsets.only(left: 12, right: 12);
+final componentPadding = EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 8);
 
 final borderRadius = BorderRadius.only(
     topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0));
+
+final allBorderRadius = borderRadius.copyWith(
+  topLeft: Radius.circular(18.0),
+  topRight: Radius.circular(18.0),
+  bottomLeft: Radius.circular(18.0),
+  bottomRight: Radius.circular(18.0),
+);
 
 final boxDecorationRadius = BoxDecoration(
   color: Colors.white,
@@ -65,6 +73,13 @@ final theme = (BuildContext context) => ThemeData(
           fontSize: 16.0,
           color: primaryColor,
         ),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        selectedIconTheme: IconThemeData(color: primaryColor),
+        unselectedIconTheme: IconThemeData(color: accentColor),
+        backgroundColor: lightGrey,
       ),
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
