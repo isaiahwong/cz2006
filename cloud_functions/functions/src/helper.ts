@@ -1,1 +1,1 @@
-const FUNCTION_REGION = "asia-east2";
+export const FUNCTION_REGION = "asia-east2";

@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as lx from "luxon";
-
+import * as helper from "./helper";
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -14,7 +14,7 @@ import * as lx from "luxon";
  * @return {number} current Datetime
  */
 exports.getCurrentTime = functions
-    .region(FUNCTION_REGION)
+    .region(helper.FUNCTION_REGION)
     .https
     .onCall((data, context) => {
       // Sanity check
