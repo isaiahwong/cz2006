@@ -92,4 +92,22 @@ final theme = (BuildContext context) => ThemeData(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: elevatedButtonStyle(),
+      ),
     );
+
+ButtonStyle elevatedButtonStyle() {
+  return ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(primaryColor),
+      padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      ),
+      shape: MaterialStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+      ));
+}
