@@ -14,6 +14,7 @@ class DashboardController extends GetxController {
       ),
       curve: Curves.ease,
     );
+    update();
   }
 
   PageController get getPageController => _pageController.value;
