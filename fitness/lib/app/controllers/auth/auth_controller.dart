@@ -3,7 +3,6 @@ import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  static AuthController to = Get.find();
   // final UserRepo _userRepo;
   final AuthRepo _authRepo;
 
@@ -11,6 +10,10 @@ class AuthController extends GetxController {
   // Rxn<User> currentUser = Rxn<User>();
 
   AuthController({required AuthRepo authRepo}) : _authRepo = authRepo;
+
+  factory AuthController.to() {
+    return Get.find();
+  }
 
   @override
   void onReady() async {

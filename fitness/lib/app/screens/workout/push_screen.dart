@@ -1,12 +1,28 @@
+import 'package:fitness/app/components/panel/panel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SecondaryScreen extends StatelessWidget {
+  FullScreenPanelController controller = FullScreenPanelController.to();
+
+  static Widget Screen() {
+    return FullScreenPanel(
+      body: SecondaryScreen(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: Colors.green[40],
-      body: Body(),
+      body: Container(
+        child: ElevatedButton(
+          onPressed: () {
+            controller.open();
+          },
+          child: Text("Next screen"),
+        ),
+      ),
     );
   }
 }
