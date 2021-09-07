@@ -35,7 +35,7 @@ class App extends StatelessWidget {
         child: SafeArea(child: widget!),
       ),
       theme: theme(context),
-      title: "CZ2006 Project",
+      title: "SoFit",
       debugShowCheckedModeBanner: false,
       getPages: Routes.routes,
     );
