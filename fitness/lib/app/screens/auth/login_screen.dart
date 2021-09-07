@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitness/app/controllers/controllers.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/basescreen.dart';
+import 'package:fitness/app/screens/base_screen.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
