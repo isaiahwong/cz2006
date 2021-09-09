@@ -84,8 +84,7 @@ class WorkoutScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => SecondaryScreen.Screen(),
-                        binding: ActiveWorkoutBindings()),
+                    onPressed: () => SecondaryScreen.to(),
                     child: Text("Next screen"),
                   ),
                 ),
