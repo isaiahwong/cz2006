@@ -23,4 +23,15 @@ class SlidingPanelController extends GetxController {
   factory SlidingPanelController.to() {
     return Get.find();
   }
+
+  void closed() {
+    if (status is SlidingPanelSticky) {
+      controller.open();
+      return;
+    }
+    if (!(status is SlidingPanelClosing)) return;
+    // close
+    status = SlidingPanelClosed();
+    panel = (_) => placeholder;
+  }
 }

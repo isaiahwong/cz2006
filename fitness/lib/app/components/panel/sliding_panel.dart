@@ -1,3 +1,5 @@
+import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/components/panel/sliding_panel_status.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
@@ -13,7 +15,7 @@ class SlideUpNavObserver extends NavigatorObserver {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     // Resets Panel State
-    context.read<SlidingPanelBloc>().add(SlidingPanelOpened());
+    // context.read<SlidingPanelBloc>().add(SlidingPanelOpened());
   }
 }
 
@@ -44,7 +46,7 @@ class SlidingPanel extends StatefulWidget {
 }
 
 class _SlidingPanelState extends State<SlidingPanel> {
-  double calPanelMinHeight(double height, SlidingPanelEvent event) {
+  double calPanelMinHeight(double height, SlidingPanelStatus event) {
     if (event is SlidingPanelOpened)
       return height * 0.2;
     else if (event is SlidingPanelSticky)
@@ -57,21 +59,14 @@ class _SlidingPanelState extends State<SlidingPanel> {
   Widget build(BuildContext context) {
     final maxPanelHeight = MediaQuery.of(context).size.height * 0.92;
 
-    return BlocListener<SlidingPanelBloc, SlidingPanelState>(
-      listener: (context, state) {
-        // Dismisses Keyboard
-        if (state.status is SlidingPanelClosing)
-          FocusScope.of(context).unfocus();
-      },
-      child: BlocBuilder<SlidingPanelBloc, SlidingPanelState>(
-          builder: (context, state) {
-        double minPanelHeight =
-            calPanelMinHeight(MediaQuery.of(context).size.height, state.status);
+    return GetBuilder<SlidingPanelController>(
+      builder: (slidingPanelController) {
+        double minPanelHeight = calPanelMinHeight(
+            MediaQuery.of(context).size.height, slidingPanelController.status);
 
         return SlidingUpPanel(
-          controller: state.controller,
-          onPanelClosed: () => BlocProvider.of<SlidingPanelBloc>(context)
-              .add(SlidingPanelClosed()),
+          controller: slidingPanelController.controller,
+          onPanelClosed: () => slidingPanelController.closed(),
 
           /// Dismisses keyboard when slider is below 60% panel width
           onPanelSlide: (s) =>
@@ -80,7 +75,7 @@ class _SlidingPanelState extends State<SlidingPanel> {
           backdropEnabled: widget.backdrop,
           backdropColor: widget.backdropColor,
           backdropOpacity: widget.backdropOpacity,
-          isDraggable: !(state.status is SlidingPanelFixed),
+          isDraggable: !(slidingPanelController.status is SlidingPanelFixed),
           renderPanelSheet: true,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
@@ -91,7 +86,8 @@ class _SlidingPanelState extends State<SlidingPanel> {
               child: Stack(children: [
                 Padding(
                     padding: EdgeInsets.only(top: 22),
-                    child: state.panel(SlideUpNavObserver(context))),
+                    child: slidingPanelController
+                        .panel(SlideUpNavObserver(context))),
                 Positioned(
                   top: 10,
                   right: 0,
@@ -106,12 +102,12 @@ class _SlidingPanelState extends State<SlidingPanel> {
           maxHeight: widget.maxHeight ?? maxPanelHeight,
           body: IgnorePointer(
             ignoring: widget.disableBody &&
-                (state.status is SlidingPanelOpened ||
-                    state.status is SlidingPanelSticky),
+                (slidingPanelController.status is SlidingPanelOpened ||
+                    slidingPanelController.status is SlidingPanelSticky),
             child: widget.child,
           ),
         );
-      }),
+      },
     );
   }
 }
