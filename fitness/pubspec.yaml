@@ -33,6 +33,7 @@ dependencies:
   json_annotation: ^4.0.1
   flutter_webrtc: ^0.6.6
   sliding_up_panel: ^2.0.0+1
+  reorderables: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - ./assets/image/icon/
     - ./secrets.json
     - ./secrets.example.json
 

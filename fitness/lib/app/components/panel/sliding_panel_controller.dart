@@ -8,15 +8,17 @@ typedef Widget WithNavObserver(NavigatorObserver? observer);
 class SlidingPanelController extends GetxController {
   static Widget placeholder = SizedBox.shrink();
 
-  WithNavObserver panel;
-  SlidingPanelStatus status = SlidingPanelClosed();
+  late WithNavObserver panel;
+  late SlidingPanelStatus status = SlidingPanelClosed();
   late final PanelController controller;
 
   SlidingPanelController({
-    required this.panel,
-    required this.status,
+    Widget? panel,
+    SlidingPanelStatus? status,
     PanelController? controller,
   }) {
+    this.panel = (ob) => panel == null ? placeholder : panel;
+    this.status = status ?? this.status;
     this.controller = controller == null ? PanelController() : controller;
   }
 

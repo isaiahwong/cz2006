@@ -38,3 +38,5 @@ class Workout {
 
   Map<String, dynamic> toJson() => _$WorkoutToJson(this);
 }
+
+class Routine {}

@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:flutter/material.dart';
 
 abstract class SlidingPanelStatus {
@@ -8,8 +9,6 @@ class SlidingPanelOpened extends SlidingPanelStatus {
   final WithNavObserver? panel;
   final bool fixed;
   const SlidingPanelOpened({this.panel, this.fixed = false});
-  @override
-  List<Object> get props => [panel ?? SizedBox.shrink()];
 }
 
 class SlidingPanelSticky extends SlidingPanelStatus {

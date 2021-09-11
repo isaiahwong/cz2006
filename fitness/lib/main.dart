@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
@@ -20,6 +21,8 @@ void main() async {
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));
+  Get.put<SlidingPanelController>(SlidingPanelController());
+
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);
 
@@ -31,7 +34,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       builder: (context, widget) => Container(
-        color: Colors.white,
+        color: lightGrey,
         child: SafeArea(child: widget!),
       ),
       theme: theme(context),

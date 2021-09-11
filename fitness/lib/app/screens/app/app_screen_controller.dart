@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DashboardController extends GetxController {
+class AppScreenController extends GetxController {
   Rx<PageController> _pageController = PageController().obs;
   Rx<int> _currentIndex = 0.obs;
 
