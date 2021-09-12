@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fitness/app/controllers/auth/register_controller.dart';
+import 'package:fitness/app/screens/auth/register/register_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:get/get.dart';
 

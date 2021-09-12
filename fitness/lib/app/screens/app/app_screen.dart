@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,12 @@ class BaseScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: lightGrey,
           resizeToAvoidBottomInset: false,
-          body: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _.getPageController,
-            children: _screens,
+          body: SlidingPanel(
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _.getPageController,
+              children: _screens,
+            ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _.getCurrentIndex,

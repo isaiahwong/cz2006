@@ -1,9 +1,7 @@
-import 'package:fitness/app/components/panel/panel.dart';
-import 'package:fitness/app/screens/workout/active_workout_bindings.dart';
+import 'package:fitness/app/screens/workout/workout_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/screens/workout/push_screen.dart';
-import 'package:fitness/app/controllers/controllers.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:get/get.dart';
 
