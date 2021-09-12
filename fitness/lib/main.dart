@@ -1,5 +1,4 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
-import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +9,6 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness/app/controllers/controllers.dart';
 import 'package:fitness/app/theme/theme.dart';
-
-import 'app/components/panel/sliding_panel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +23,6 @@ void main() async {
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));
-  Get.put<ExerciseController>(ExerciseController(exerciseRepo: exerciseRepo));
   Get.put<SlidingPanelController>(SlidingPanelController());
 
   Get.put<UserRepo>(userRepo);

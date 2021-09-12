@@ -18,6 +18,7 @@ enum SelectedOption {
 
 class _ExerciseTileState extends State<ExerciseTile>
     with SingleTickerProviderStateMixin {
+  ExerciseController exerciseController = ExerciseController.to();
   late Exercise _exercise;
 
   late Animation<double> _iconTurns;
@@ -37,14 +38,7 @@ class _ExerciseTileState extends State<ExerciseTile>
     super.initState();
     _animationController = AnimationController(duration: _kExpand, vsync: this);
     _iconTurns = _animationController.drive(_halfTween.chain(_easeInTween));
-    // _exerciseBloc = ExerciseBloc(
-    //   workoutBloc: BlocProvider.of<WorkoutBloc>(context),
-    //   initialState: ExerciseState(
-    //     exercise: widget.exercise,
-    //   ),
-    // );
-    // _routineBloc =
-    //     RoutineBloc(workoutBloc: BlocProvider.of<WorkoutBloc>(context));
+    _exercise = widget.exercise;
   }
 
   void onSelected(bool expanded) {
@@ -53,8 +47,10 @@ class _ExerciseTileState extends State<ExerciseTile>
       _animationController.forward();
     else
       _animationController.reverse();
-    // if (_exercise.workout.isNotEmpty) return;
-    // _exerciseBloc.add(ExerciseAdded(exercise: _exercise));
+    final exercise = exerciseController.onSelected(_exercise);
+    setState(() {
+      _exercise = exercise ?? _exercise;
+    });
   }
 
   Widget _title() {
@@ -63,27 +59,23 @@ class _ExerciseTileState extends State<ExerciseTile>
       style: TextStyle(
         fontSize: 20.0,
         fontWeight: FontWeight.bold,
-        // color: _exercise.workout.isNotEmpty
-        //     ? Theme.of(context).primaryColor
-        //     : darkGrey,
+        color: exerciseController.isSelected(_exercise)
+            ? Theme.of(context).primaryColor
+            : darkGrey,
       ),
     );
   }
 
   Widget _trailing() {
-    // return _exercise.workout.isNotEmpty
-    //     ? RotationTransition(
-    //         turns: _iconTurns,
-    //         child: const Icon(Icons.expand_more),
-    //       )
-    //     : const Icon(
-    //         CupertinoIcons.add_circled,
-    //         color: primaryColor,
-    //       );
-    return const Icon(
-      CupertinoIcons.add_circled,
-      color: primaryColor,
-    );
+    return exerciseController.isSelected(_exercise)
+        ? RotationTransition(
+            turns: _iconTurns,
+            child: const Icon(Icons.expand_more),
+          )
+        : const Icon(
+            CupertinoIcons.add_circled,
+            color: primaryColor,
+          );
   }
 
   Widget _warmupItem() {
@@ -108,8 +100,7 @@ class _ExerciseTileState extends State<ExerciseTile>
           borderRadius: BorderRadius.circular(5.0),
         ),
         onChanged: (w) {
-          // _exerciseBloc
-          //     .add(ExerciseWarmupsChanged(exercise: _exercise, warmups: w));
+          exerciseController.onChanged(exercise: _exercise, warmups: w);
           if (_selectedOption != SelectedOption.WARMUPS)
             setState(() => _selectedOption = SelectedOption.WARMUPS);
         },
@@ -140,7 +131,7 @@ class _ExerciseTileState extends State<ExerciseTile>
           borderRadius: BorderRadius.circular(5.0),
         ),
         onChanged: (s) {
-          // _exerciseBloc.add(ExerciseSetsChanged(exercise: _exercise, sets: s));
+          exerciseController.onChanged(exercise: _exercise, sets: s);
           if (_selectedOption != SelectedOption.SETS)
             setState(() => _selectedOption = SelectedOption.SETS);
         },
@@ -171,7 +162,7 @@ class _ExerciseTileState extends State<ExerciseTile>
           borderRadius: BorderRadius.circular(5.0),
         ),
         onChanged: (r) => setState(() {
-          // _exerciseBloc.add(ExerciseRepsChanged(exercise: _exercise, reps: r));
+          exerciseController.onChanged(exercise: _exercise, reps: r);
           if (_selectedOption != SelectedOption.REPS)
             _selectedOption = SelectedOption.REPS;
         }),
@@ -207,11 +198,11 @@ class _ExerciseTileState extends State<ExerciseTile>
                 borderRadius: BorderRadius.circular(5.0),
               ),
               onChanged: (m) => setState(() {
-                // _exerciseBloc.add(ExerciseRestChanged(
-                //   exercise: _exercise,
-                //   minutes: m,
-                //   seconds: _exercise.defaultRestSeconds,
-                // ));
+                exerciseController.onChanged(
+                  exercise: _exercise,
+                  minutes: m,
+                  seconds: _exercise.defaultRestSeconds,
+                );
                 if (_selectedOption != SelectedOption.REST)
                   _selectedOption = SelectedOption.REST;
               }),
@@ -233,11 +224,11 @@ class _ExerciseTileState extends State<ExerciseTile>
                 borderRadius: BorderRadius.circular(5.0),
               ),
               onChanged: (s) => setState(() {
-                // _exerciseBloc.add(ExerciseRestChanged(
-                //   exercise: _exercise,
-                //   seconds: s,
-                //   minutes: _exercise.defaultRestMinutes,
-                // ));
+                exerciseController.onChanged(
+                  exercise: _exercise,
+                  seconds: s,
+                  minutes: _exercise.defaultRestMinutes,
+                );
                 if (_selectedOption != SelectedOption.REST)
                   _selectedOption = SelectedOption.REST;
               }),
@@ -258,17 +249,16 @@ class _ExerciseTileState extends State<ExerciseTile>
         height: 32,
         textColor: Colors.white,
         backgroundColor: red,
-        // onTap: () {
-        //   _expansionKey.currentState!.toggle();
-        //   _exerciseBloc.add(ExerciseRemoved(exercise: _exercise));
-        // },
+        onPressed: () {
+          _expansionKey.currentState!.toggle();
+          exerciseController.onRemove(_exercise);
+        },
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    _exercise = widget.exercise;
     return Padding(
       padding: EdgeInsets.only(left: 10, right: 5),
       child: Theme(
@@ -283,7 +273,6 @@ class _ExerciseTileState extends State<ExerciseTile>
             _setItem(),
             _repsItem(),
             _restItem(),
-            // _configureSetsItem(),
             SizedBox(height: 20),
             _removeButton(),
           ],

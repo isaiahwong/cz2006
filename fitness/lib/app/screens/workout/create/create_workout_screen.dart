@@ -7,6 +7,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reorderables/reorderables.dart';
 
 part 'create_workout_main_screen.dart';
 part 'create_workout_type_screen.dart';
@@ -15,12 +16,16 @@ class CreateWorkoutScreen extends StatefulWidget {
   final NavigatorObserver? observer;
   final CreateWorkoutController controller;
 
-  static List<Page> router(CreateWorkoutRoute state, List<Page> pages) {
+  List<Page> router(CreateWorkoutRoute state, List<Page> pages) {
     switch (state) {
       case CreateWorkoutRoute.NEW_WORKOUT_EXERCISE:
         return [
           CreateWorkoutMainScreen.page(),
-          ExerciseListView.page(),
+          ExerciseListView.page(
+            exerciseController: ExerciseController(
+              workoutController: controller,
+            ),
+          ),
         ];
       case CreateWorkoutRoute.NEW_WORKOUT_TYPE:
         return [
@@ -85,8 +90,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
           init: widget.controller,
           builder: (workoutController) => FlowBuilder<CreateWorkoutRoute>(
             state: workoutController.route,
-            onGeneratePages: (state, pages) =>
-                CreateWorkoutScreen.router(state, pages),
+            onGeneratePages: (state, pages) => widget.router(state, pages),
             // Observers when screen pops.
             observers: _observers,
           ),

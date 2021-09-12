@@ -1,7 +1,3 @@
-/**
- * Helper functions that is used globally
- */
-
 import 'dart:async' show Future;
 import 'dart:convert' show json;
 import 'package:flutter/services.dart' show rootBundle;

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class RoutePaths {
   static const ROOT = '/';
   static const LOGIN = '/auth/login';
+
   static const REGISTER = '/auth/register';
   static const DASHBOARD = '/dashboard';
 }

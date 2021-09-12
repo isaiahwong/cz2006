@@ -86,14 +86,16 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
   }
 
   Widget _exercisesGrid(BuildContext context) {
-    // return ReorderableWrap(
-    //   onReorder: (oldIndex, newIndex) {},
-    //   spacing: 10.0,
-    //   runSpacing: 10.0,
-    //   maxMainAxisCount: 2,
-    //   children: state.exercises.map((e) => Tag(title: e.name)).toList(),
-    // );
-    return Container();
+    return ReorderableWrap(
+      onReorder: (oldIndex, newIndex) {},
+      spacing: 10.0,
+      runSpacing: 10.0,
+      maxMainAxisCount: 2,
+      children: controller.exercises
+          .map((k, e) => MapEntry(k, Tag(title: e.name)))
+          .values
+          .toList(),
+    );
   }
 
   Widget _exerciseTile(BuildContext context) {

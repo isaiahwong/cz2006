@@ -1,9 +1,15 @@
 part of 'exercise.dart';
 
 class ExerciseListView extends GetView<ExerciseController> {
-  static Page page({ScrollController? scrollController}) => CupertinoPage<void>(
-        child: ExerciseListView(
-          scrollController: scrollController,
+  static Page page(
+          {ScrollController? scrollController,
+          ExerciseController? exerciseController}) =>
+      CupertinoPage<void>(
+        child: GetBuilder(
+          init: exerciseController,
+          builder: (_) => ExerciseListView(
+            scrollController: scrollController,
+          ),
         ),
       );
 
@@ -35,10 +41,7 @@ class ExerciseListView extends GetView<ExerciseController> {
                     padding: EdgeInsets.only(right: 10, left: 10),
                     child: NakedTextField(
                       hintText: "Search",
-                      // onChanged: (q) =>
-                      //     context.read<ExercisesFilteredBloc>().add(
-                      //           ExerciseSearched(query: q),
-                      //         ),
+                      onChanged: (q) => controller.onFilter(q),
                       fontSize: Theme.of(context).textTheme.headline5!.fontSize,
                     ),
                   ),
@@ -50,9 +53,9 @@ class ExerciseListView extends GetView<ExerciseController> {
                   height: 40,
                   radius: 5.0,
                   textColor: accentColor,
-                  // onTap: () => context
-                  //     .flow<NewWorkoutRoute>()
-                  //     .update((_) => NewWorkoutRoute.NEW_WORKOUT_MAIN),
+                  onPressed: () => context
+                      .flow<CreateWorkoutRoute>()
+                      .update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN),
                 ),
               ],
             ),
