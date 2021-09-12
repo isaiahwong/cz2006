@@ -4,5 +4,6 @@ export "auth/auth.dart";
 
 export "profile/profile.dart";
 export "workout/workout.dart";
+export 'exercise/exercise.dart';
 export "schedule/schedule.dart";
 export 'dashboard/dashboard.dart';

@@ -106,8 +106,8 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
             .flow<CreateWorkoutRoute>()
             .update((_) => CreateWorkoutRoute.NEW_WORKOUT_EXERCISE);
       },
-      // child: state.exercises.isNotEmpty ? _exercisesGrid(context, state) : null,
-      child: SizedBox.shrink(),
+      child: controller.exercises.isNotEmpty ? _exercisesGrid(context) : null,
+      // child: SizedBox.shrink(),
     );
   }
 

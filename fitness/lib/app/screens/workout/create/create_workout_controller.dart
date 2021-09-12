@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:get/get.dart';
 import 'package:formz/formz.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -32,6 +33,7 @@ class CreateWorkoutController extends GetxController {
   WorkoutName name;
   int type;
   FormzStatus status;
+  List<Exercise> exercises = [];
 
   CreateWorkoutController({
     this.type = 1,

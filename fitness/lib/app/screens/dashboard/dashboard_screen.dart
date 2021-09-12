@@ -3,7 +3,7 @@ import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/screens/workout/create/create.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
 
 import 'dashboard_screen_controller.dart';

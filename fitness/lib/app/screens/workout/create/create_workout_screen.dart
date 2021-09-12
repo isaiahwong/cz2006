@@ -1,11 +1,12 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/screens/exercise/exercise_controller.dart';
+import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/create/create_workout_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reorderables/reorderables.dart';
 
 part 'create_workout_main_screen.dart';
 part 'create_workout_type_screen.dart';
@@ -19,7 +20,7 @@ class CreateWorkoutScreen extends StatefulWidget {
       case CreateWorkoutRoute.NEW_WORKOUT_EXERCISE:
         return [
           CreateWorkoutMainScreen.page(),
-          // ExerciseListView.page(),
+          ExerciseListView.page(),
         ];
       case CreateWorkoutRoute.NEW_WORKOUT_TYPE:
         return [

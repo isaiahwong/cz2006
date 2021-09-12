@@ -4,6 +4,7 @@ export 'card/card.dart';
 export 'space/space.dart';
 export 'button/button.dart';
 export 'textfield/textfield.dart';
+export 'number/number.dart';
 
 /// Helper class to handle null widgets declaratively
 class DefaultWidget extends StatelessWidget {
