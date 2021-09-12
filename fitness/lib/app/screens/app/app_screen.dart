@@ -27,20 +27,19 @@ class BaseScreen extends StatelessWidget {
     return GetBuilder<AppScreenController>(
       init: AppScreenController(),
       builder: (_) {
-        return Scaffold(
-          backgroundColor: lightGrey,
-          resizeToAvoidBottomInset: false,
-          body: SlidingPanel(
-            child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+        return SlidingPanel(
+          child: Scaffold(
+            backgroundColor: lightGrey,
+            resizeToAvoidBottomInset: false,
+            body: PageView(
               controller: _.getPageController,
               children: _screens,
             ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _.getCurrentIndex,
-            onTap: (value) => _.setIndex(value),
-            items: _barItems,
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _.getCurrentIndex,
+              onTap: (value) => _.setIndex(value),
+              items: _barItems,
+            ),
           ),
         );
       },

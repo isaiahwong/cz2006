@@ -57,7 +57,7 @@ class _SlidingPanelState extends State<SlidingPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final maxPanelHeight = MediaQuery.of(context).size.height * 0.92;
+    final maxPanelHeight = MediaQuery.of(context).size.height * 0.82;
 
     return GetBuilder<SlidingPanelController>(
       builder: (slidingPanelController) {

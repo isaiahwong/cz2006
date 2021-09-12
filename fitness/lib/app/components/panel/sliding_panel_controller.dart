@@ -7,6 +7,7 @@ typedef Widget WithNavObserver(NavigatorObserver? observer);
 
 class SlidingPanelController extends GetxController {
   static Widget placeholder = SizedBox.shrink();
+  static SlidingPanelController to = Get.find();
 
   late WithNavObserver panel;
   late SlidingPanelStatus status = SlidingPanelClosed();
@@ -22,8 +23,12 @@ class SlidingPanelController extends GetxController {
     this.controller = controller == null ? PanelController() : controller;
   }
 
-  factory SlidingPanelController.to() {
-    return Get.find();
+  void open({bool fixed = false, required Widget panel}) {
+    if (status is SlidingPanelOpened) return;
+    status = fixed ? SlidingPanelFixed() : SlidingPanelOpened();
+    this.panel = (obs) => panel;
+    controller.open();
+    update();
   }
 
   void closed() {
@@ -35,5 +40,12 @@ class SlidingPanelController extends GetxController {
     // close
     status = SlidingPanelClosed();
     panel = (_) => placeholder;
+    update();
+  }
+
+  void close() {
+    status = SlidingPanelClosing();
+    controller.close();
+    update();
   }
 }

@@ -9,6 +9,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness/app/controllers/controllers.dart';
 import 'package:fitness/app/theme/theme.dart';
 
+import 'app/components/panel/sliding_panel.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -35,7 +37,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       builder: (context, widget) => Container(
         color: lightGrey,
-        child: SafeArea(child: widget!),
+        child: widget!,
       ),
       theme: theme(context),
       title: "SoFit",

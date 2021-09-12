@@ -1,4 +1,6 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/screens/workout/create/create.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -8,6 +10,11 @@ import 'dashboard_screen_controller.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
+
+  void onCreate() {
+    final slide = SlidingPanelController.to;
+    slide.open(panel: CreateWorkoutScreen.to());
+  }
 
   Widget _myWorkoutsList(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -39,10 +46,7 @@ class DashboardScreen extends StatelessWidget {
               child: ColumnCard(
                 height: height,
                 type: CardType.NEW_CARD,
-                // onTap: () => BlocProvider.of<SlidingPanelBloc>(context).add(
-                //   SlidingPanelOpened(
-                //     panel: (o) => NewWorkoutView.bloc(context, observer: o),
-                //   ),
+                onTap: onCreate,
               ),
             ),
           ],
