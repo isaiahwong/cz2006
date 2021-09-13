@@ -1,9 +1,9 @@
+import 'package:fitness/app/screens/app/app_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/app/screens/diet/diet_screen.dart';
 import 'package:get/get.dart';
 
 import 'package:fitness/app/screens/screens.dart';
-import 'package:fitness/app/controllers/controllers.dart';
 
 class BaseScreen extends StatelessWidget {
   static List<BottomNavigationBarItem> _barItems = [
@@ -21,8 +21,8 @@ class BaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(
-      init: DashboardController(),
+    return GetBuilder<AppScreenController>(
+      init: AppScreenController(),
       builder: (_) {
         return Scaffold(
           resizeToAvoidBottomInset: false,

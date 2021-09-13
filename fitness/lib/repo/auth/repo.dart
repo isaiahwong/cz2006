@@ -36,6 +36,10 @@ class AuthRepo {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
+  Future<void> logout() async {
+    await _auth.signOut();
+  }
+
   Stream<Auth?> onAuthChanged() {
     return _auth.authStateChanges().asyncMap<Auth?>((fireUser) async {
       if (fireUser == null) return null;

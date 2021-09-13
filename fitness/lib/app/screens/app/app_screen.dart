@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/controllers/controllers.dart';
 
-import 'app_screen_controller.dart';
-
 class BaseScreen extends StatelessWidget {
   static List<BottomNavigationBarItem> _barItems = [
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.app), label: ""),
