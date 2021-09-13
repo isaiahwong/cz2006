@@ -4,10 +4,13 @@ import 'model.dart';
 
 class UserRepo {
   final FirebaseFirestore _store;
+  late final CollectionReference collection;
 
-  UserRepo() : _store = FirebaseFirestore.instance;
+  UserRepo() : _store = FirebaseFirestore.instance {
+    collection = FirebaseFirestore.instance.collection('users');
+  }
 
-  Future<void> createUser(User user) {
+  Future<void> createUser(User user) async {
     return _store.doc('/users/${user.id}').set(user.toJson());
   }
 

@@ -19,6 +19,17 @@ final boxDecorationRadius = BoxDecoration(
   borderRadius: borderRadius,
 );
 
+final boxShadow = BoxDecoration(
+  borderRadius: BorderRadius.circular(6.0),
+  color: Colors.white,
+  boxShadow: [
+    BoxShadow(
+      blurRadius: 3.0,
+      color: Color.fromRGBO(0, 0, 0, 0.1),
+    )
+  ],
+);
+
 const primaryColor = Color(0xFF3E50FF);
 const accentColor = Color(0xFF7B86FF);
 

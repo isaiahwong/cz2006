@@ -26,12 +26,16 @@ dependencies:
   get: ^4.3.8
   firebase_core: ^1.6.0
   firebase_auth: ^3.1.0
+  formz: ^0.4.0
   cupertino_icons: ^1.0.2
   cloud_firestore: ^2.5.0
   cloud_functions: ^3.0.0
   google_fonts: ^2.1.0
   json_annotation: ^4.0.1
   flutter_webrtc: ^0.6.6
+  sliding_up_panel: ^2.0.0+1
+  reorderables: ^0.4.1
+  flow_builder: ^0.0.4
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +54,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - ./assets/image/icon/
     - ./secrets.json
     - ./secrets.example.json
 

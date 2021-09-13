@@ -1,14 +1,17 @@
 import 'package:fitness/app/components/panel/panel.dart';
+import 'package:fitness/app/screens/workout/active_workout_bindings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SecondaryScreen extends StatelessWidget {
   FullScreenPanelController controller = FullScreenPanelController.to();
 
-  static Widget Screen() {
-    return FullScreenPanel(
-      body: SecondaryScreen(),
-    );
+  static void to() {
+    Get.to(
+        () => FullScreenPanel(
+              body: SecondaryScreen(),
+            ),
+        binding: ActiveWorkoutBindings());
   }
 
   @override

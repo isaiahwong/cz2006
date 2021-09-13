@@ -1,3 +1,5 @@
+import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/repo/exercise/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
@@ -17,11 +19,15 @@ void main() async {
 
   UserRepo userRepo = UserRepo();
   AuthRepo authRepo = AuthRepo(userRepo: userRepo);
+  ExerciseRepo exerciseRepo = ExerciseRepo();
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));
+  Get.put<SlidingPanelController>(SlidingPanelController());
+
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);
+  Get.put<ExerciseRepo>(exerciseRepo);
 
   runApp(App());
 }
@@ -31,8 +37,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       builder: (context, widget) => Container(
-        color: Colors.white,
-        child: SafeArea(child: widget!),
+        color: lightGrey,
+        child: widget!,
       ),
       theme: theme(context),
       title: "SoFit",

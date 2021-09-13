@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class FullScreenPanelController extends GetxController {
   static Widget placeholder = SizedBox.shrink();
 
-  late FullScreenController controller;
+  late final FullScreenController controller;
   FullScreenStatus status = FullScreenStatusInactive();
 
   Widget? panelHeader;

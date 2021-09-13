@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fitness/app/controllers/auth/register_controller.dart';
+import 'package:fitness/app/screens/auth/register/register_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<RegisterController>(
-        builder: (state) => Container(
+        builder: (registerControler) => Container(
           padding: screenPadding,
           child: Column(
             children: [
@@ -19,14 +19,14 @@ class RegisterScreen extends StatelessWidget {
                   filled: true,
                   labelText: "Name",
                 ),
-                controller: state.nameController,
+                controller: registerControler.nameController,
               ),
               TextFormField(
                 decoration: InputDecoration(
                   filled: true,
                   labelText: "email",
                 ),
-                controller: state.emailController,
+                controller: registerControler.emailController,
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -34,10 +34,11 @@ class RegisterScreen extends StatelessWidget {
                   labelText: "password",
                 ),
                 obscureText: true,
-                controller: state.passwordController,
+                controller: registerControler.passwordController,
               ),
               ElevatedButton(
-                  onPressed: () => state.register(), child: Text("Register")),
+                  onPressed: () => registerControler.register(),
+                  child: Text("Register")),
             ],
           ),
         ),
