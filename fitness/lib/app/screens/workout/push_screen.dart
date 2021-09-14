@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SecondaryScreen extends StatelessWidget {
-  FullScreenPanelController controller = FullScreenPanelController.to();
+  final FullScreenPanelController controller = FullScreenPanelController.to();
 
   static void to() {
     Get.to(
