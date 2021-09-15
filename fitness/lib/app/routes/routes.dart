@@ -1,3 +1,5 @@
+import 'package:fitness/app/screens/auth/login/login_bindings.dart';
+import 'package:fitness/app/screens/auth/register_bindings.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:get/get.dart';
 
