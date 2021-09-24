@@ -41,7 +41,7 @@ class App extends StatelessWidget {
         child: widget!,
       ),
       theme: theme(context),
-      title: "SoFit",
+      title: "VeryFit",
       debugShowCheckedModeBanner: false,
       getPages: Routes.routes,
     );
