@@ -1,11 +1,23 @@
 import 'package:fitness/common/common.dart';
-import 'package:fitness/repo/repo.dart';
+import 'package:fitness/repo/exercise/model.dart';
+import 'package:fitness/repo/workout/model.dart';
 
 final workouts = [
   Workout(
     id: genRandStr(5),
     name: "Chest Workout",
   )
+];
+
+final legExercises = [
+  Exercise(
+    id: genRandStr(5),
+    name: "Squats",
+    defaultWarmups: 0,
+    defaultSets: 3,
+    defaultReps: 10,
+    defaultRestDuration: 30,
+  ),
 ];
 
 final chestExercises = [
@@ -36,5 +48,5 @@ final chestExercises = [
 ];
 
 final exercises = [
-  ...chestExercises,
+  ...legExercises,
 ];

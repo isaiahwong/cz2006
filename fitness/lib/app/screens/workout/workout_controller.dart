@@ -1,4 +1,4 @@
-import 'package:fitness/repo/repo.dart';
+import 'package:fitness/repo/exercise/model.dart';
 import 'package:get/get.dart';
 
 abstract class WorkoutController extends GetxController {

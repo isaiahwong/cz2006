@@ -1,4 +1,4 @@
-import 'package:fitness/repo/repo.dart';
+import 'package:fitness/repo/exercise/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'model.g.dart';

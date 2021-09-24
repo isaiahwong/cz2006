@@ -1,6 +1,6 @@
 import 'package:fitness/app/screens/workout/workout_controller.dart';
+import 'package:fitness/repo/exercise/model.dart';
 import 'package:fitness/repo/exercise/repo.dart';
-import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 
 class ExerciseController extends GetxController {

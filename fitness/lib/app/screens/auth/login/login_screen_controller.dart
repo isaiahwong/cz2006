@@ -31,7 +31,7 @@ class LoginScreenController extends GetxController {
     }
 
     try {
-      await _authRepo.login(
+      await _authRepo.signin(
         email: emailController.text,
         password: passwordController.text,
       );
