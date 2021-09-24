@@ -42,7 +42,7 @@ class App extends StatelessWidget {
       ),
       theme: theme(context),
       //
-      title: "SoFit__",
+      title: "SoFit",
       debugShowCheckedModeBanner: false,
       getPages: Routes.routes,
     );
