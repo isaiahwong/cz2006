@@ -66,10 +66,10 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
         child: GetBuilder<CreateWorkoutController>(
           init: widget.controller,
           builder: (workoutController) => FlowBuilder<CreateWorkoutRoute>(
-            state: workoutController.route,
             onGeneratePages: (state, pages) => widget.router(state, pages),
             // Observers when screen pops.
             observers: _observers,
+            controller: workoutController.flowController,
           ),
         ),
       ),

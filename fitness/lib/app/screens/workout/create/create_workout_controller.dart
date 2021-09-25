@@ -1,7 +1,9 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/workout/workout.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 
@@ -30,8 +32,11 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
 }
 
 class CreateWorkoutController extends GetxController with ExerciseDelegate {
-  CreateWorkoutRoute route = CreateWorkoutRoute.NEW_WORKOUT_MAIN;
-  WorkoutRepo repo = WorkoutRepo.get();
+  final FlowController<CreateWorkoutRoute> flowController =
+      FlowController(CreateWorkoutRoute.NEW_WORKOUT_MAIN);
+  final panelController = SlidingPanelController.get(RoutePaths.APP);
+  final WorkoutRepo repo = WorkoutRepo.get();
+
   WorkoutName name;
   WorkoutType type;
   FormzStatus status;
@@ -50,14 +55,12 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   }
 
   close() {
-    final panelController = SlidingPanelController.to;
     panelController.close();
     update();
   }
 
   void onSubmit() async {
     status = FormzStatus.submissionInProgress;
-    final panelController = SlidingPanelController.to;
     panelController.close();
 
     final workoutIncrement = 0;
@@ -131,5 +134,10 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   void onTypeChanged(WorkoutType type) {
     this.type = type;
     update();
+  }
+
+  @override
+  void onExerciseSelectionDone() {
+    flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   }
 }

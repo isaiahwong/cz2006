@@ -64,9 +64,8 @@ class ExerciseListScreen extends GetView<ExerciseController> {
                   height: 40,
                   radius: 5.0,
                   textColor: accentColor,
-                  onPressed: () => context
-                      .flow<CreateWorkoutRoute>()
-                      .update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN),
+                  onPressed: () =>
+                      controller.delegateController.onExerciseSelectionDone(),
                 ),
               ],
             ),

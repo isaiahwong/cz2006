@@ -1,6 +1,6 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/model/model.dart';
@@ -104,7 +104,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
       onPressed: controller.onNewRoutine,
       title: "New",
       trailing: IconButton(
-        onPressed: null,
+        onPressed: () {},
         color: primaryColor,
         alignment: Alignment.centerRight,
         icon: Icon(CupertinoIcons.add_circled_solid),
@@ -177,28 +177,31 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: lightGrey,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: screenPadding,
-              child: CustomScrollView(
-                controller: ScrollController(),
-                slivers: [
-                  _appBar(context),
-                  _title(context),
-                  SliverToBoxAdapter(child: SizedBox(height: 80)),
-                  _body(context),
-                ],
+    return SlidingPanel(
+      tag: RoutePaths.WORKOUT_DETAILS,
+      child: Scaffold(
+        backgroundColor: lightGrey,
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
+                padding: screenPadding,
+                child: CustomScrollView(
+                  controller: ScrollController(),
+                  slivers: [
+                    _appBar(context),
+                    _title(context),
+                    SliverToBoxAdapter(child: SizedBox(height: 80)),
+                    _body(context),
+                  ],
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: _start(),
-            )
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _start(),
+              )
+            ],
+          ),
         ),
       ),
     );

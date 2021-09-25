@@ -23,6 +23,7 @@ class SlideUpNavObserver extends NavigatorObserver {
 /// StatefulWidget is used as hot reload causes _pc isAttached error
 class SlidingPanel extends StatefulWidget {
   final Widget child;
+  final String? tag;
   final double? maxHeight;
   final bool backdrop;
   final Color backdropColor;
@@ -34,6 +35,7 @@ class SlidingPanel extends StatefulWidget {
   SlidingPanel({
     Key? key,
     required this.child,
+    this.tag,
     this.maxHeight,
     this.backdrop = true,
     this.backdropColor = Colors.black,
@@ -60,6 +62,8 @@ class _SlidingPanelState extends State<SlidingPanel> {
     final maxPanelHeight = MediaQuery.of(context).size.height * 0.82;
 
     return GetBuilder<SlidingPanelController>(
+      init: Get.find<SlidingPanelController>(tag: widget.tag),
+      global: false,
       builder: (slidingPanelController) {
         double minPanelHeight = calPanelMinHeight(
             MediaQuery.of(context).size.height, slidingPanelController.status);

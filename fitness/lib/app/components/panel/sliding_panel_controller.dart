@@ -6,17 +6,19 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 typedef Widget WithNavObserver(NavigatorObserver? observer);
 
 class SlidingPanelController extends GetxController {
+  static SlidingPanelController get(String tag) => Get.find(tag: tag);
   static Widget placeholder = SizedBox.shrink();
-  static SlidingPanelController to = Get.find();
 
   late WithNavObserver panel;
   late SlidingPanelStatus status = SlidingPanelClosed();
   late final PanelController controller;
+  String? tag;
 
   SlidingPanelController({
     Widget? panel,
     SlidingPanelStatus? status,
     PanelController? controller,
+    this.tag,
   }) {
     this.panel = (ob) => panel == null ? placeholder : panel;
     this.status = status ?? this.status;

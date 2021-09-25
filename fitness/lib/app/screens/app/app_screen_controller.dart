@@ -8,6 +8,7 @@ class AppScreenController extends GetxController {
   void onInit() {
     super.onInit();
   }
+
   Rx<int> _currentIndex = 0.obs;
 
   void setIndex(int value) {

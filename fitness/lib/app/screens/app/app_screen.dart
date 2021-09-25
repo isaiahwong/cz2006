@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/app/app_screen_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class AppScreen extends GetView<AppScreenController> {
     BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.profile_circled), label: ""),
   ];
+
   static List<Widget> _screens = [
     DashboardScreen(),
     ExploreScreen(),
@@ -23,6 +25,7 @@ class AppScreen extends GetView<AppScreenController> {
   @override
   Widget build(BuildContext context) {
     return SlidingPanel(
+      tag: RoutePaths.APP,
       child: Scaffold(
         backgroundColor: lightGrey,
         resizeToAvoidBottomInset: false,

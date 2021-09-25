@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/exercise/exercise.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
@@ -10,6 +11,13 @@ import 'package:get/get.dart';
 class HIITDetailsController extends GetxController with ExerciseDelegate {
   late HIIT hiit;
   final WorkoutRepo workoutRepo = WorkoutRepo.get();
+  late final SlidingPanelController panelController;
+
+  HIITDetailsController({SlidingPanelController? panelController}) {
+    this.panelController = panelController == null
+        ? SlidingPanelController.get(RoutePaths.WORKOUT_DETAILS)
+        : panelController;
+  }
 
   @override
   void onInit() {
@@ -24,12 +32,12 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   }
 
   void onNewRoutine() {
-    final slide = SlidingPanelController.to;
-    slide.open(
+    panelController.open(
       panel: ExerciseListScreen.component(
-          exerciseController: ExerciseController(
-        delegateController: this,
-      )),
+        exerciseController: ExerciseController(
+          delegateController: this,
+        ),
+      ),
     );
   }
 
@@ -58,4 +66,10 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
 
   @override
   void onExercisesChanged(List<Exercise> exercises) {}
+
+  @override
+  void onExerciseSelectionDone() {
+    panelController.close();
+    update();
+  }
 }

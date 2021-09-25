@@ -20,9 +20,10 @@ class Routes {
         page: () => LoginScreen(),
         binding: LoginBindings()),
     GetPage(
-        name: RoutePaths.REGISTER,
-        page: () => RegisterScreen(),
-        binding: RegisterUserBindings()),
+      name: RoutePaths.REGISTER,
+      page: () => RegisterScreen(),
+      binding: RegisterUserBindings(),
+    ),
     GetPage(
       name: RoutePaths.APP,
       page: () => AppScreen(),

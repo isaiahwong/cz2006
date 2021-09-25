@@ -27,15 +27,14 @@ void main() async {
       ExerciseRepo exerciseRepo = ExerciseRepo();
       SocialRepo socialRepo = SocialRepo(userRepo.id);
 
-      Get.lazyPut<ExerciseRepo>(() => exerciseRepo);
-      Get.lazyPut<WorkoutRepo>(() => workoutRepo);
-      Get.lazyPut<SocialRepo>(() => socialRepo);
+      Get.put<ExerciseRepo>(exerciseRepo, permanent: true);
+      Get.put<WorkoutRepo>(workoutRepo, permanent: true);
+      Get.put<SocialRepo>(socialRepo, permanent: true);
     },
   );
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));
-  Get.put<SlidingPanelController>(SlidingPanelController());
 
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);

@@ -9,4 +9,5 @@ abstract class ExerciseDelegate {
   void onExercisesChanged(List<Exercise> exercises);
   bool exists(Exercise ex);
   bool notExists(Exercise ex);
+  void onExerciseSelectionDone();
 }
