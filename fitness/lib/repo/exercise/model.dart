@@ -15,7 +15,6 @@ class Exercise {
   final String name;
   @JsonKey(defaultValue: "")
   @JsonKey(defaultValue: [])
-  final Exercise? next;
   final int defaultWarmups;
   final int defaultSets;
   final int defaultReps;
@@ -28,7 +27,6 @@ class Exercise {
     required this.defaultSets,
     required this.defaultReps,
     required this.defaultRestDuration,
-    this.next,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) =>
@@ -57,7 +55,6 @@ class Exercise {
     return Exercise(
       id: id ?? this.id,
       name: name ?? this.name,
-      next: next ?? this.next,
       defaultWarmups: defaultWarmups ?? this.defaultWarmups,
       defaultSets: defaultSets ?? this.defaultSets,
       defaultReps: defaultReps ?? this.defaultReps,

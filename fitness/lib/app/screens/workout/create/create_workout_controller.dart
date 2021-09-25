@@ -3,6 +3,7 @@ import 'package:fitness/app/screens/workout/workout_controller.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:formz/formz.dart';
+import 'package:get/get.dart';
 
 enum CreateWorkoutRoute {
   NEW_WORKOUT_MAIN,
@@ -28,7 +29,8 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
   }
 }
 
-class CreateWorkoutController extends WorkoutController {
+class CreateWorkoutController extends GetxController
+    with ExerciseDelegateController {
   CreateWorkoutRoute route = CreateWorkoutRoute.NEW_WORKOUT_MAIN;
   WorkoutRepo repo = WorkoutRepo.get();
   WorkoutName name;

@@ -1,7 +1,9 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/workout/create/create.dart';
 import 'package:fitness/app/theme/theme.dart';
+import 'package:fitness/repo/workout/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
@@ -16,6 +18,11 @@ class DashboardScreen extends StatelessWidget {
     slide.open(panel: CreateWorkoutScreen.to());
   }
 
+  void onWorkoutSelected(Workout workout) {
+    if (workout is HIIT)
+      Get.toNamed(RoutePaths.WORKOUT_DETAILS, arguments: workout);
+  }
+
   Widget _myWorkoutsList(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final double height = (size.height) * 0.2;
@@ -28,6 +35,14 @@ class DashboardScreen extends StatelessWidget {
           runSpacing: 12,
           maxMainAxisCount: 2,
           children: [
+            FractionallySizedBox(
+              widthFactor: 0.48,
+              child: ColumnCard(
+                height: height,
+                type: CardType.NEW_CARD,
+                onTap: onCreate,
+              ),
+            ),
             ...dashboardController.workouts
                 .map(
                   (w) => FractionallySizedBox(
@@ -38,19 +53,11 @@ class DashboardScreen extends StatelessWidget {
                       subtitle: "5th May",
                       // statusBarTitle: "${w.routines.length}",
                       statusBarSubtitle: "Exercises",
-                      onTap: () => {},
+                      onTap: () => onWorkoutSelected(w),
                     ),
                   ),
                 )
                 .toList(),
-            FractionallySizedBox(
-              widthFactor: 0.48,
-              child: ColumnCard(
-                height: height,
-                type: CardType.NEW_CARD,
-                onTap: onCreate,
-              ),
-            ),
           ],
         ),
       ),

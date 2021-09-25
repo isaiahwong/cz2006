@@ -4,6 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'routine_interval.g.dart';
 
 enum RoutineIntervalType {
+  @JsonValue(0)
+  UNKNOWN,
   @JsonValue(1)
   WARMUP,
   @JsonValue(2)

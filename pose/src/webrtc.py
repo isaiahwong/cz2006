@@ -25,6 +25,7 @@ class VideoTransformTrack(MediaStreamTrack):
         super().__init__()  # don't forget this!
         self.track = track
         self.transform = transform
+
         # Initialises Media Pose
         self.pose = mp_pose.Pose(
             min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -52,4 +53,4 @@ class VideoTransformTrack(MediaStreamTrack):
         new_frame = VideoFrame.from_ndarray(image, format="bgr24")
         new_frame.pts = frame.pts
         new_frame.time_base = frame.time_base
-        return new_frame
+        return frame

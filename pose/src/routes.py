@@ -44,9 +44,7 @@ async def offer(request):
     def on_track(track):
         log_info("Track %s received", track.kind)
 
-        if track.kind == "audio":
-            pc.addTrack(player.audio)
-        elif track.kind == "video":
+        if track.kind == "video":
             pc.addTrack(
                 VideoTransformTrack(
                     relay.subscribe(track), transform=params["video_transform"]

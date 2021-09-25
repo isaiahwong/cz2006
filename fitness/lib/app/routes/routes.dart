@@ -1,4 +1,5 @@
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/camera/pose.dart';
 import 'package:get/get.dart';
 
 class RoutePaths {
@@ -7,6 +8,8 @@ class RoutePaths {
 
   static const REGISTER = '/auth/register';
   static const DASHBOARD = '/dashboard';
+  static const WORKOUT_ACTIVE = '/workout/active';
+  static const WORKOUT_DETAILS = '/workout/details';
 }
 
 class Routes {
@@ -23,6 +26,15 @@ class Routes {
     GetPage(
       name: RoutePaths.DASHBOARD,
       page: () => BaseScreen(),
+    ),
+    GetPage(
+      name: RoutePaths.WORKOUT_ACTIVE,
+      page: () => P2PVideo(),
+    ),
+    GetPage(
+      name: RoutePaths.WORKOUT_DETAILS,
+      page: () => HIITDetailsScreen(),
+      binding: HIITDetailsBindings(),
     )
   ];
 }

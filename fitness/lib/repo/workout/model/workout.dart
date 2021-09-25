@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'workout.g.dart';
 
 enum WorkoutType {
+  @JsonValue(0)
+  UNKNOWN,
   @JsonValue(1)
   CYCLING,
   @JsonValue(2)

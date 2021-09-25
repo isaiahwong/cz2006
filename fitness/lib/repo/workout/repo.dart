@@ -8,10 +8,10 @@ import 'model/model.dart';
 
 class WorkoutRepo {
   final FirebaseFirestore _store;
-  late final CollectionReference collection;
+  late final UserRepo userRepo;
+  late CollectionReference collection;
 
-  WorkoutRepo({required UserRepo userRepo})
-      : _store = FirebaseFirestore.instance {
+  WorkoutRepo({required this.userRepo}) : _store = FirebaseFirestore.instance {
     collection =
         FirebaseFirestore.instance.collection('/users/${userRepo.id}/workouts');
   }
@@ -21,6 +21,7 @@ class WorkoutRepo {
   }
 
   Future<Workout> createWorkout(Workout workout) async {
+    FirebaseFirestore.instance.collection('/users/${userRepo.id}/workouts');
     final result = await collection.add(workout.toJson());
     collection.doc(result.id).update({"id": result.id});
     return workout.copyWith(id: result.id);
@@ -42,17 +43,23 @@ class WorkoutRepo {
   }
 
   Stream<List<Workout>> streamWorkouts() {
-    return _store
-        .collection("/users/tjbV11j8nEac5DJTUKPyHqJxilE3/workouts")
-        .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
-              .map(
-                (document) => Workout.fromJson(
-                  document.data() as Map<String, dynamic>,
-                ),
-              )
-              .toList(),
+    return collection.snapshots().map(
+          (snapshot) => snapshot.docs.map((document) {
+            final data = document.data() as Map<String, dynamic>;
+            switch (Workout.intToType(data["type"])) {
+              case WorkoutType.UNKNOWN:
+                break;
+              case WorkoutType.CYCLING:
+                break;
+              case WorkoutType.HIIT:
+                return HIIT.fromJson(
+                  data,
+                );
+            }
+            return Workout.fromJson(
+              data,
+            );
+          }).toList(),
         );
   }
 }

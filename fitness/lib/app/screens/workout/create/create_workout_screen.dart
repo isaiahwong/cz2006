@@ -25,7 +25,7 @@ class CreateWorkoutScreen extends StatefulWidget {
           CreateWorkoutMainScreen.page(),
           ExerciseListView.page(
             exerciseController: ExerciseController(
-              workoutController: controller,
+              delegateController: controller,
             ),
           ),
         ];

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class ExerciseController extends GetxController {
   late final ExerciseRepo exerciseRepo;
-  late WorkoutController workoutController;
+  late ExerciseDelegateController delegateController;
 
   List<Exercise> filteredExercises = [];
 
@@ -17,7 +17,7 @@ class ExerciseController extends GetxController {
 
   ExerciseController({
     ExerciseRepo? exerciseRepo,
-    required this.workoutController,
+    required this.delegateController,
     List<Exercise>? selected,
   }) {
     this.exerciseRepo = exerciseRepo == null ? Get.find() : ExerciseRepo();
@@ -28,14 +28,15 @@ class ExerciseController extends GetxController {
     super.onInit();
     exercises = await exerciseRepo.getExercises();
     exercises = List.from(exercises)
-      ..map((e) =>
-          workoutController.exists(e) ? workoutController.exercises[e.id] : e);
+      ..map((e) => delegateController.exists(e)
+          ? delegateController.exercises[e.id]
+          : e);
     filteredExercises = List.from(exercises);
     update();
   }
 
   bool isSelected(Exercise ex) {
-    return workoutController.exists(ex);
+    return delegateController.exists(ex);
   }
 
   void onFilter(String query) {
@@ -60,7 +61,7 @@ class ExerciseController extends GetxController {
     int? reps,
   }) {
     if (!isSelected(exercise)) return;
-    workoutController.onExerciseChanged(
+    delegateController.onExerciseChanged(
       exercise.copyWith(
         defaultReps: reps,
         defaultSets: sets,
@@ -73,15 +74,15 @@ class ExerciseController extends GetxController {
   }
 
   Exercise? onSelected(Exercise ex) {
-    if (isSelected(ex)) return workoutController.exercises[ex.id];
-    workoutController.onExerciseSelected(ex);
+    if (isSelected(ex)) return delegateController.exercises[ex.id];
+    delegateController.onExerciseSelected(ex);
     update();
     return ex;
   }
 
   void onRemove(Exercise ex) {
     if (!isSelected(ex)) return;
-    workoutController.onExerciseRemoved(ex);
+    delegateController.onExerciseRemoved(ex);
     update();
   }
 }

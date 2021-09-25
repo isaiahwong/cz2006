@@ -51,6 +51,7 @@ K _$enumDecode<K, V>(
 }
 
 const _$WorkoutTypeEnumMap = {
+  WorkoutType.UNKNOWN: 0,
   WorkoutType.CYCLING: 1,
   WorkoutType.HIIT: 2,
 };
