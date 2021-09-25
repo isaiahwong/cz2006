@@ -13,8 +13,6 @@ class Exercise {
 
   final String id;
   final String name;
-  @JsonKey(defaultValue: "")
-  @JsonKey(defaultValue: [])
   final int defaultWarmups;
   final int defaultSets;
   final int defaultReps;

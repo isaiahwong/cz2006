@@ -17,8 +17,8 @@ class User {
     required this.id,
     required this.email,
     required this.name,
-    required this.height,
-    required this.profilePicture,
+    this.height = 0,
+    this.profilePicture = "",
   });
 
   User copyWith({
