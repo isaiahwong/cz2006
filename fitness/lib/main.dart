@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,6 @@ class App extends StatelessWidget {
         child: widget!,
       ),
       theme: theme(context),
-      //
       title: "SoFit",
       debugShowCheckedModeBanner: false,
       getPages: Routes.routes,

@@ -13,7 +13,6 @@ class RegisterScreen extends StatelessWidget {
         builder: (registerControler) => Container(
           padding: screenPadding,
           //margin: const EdgeInsets.only(top: 50.0),
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'model.dart';
+import 'model/model.dart';
 
 class WorkoutRepo {
   final FirebaseFirestore _store;
