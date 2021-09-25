@@ -47,10 +47,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      builder: (context, widget) => Container(
-        color: lightGrey,
-        child: widget!,
-      ),
+      builder: (context, widget) => widget!,
       theme: theme(context),
       title: "SoFit",
       debugShowCheckedModeBanner: false,

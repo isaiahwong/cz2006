@@ -7,7 +7,7 @@ class RoutePaths {
   static const LOGIN = '/auth/login';
 
   static const REGISTER = '/auth/register';
-  static const DASHBOARD = '/dashboard';
+  static const APP = '/app';
   static const WORKOUT_ACTIVE = '/workout/active';
   static const WORKOUT_DETAILS = '/workout/details';
 }
@@ -24,8 +24,9 @@ class Routes {
         page: () => RegisterScreen(),
         binding: RegisterUserBindings()),
     GetPage(
-      name: RoutePaths.DASHBOARD,
-      page: () => BaseScreen(),
+      name: RoutePaths.APP,
+      page: () => AppScreen(),
+      binding: AppScreenBindings(),
     ),
     GetPage(
       name: RoutePaths.WORKOUT_ACTIVE,

@@ -1,7 +1,5 @@
 import 'package:fitness/app/components/components.dart';
-import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/workout/create/create.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/model/model.dart';
 import 'package:flutter/material.dart';
@@ -10,17 +8,28 @@ import 'package:reorderables/reorderables.dart';
 
 import 'dashboard_screen_controller.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends GetView<DashboardScreenController> {
   const DashboardScreen({Key? key}) : super(key: key);
-
-  void onCreate() {
-    final slide = SlidingPanelController.to;
-    slide.open(panel: CreateWorkoutScreen.to());
-  }
 
   void onWorkoutSelected(Workout workout) {
     if (workout is HIIT)
       Get.toNamed(RoutePaths.WORKOUT_DETAILS, arguments: workout);
+  }
+
+  Widget _hiitCard({required double height, required HIIT hiit}) {
+    return ColumnCard(
+      height: height,
+      title: hiit.name,
+      subtitle: "5th May",
+      statusBarTitle: "${hiit.routines.length}",
+      statusBarSubtitle: "${hiit.routines.length > 1 ? "Routines" : "Routine"}",
+      onTap: () => onWorkoutSelected(hiit),
+    );
+  }
+
+  Widget _mapCard({required Workout workout, required double height}) {
+    if (workout is HIIT) return _hiitCard(height: height, hiit: workout);
+    return SizedBox.shrink();
   }
 
   Widget _myWorkoutsList(BuildContext context) {
@@ -40,21 +49,14 @@ class DashboardScreen extends StatelessWidget {
               child: ColumnCard(
                 height: height,
                 type: CardType.NEW_CARD,
-                onTap: onCreate,
+                onTap: controller.onCreate,
               ),
             ),
             ...dashboardController.workouts
                 .map(
                   (w) => FractionallySizedBox(
                     widthFactor: 0.48,
-                    child: ColumnCard(
-                      height: height,
-                      title: w.name,
-                      subtitle: "5th May",
-                      // statusBarTitle: "${w.routines.length}",
-                      statusBarSubtitle: "Exercises",
-                      onTap: () => onWorkoutSelected(w),
-                    ),
+                    child: _mapCard(workout: w, height: height),
                   ),
                 )
                 .toList(),
@@ -70,6 +72,7 @@ class DashboardScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            color: lightGrey,
             margin: screenPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,

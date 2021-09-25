@@ -22,7 +22,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
       backgroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
         title: Padding(
-          padding: screenPadding.copyWith(top: 10.0),
+          padding: screenPadding,
           child: Container(
             color: Colors.white,
             child: Row(
@@ -41,7 +41,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
                   "Save",
                   fontSize: 17,
                   width: 66,
-                  height: 40,
+                  height: 50,
                   radius: 5.0,
                   textColor: Colors.white,
                   backgroundColor: primaryColor,

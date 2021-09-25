@@ -1,7 +1,7 @@
 import 'package:fitness/repo/exercise/model.dart';
 import 'package:fitness/repo/workout/workout.dart';
 
-abstract class ExerciseDelegateController {
+abstract class ExerciseDelegate {
   Map<String, Exercise> exercises = {};
   void onExerciseSelected(Exercise ex);
   void onExerciseRemoved(Exercise ex);

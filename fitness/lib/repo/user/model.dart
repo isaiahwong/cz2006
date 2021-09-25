@@ -7,7 +7,9 @@ class User {
   final String id;
   final String name;
   final String email;
+  @JsonKey(defaultValue: 0)
   final int height;
+  @JsonKey(defaultValue: "")
   final String profilePicture;
 
   // TODO: Add workouts, weights, workoutevents

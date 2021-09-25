@@ -1,21 +1,32 @@
 part of 'exercise.dart';
 
-class ExerciseListView extends GetView<ExerciseController> {
+class ExerciseListScreen extends GetView<ExerciseController> {
   static Page page(
           {ScrollController? scrollController,
           ExerciseController? exerciseController}) =>
       CupertinoPage<void>(
         child: GetBuilder(
           init: exerciseController,
-          builder: (_) => ExerciseListView(
+          builder: (_) => ExerciseListScreen(
             scrollController: scrollController,
           ),
         ),
       );
 
+  static Widget component(
+      {ScrollController? scrollController,
+      ExerciseController? exerciseController}) {
+    return GetBuilder(
+      init: exerciseController,
+      builder: (_) => ExerciseListScreen(
+        scrollController: scrollController,
+      ),
+    );
+  }
+
   final ScrollController? scrollController;
 
-  const ExerciseListView({
+  const ExerciseListScreen({
     Key? key,
     this.scrollController,
   }) : super(key: key);

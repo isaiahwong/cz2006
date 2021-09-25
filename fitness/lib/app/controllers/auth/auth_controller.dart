@@ -30,6 +30,6 @@ class AuthController extends GetxController {
     // if (user.uid != null) {
     //   currentUser.bindStream(_userRepo.streamUser(user.uid));
     // }
-    Get.offAllNamed(RoutePaths.DASHBOARD);
+    Get.offAllNamed(RoutePaths.APP);
   }
 }

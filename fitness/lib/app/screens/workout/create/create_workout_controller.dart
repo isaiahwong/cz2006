@@ -1,5 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
-import 'package:fitness/app/screens/workout/workout_controller.dart';
+import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:formz/formz.dart';
@@ -29,8 +29,7 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
   }
 }
 
-class CreateWorkoutController extends GetxController
-    with ExerciseDelegateController {
+class CreateWorkoutController extends GetxController with ExerciseDelegate {
   CreateWorkoutRoute route = CreateWorkoutRoute.NEW_WORKOUT_MAIN;
   WorkoutRepo repo = WorkoutRepo.get();
   WorkoutName name;

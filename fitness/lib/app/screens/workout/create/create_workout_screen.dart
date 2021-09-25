@@ -23,7 +23,7 @@ class CreateWorkoutScreen extends StatefulWidget {
       case CreateWorkoutRoute.NEW_WORKOUT_EXERCISE:
         return [
           CreateWorkoutMainScreen.page(),
-          ExerciseListView.page(
+          ExerciseListScreen.page(
             exerciseController: ExerciseController(
               delegateController: controller,
             ),
@@ -39,36 +39,11 @@ class CreateWorkoutScreen extends StatefulWidget {
     }
   }
 
-  factory CreateWorkoutScreen.to() {
+  factory CreateWorkoutScreen.get() {
     return CreateWorkoutScreen(controller: CreateWorkoutController());
   }
 
   CreateWorkoutScreen({this.observer, required this.controller});
-
-  // static Widget bloc(BuildContext context, {NavigatorObserver? observer}) {
-  //   final workoutRepo = RepositoryProvider.of<WorkoutRepo>(context);
-  //   final workoutsBloc = BlocProvider.of<WorkoutsBloc>(context);
-
-  //   return MultiBlocProvider(
-  //     providers: [
-  //       BlocProvider(
-  //         create: (_) => WorkoutBloc(
-  //           workoutRepo: workoutRepo,
-  //           workoutsBloc: workoutsBloc,
-  //         ),
-  //       ),
-  //       BlocProvider(
-  //         create: (_) => ExercisesFilteredBloc(
-  //           workoutRepo: workoutRepo,
-  //           workoutsBloc: workoutsBloc,
-  //         )..add(ExercisesRetrieved()),
-  //       )
-  //     ],
-  //     child: CreateWorkoutScreen(
-  //       observer: observer,
-  //     ),
-  //   );
-  // }
 
   @override
   _CreateWorkoutScreenState createState() => _CreateWorkoutScreenState();

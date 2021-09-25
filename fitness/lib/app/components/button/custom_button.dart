@@ -30,8 +30,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
+    return TextButton(
+      onPressed: onPressed,
       child: Container(
         height: height ?? 40.0,
         width: width ?? 60.0,

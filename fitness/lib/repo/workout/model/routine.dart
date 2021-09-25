@@ -15,6 +15,9 @@ class Routine {
   final List<RoutineInterval> intervals;
   final bool completed;
 
+  int get sets => intervals.fold(
+      0, (p, element) => element.type == RoutineIntervalType.SET ? p + 1 : 0);
+
   Routine({
     this.id = '',
     required this.exercise,

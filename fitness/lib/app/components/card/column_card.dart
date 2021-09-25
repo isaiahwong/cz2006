@@ -10,6 +10,7 @@ class ColumnCard extends StatelessWidget {
   final String subtitle;
   final String statusBarTitle;
   final String statusBarSubtitle;
+  final Widget? statusBarSubtitleWidget;
 
   final CardType? type;
   final VoidCallback? onTap;
@@ -23,6 +24,7 @@ class ColumnCard extends StatelessWidget {
     this.statusBarTitle = "",
     this.statusBarSubtitle = "",
     this.onTap,
+    this.statusBarSubtitleWidget,
     this.type = CardType.CARD,
   }) : super(key: key);
 
@@ -79,14 +81,14 @@ class ColumnCard extends StatelessWidget {
               statusBarTitle,
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
+                  .headline4!
                   .copyWith(fontWeight: FontWeight.w900),
             ),
             Text(
               statusBarSubtitle,
               style: Theme.of(context).textTheme.headline5!.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: black,
+                    color: accentColor,
+                    fontWeight: FontWeight.w900,
                   ),
             ),
           ],

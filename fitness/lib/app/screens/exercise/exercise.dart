@@ -12,5 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'exercise_controller.dart';
 
-part 'exercise_list_view.dart';
+export 'exercise_delegate.dart';
+
+part 'exercise_list_screen.dart';
 part 'exercise_tile.dart';

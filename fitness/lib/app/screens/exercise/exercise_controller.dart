@@ -1,11 +1,11 @@
-import 'package:fitness/app/screens/workout/workout_controller.dart';
+import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/exercise/model.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:get/get.dart';
 
 class ExerciseController extends GetxController {
   late final ExerciseRepo exerciseRepo;
-  late ExerciseDelegateController delegateController;
+  late ExerciseDelegate delegateController;
 
   List<Exercise> filteredExercises = [];
 

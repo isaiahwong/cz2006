@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import 'package:fitness/app/screens/screens.dart';
 
-class BaseScreen extends StatelessWidget {
+class AppScreen extends GetView<AppScreenController> {
   static List<BottomNavigationBarItem> _barItems = [
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.app), label: ""),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: ""),
@@ -22,25 +22,20 @@ class BaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppScreenController>(
-      init: AppScreenController(),
-      builder: (_) {
-        return SlidingPanel(
-          child: Scaffold(
-            backgroundColor: lightGrey,
-            resizeToAvoidBottomInset: false,
-            body: PageView(
-              controller: _.getPageController,
-              children: _screens,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _.getCurrentIndex,
-              onTap: (value) => _.setIndex(value),
-              items: _barItems,
-            ),
-          ),
-        );
-      },
+    return SlidingPanel(
+      child: Scaffold(
+        backgroundColor: lightGrey,
+        resizeToAvoidBottomInset: false,
+        body: PageView(
+          controller: controller.getPageController,
+          children: _screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: controller.getCurrentIndex,
+          onTap: (value) => controller.setIndex(value),
+          items: _barItems,
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 export 'splash/splash.dart';
-export 'app/app_screen.dart';
+export 'app/app.dart';
 export "auth/auth.dart";
 
 export "profile/profile.dart";

@@ -75,18 +75,24 @@ class UnderlineTextField extends StatelessWidget {
 
 class NakedTextField extends StatelessWidget {
   final String? hintText;
+  final TextStyle? style;
+  final TextStyle? hintStyle;
   final String? errorText;
   final TextAlign? textAlign;
   final double? fontSize;
   final ValueChanged? onChanged;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final TextEditingController? controller;
   final bool enableInteractiveSelection;
   final bool showCursor;
 
   const NakedTextField({
     Key? key,
     this.hintText,
+    this.style,
+    this.controller,
+    this.hintStyle,
     this.textAlign,
     this.onChanged,
     this.errorText,
@@ -100,7 +106,7 @@ class NakedTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style:
+      style: style ??
           Theme.of(context).textTheme.headline3!.copyWith(fontSize: fontSize),
       textAlign: textAlign ?? TextAlign.left,
       onChanged: onChanged,
@@ -108,10 +114,12 @@ class NakedTextField extends StatelessWidget {
       inputFormatters: inputFormatters,
       enableInteractiveSelection: enableInteractiveSelection,
       showCursor: showCursor,
+      controller: controller,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,
         hintText: hintText,
+        hintStyle: hintStyle,
         errorText: errorText,
         errorStyle: Theme.of(context).textTheme.headline6!.copyWith(color: red),
         focusedErrorBorder: InputBorder.none,
