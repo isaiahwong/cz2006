@@ -1,2 +1,4 @@
-exports.user = require("./user");
-exports.workout = require("./workout");
+export * as user from "./user";
+export * as workout from "./workout";
+
+

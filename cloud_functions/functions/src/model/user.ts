@@ -12,6 +12,22 @@ export interface User {
     friends: User[];
 }
 
+export interface FriendRequestWithId extends FriendRequest{
+    id: string;
+}
+export interface FriendRequest{
+    createdAt: number;
+    initiator: UserSnippet;
+    responder: UserSnippet;
+    status: SocialStatus;
+}
+
+export interface UserSnippet{
+    id: string;
+    name: string;
+    profilePicture: string;
+}
+
 
 export interface Weight {
     weight: number;
@@ -31,5 +47,6 @@ export enum SocialStatus {
     FRIEND = "friend",
     UNFRIEND = "unfriend",
     PENDING = "pending",
+    DECLINE = "decline"
 }
 
