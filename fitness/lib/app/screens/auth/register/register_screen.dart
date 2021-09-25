@@ -13,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
         builder: (registerControler) => Container(
           padding: screenPadding,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 decoration: InputDecoration(

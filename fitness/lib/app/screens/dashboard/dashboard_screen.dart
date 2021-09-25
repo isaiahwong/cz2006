@@ -1,6 +1,5 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
-import 'package:fitness/app/controllers/auth/auth_controller.dart';
 import 'package:fitness/app/screens/workout/create/create.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/material.dart';

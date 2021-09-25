@@ -3,6 +3,11 @@ import 'package:get/get.dart';
 
 class AppScreenController extends GetxController {
   Rx<PageController> _pageController = PageController().obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
   Rx<int> _currentIndex = 0.obs;
 
   void setIndex(int value) {

@@ -23,18 +23,20 @@ class FullScreenPanel extends StatelessWidget {
     return GetBuilder<FullScreenPanelController>(
       init: FullScreenPanelController.to(),
       builder: (state) {
-        return Scaffold(
-          body: _FullScreenPanel(
-            body: body,
-            controller: state.controller,
-            panelMinSize: state.status is FullScreenStatusInactive ? 0 : 90,
-            panelMaxSize: _panelMaxSize,
-            panel: state.panel,
-            panelBorderRadiusEnd: 20,
-            panelBorderRadiusBegin: 0,
-            panelHeader: state.panelHeader,
-            hideAppBar: true,
-            footer: footer,
+        return SafeArea(
+          child: Scaffold(
+            body: _FullScreenPanel(
+              body: body,
+              controller: state.controller,
+              panelMinSize: state.status is FullScreenStatusInactive ? 0 : 90,
+              panelMaxSize: _panelMaxSize,
+              panel: state.panel,
+              panelBorderRadiusEnd: 20,
+              panelBorderRadiusBegin: 0,
+              panelHeader: state.panelHeader,
+              hideAppBar: true,
+              footer: footer,
+            ),
           ),
         );
       },
