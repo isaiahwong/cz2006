@@ -9,6 +9,17 @@ final workouts = [
   )
 ];
 
+final legExercises = [
+  Exercise(
+    id: genRandStr(5),
+    name: "Squats",
+    defaultWarmups: 0,
+    defaultSets: 3,
+    defaultReps: 10,
+    defaultRestDuration: 30,
+  ),
+];
+
 final chestExercises = [
   Exercise(
     id: genRandStr(5),
@@ -37,5 +48,5 @@ final chestExercises = [
 ];
 
 final exercises = [
-  ...chestExercises,
+  ...legExercises,
 ];
