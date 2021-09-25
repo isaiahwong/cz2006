@@ -1,4 +1,5 @@
 import 'package:fitness/repo/exercise/model.dart';
+import 'package:fitness/repo/workout/workout.dart';
 import 'package:get/get.dart';
 
 abstract class WorkoutController extends GetxController {
@@ -7,6 +8,7 @@ abstract class WorkoutController extends GetxController {
   void onExerciseRemoved(Exercise ex);
   void onExerciseChanged(Exercise ex);
   void onExercisesChanged(List<Exercise> exercises);
+  void onTypeChanged(WorkoutType type);
   bool exists(Exercise ex);
   bool notExists(Exercise ex);
 }

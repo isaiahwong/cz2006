@@ -73,14 +73,14 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
 
   Widget _typeTile(BuildContext context) {
     return CustomTile(
-      title: "Workout",
+      title: Workout.typeToString(controller.type),
       leading: Icon(CupertinoIcons.grid, color: darkGrey),
       trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
       onTap: () {
         // context.read<SlidingPanelBloc>().add(SlidingPanelSticky());
-        // context
-        //     .flow<CreateWorkoutRoute>()
-        //     .update((_) => CreateWorkoutRoute.NEW_WORKOUT_TYPE);
+        context
+            .flow<CreateWorkoutRoute>()
+            .update((_) => CreateWorkoutRoute.NEW_WORKOUT_TYPE);
       },
     );
   }

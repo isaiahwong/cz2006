@@ -1,6 +1,6 @@
 import 'package:fitness/common/common.dart';
 import 'package:fitness/repo/exercise/model.dart';
-import 'package:fitness/repo/workout/model.dart';
+import 'package:fitness/repo/workout/workout.dart';
 
 final workouts = [
   Workout(

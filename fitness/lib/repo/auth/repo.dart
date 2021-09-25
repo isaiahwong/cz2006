@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/repo/auth/auth.dart';
 import 'package:fitness/repo/user/model.dart';
 import 'package:fitness/repo/user/repo.dart';
@@ -25,7 +26,6 @@ class AuthRepo {
       email: user.email!,
       name: name,
     );
-
     return _userRepo.createUser(newUser);
   }
 

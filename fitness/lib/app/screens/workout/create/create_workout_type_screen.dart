@@ -11,31 +11,31 @@ class CreateWorkoutTypeScreen extends GetView<CreateWorkoutController> {
         .update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   }
 
-  // List<Widget> items(BuildContext context) {
-  //   return Workout.workoutTypes()
-  //       .entries
-  //       .map<Widget>(
-  //         (w) => Column(
-  //           children: [
-  //             CustomTile(
-  //               title: w.value,
-  //               trailing: w.key == state.type
-  //                   ? Icon(
-  //                       CupertinoIcons.checkmark_alt,
-  //                       color: green,
-  //                     )
-  //                   : null,
-  //               onTap: () {
-  //                 resetPanel(context);
-  //                 context.read<WorkoutBloc>().add(WorkoutTypeChanged(w.key));
-  //               },
-  //             ),
-  //             Divider(color: lightGrey),
-  //           ],
-  //         ),
-  //       )
-  //       .toList();
-  // }
+  List<Widget> items(BuildContext context) {
+    return Workout.workoutTypes()
+        .entries
+        .map<Widget>(
+          (w) => Column(
+            children: [
+              CustomTile(
+                title: w.value,
+                trailing: w.key == controller.type.index
+                    ? Icon(
+                        CupertinoIcons.checkmark_alt,
+                        color: green,
+                      )
+                    : null,
+                onTap: () {
+                  resetPanel(context);
+                  controller.onTypeChanged(Workout.intToType(w.key));
+                },
+              ),
+              Divider(color: lightGrey),
+            ],
+          ),
+        )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class CreateWorkoutTypeScreen extends GetView<CreateWorkoutController> {
             height: 20.0,
           ),
           Divider(color: lightGrey),
-          // ...items(context, state),
+          ...items(context),
         ],
       ),
     );
