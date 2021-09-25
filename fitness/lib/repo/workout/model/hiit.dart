@@ -12,6 +12,7 @@ class HIIT extends Workout {
   HIIT({
     String id = "",
     required String name,
+    WorkoutType type = WorkoutType.HIIT, // used for json generator
     this.routines = const [],
   }) : super(id: id, name: name, type: WorkoutType.HIIT);
 

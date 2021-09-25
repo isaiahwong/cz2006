@@ -8,6 +8,8 @@ class UserRepo {
   late final CollectionReference collection;
   String _id = "";
 
+  String get id => _id;
+
   set id(String id) => _id = id;
 
   UserRepo() : _store = FirebaseFirestore.instance {

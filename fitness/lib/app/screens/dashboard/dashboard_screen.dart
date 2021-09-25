@@ -28,19 +28,21 @@ class DashboardScreen extends StatelessWidget {
           runSpacing: 12,
           maxMainAxisCount: 2,
           children: [
-            // ...state.workouts.map(
-            //   (w) => FractionallySizedBox(
-            //     widthFactor: 0.48,
-            //     child: ColumnCard(
-            //       height: height,
-            //       title: w.name,
-            //       subtitle: "5th May",
-            //       statusBarTitle: "${w.exercises.length}",
-            //       statusBarSubtitle: "Exercises",
-            //       onTap: () => {},
-            //     ),
-            //   ),
-            // ),
+            ...dashboardController.workouts
+                .map(
+                  (w) => FractionallySizedBox(
+                    widthFactor: 0.48,
+                    child: ColumnCard(
+                      height: height,
+                      title: w.name,
+                      subtitle: "5th May",
+                      // statusBarTitle: "${w.routines.length}",
+                      statusBarSubtitle: "Exercises",
+                      onTap: () => {},
+                    ),
+                  ),
+                )
+                .toList(),
             FractionallySizedBox(
               widthFactor: 0.48,
               child: ColumnCard(
