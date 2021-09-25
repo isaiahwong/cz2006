@@ -30,6 +30,7 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
 
 class CreateWorkoutController extends WorkoutController {
   CreateWorkoutRoute route = CreateWorkoutRoute.NEW_WORKOUT_MAIN;
+  WorkoutRepo repo = WorkoutRepo.get();
   WorkoutName name;
   WorkoutType type;
   FormzStatus status;
@@ -54,15 +55,35 @@ class CreateWorkoutController extends WorkoutController {
   }
 
   void onSubmit() async {
-    // Workout(
-    //   name: name.value.isNotEmpty
-    //       ? name.value
-    //       : WorkoutName.dirty("Workout $workoutIncrement"),
-    //   status: FormzStatus.submissionInProgress,
-    //   exercises: exercises,
-    // );
+    status = FormzStatus.submissionInProgress;
     final panelController = SlidingPanelController.to;
     panelController.close();
+
+    final workoutIncrement = 0;
+
+    final workout = await repo.createWorkout(HIIT(
+      name: name.value.isNotEmpty
+          ? name.value
+          : WorkoutName.dirty("Workout $workoutIncrement").value,
+    ));
+
+    switch (this.type) {
+      case WorkoutType.HIIT:
+        createHIIT(workout);
+        return;
+      case WorkoutType.CYCLING:
+        return;
+    }
+  }
+
+  Future<void> createHIIT(Workout workout) async {
+    if (exercises.isEmpty) return;
+    repo.updateHIIT(
+      HIIT.fromWorkout(workout: workout).addExercises(
+            exercises.values.toList(),
+          ),
+    );
+    return;
   }
 
   bool exists(Exercise ex) {

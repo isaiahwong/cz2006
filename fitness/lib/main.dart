@@ -1,6 +1,7 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/repo/exercise/repo.dart';
+import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
@@ -19,8 +20,16 @@ void main() async {
   await Firebase.initializeApp();
 
   UserRepo userRepo = UserRepo();
-  AuthRepo authRepo = AuthRepo(userRepo: userRepo);
-  ExerciseRepo exerciseRepo = ExerciseRepo();
+  AuthRepo authRepo = AuthRepo(
+    userRepo: userRepo,
+    initWhenAuth: () {
+      WorkoutRepo workoutRepo = WorkoutRepo(userRepo: userRepo);
+      ExerciseRepo exerciseRepo = ExerciseRepo();
+
+      Get.lazyPut<ExerciseRepo>(() => exerciseRepo);
+      Get.lazyPut<WorkoutRepo>(() => workoutRepo);
+    },
+  );
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(UserController(userRepo: userRepo));
@@ -28,7 +37,6 @@ void main() async {
 
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);
-  Get.put<ExerciseRepo>(exerciseRepo);
 
   runApp(App());
 }

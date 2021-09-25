@@ -7,7 +7,8 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
 
   const CreateWorkoutMainScreen({Key? key}) : super(key: key);
 
-  void saveWorkout(BuildContext context) {
+  void saveWorkout() {
+    controller.onSubmit();
     // if (state.status.isSubmissionInProgress) return;
     // context.read<WorkoutBloc>().add(WorkoutSaved());
   }
@@ -44,7 +45,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
                   radius: 5.0,
                   textColor: Colors.white,
                   backgroundColor: primaryColor,
-                  onPressed: () => saveWorkout(context),
+                  onPressed: () => saveWorkout(),
                 ),
               ],
             ),

@@ -19,5 +19,5 @@ HIIT _$HIITFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$HIITToJson(HIIT instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'routines': instance.routines,
+      'routines': instance.routines.map((e) => e.toJson()).toList(),
     };

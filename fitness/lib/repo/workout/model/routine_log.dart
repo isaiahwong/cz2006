@@ -3,11 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'routine_log.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class RoutineLog {
   String id;
   int reps;
-  RoutineInterval interval;
+  String interval;
   bool completed;
 
   RoutineLog({

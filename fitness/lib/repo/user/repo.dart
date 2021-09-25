@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import 'model.dart';
 
 class UserRepo {
   final FirebaseFirestore _store;
   late final CollectionReference collection;
+  String _id = "";
+
+  set id(String id) => _id = id;
 
   UserRepo() : _store = FirebaseFirestore.instance {
     collection = FirebaseFirestore.instance.collection('users');
@@ -22,9 +26,10 @@ class UserRepo {
   }
 
   //Streams the firestore user from the firestore collection
-  Stream<User> streamUser(String id) {
+  Stream<User> streamUser() {
+    if (_id.isEmpty) throw ErrorDescription("User id is empty. Set id first");
     return _store
-        .doc('/users/$id')
+        .doc('/users/$_id')
         .snapshots()
         .map((snapshot) => User.fromJson(snapshot.data()!));
   }

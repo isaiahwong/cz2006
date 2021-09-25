@@ -9,14 +9,14 @@ enum WorkoutType {
   HIIT,
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Workout {
   final String id;
   final String name;
   final WorkoutType type;
 
   Workout({
-    required this.id,
+    this.id = "",
     required this.name,
     this.type = WorkoutType.HIIT,
   });

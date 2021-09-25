@@ -3,12 +3,15 @@ import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/repo/auth/auth.dart';
 import 'package:fitness/repo/user/model.dart';
 import 'package:fitness/repo/user/repo.dart';
+import 'package:flutter/material.dart';
 
 class AuthRepo {
   final firebaseAuth.FirebaseAuth _auth;
   final UserRepo _userRepo;
+  final VoidCallback? initWhenAuth;
+  bool _init = false;
 
-  AuthRepo({required UserRepo userRepo})
+  AuthRepo({required UserRepo userRepo, this.initWhenAuth})
       : _auth = firebaseAuth.FirebaseAuth.instance,
         _userRepo = userRepo;
 
@@ -43,6 +46,8 @@ class AuthRepo {
   Stream<Auth?> onAuthChanged() {
     return _auth.authStateChanges().asyncMap<Auth?>((fireUser) async {
       if (fireUser == null) return null;
+      _userRepo.id = fireUser.uid;
+      if (!_init && initWhenAuth != null) initWhenAuth!();
       return Auth(uid: fireUser.uid);
     });
   }

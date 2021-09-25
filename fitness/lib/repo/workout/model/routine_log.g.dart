@@ -10,8 +10,7 @@ RoutineLog _$RoutineLogFromJson(Map<String, dynamic> json) {
   return RoutineLog(
     id: json['id'] as String,
     reps: json['reps'] as int,
-    interval:
-        RoutineInterval.fromJson(json['interval'] as Map<String, dynamic>),
+    interval: json['interval'] as String,
     completed: json['completed'] as bool,
   );
 }

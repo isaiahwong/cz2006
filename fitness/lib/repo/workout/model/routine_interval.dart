@@ -1,5 +1,4 @@
 import 'package:fitness/repo/workout/model/model.dart';
-import 'package:get/get_connect/http/src/interceptors/get_modifiers.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'routine_interval.g.dart';
@@ -13,19 +12,19 @@ enum RoutineIntervalType {
   DROPSET
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class RoutineInterval {
   String id;
   final int iteration;
-  final Routine routine;
-  final RoutineLog currentLog;
+  final String routine;
+  RoutineLog? currentLog;
   final RoutineIntervalType type;
 
   RoutineInterval({
     this.id = '',
     required this.iteration,
     required this.routine,
-    required this.currentLog,
+    this.currentLog,
     required this.type,
   });
 
@@ -37,7 +36,7 @@ class RoutineInterval {
   RoutineInterval copyWith({
     String? id,
     int? iteration,
-    Routine? routine,
+    String? routine,
     RoutineLog? currentLog,
     RoutineIntervalType? type,
   }) {

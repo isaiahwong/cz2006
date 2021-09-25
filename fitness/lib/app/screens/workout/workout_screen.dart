@@ -6,7 +6,7 @@ import 'package:fitness/app/theme/theme.dart';
 import 'package:get/get.dart';
 
 class WorkoutScreen extends StatelessWidget {
-  final UserController userController = UserController.to();
+  final UserController userController = UserController.get();
 
   @override
   Widget build(BuildContext context) {

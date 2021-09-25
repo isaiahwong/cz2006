@@ -10,7 +10,7 @@ class UserController extends GetxController {
 
   UserController({required UserRepo userRepo}) : _userRepo = userRepo;
 
-  factory UserController.to() {
+  factory UserController.get() {
     return Get.find();
   }
 
@@ -23,6 +23,6 @@ class UserController extends GetxController {
 
   handleAuthChanged(Auth? auth) async {
     if (auth == null) return;
-    user.bindStream(_userRepo.streamUser(auth.uid));
+    user.bindStream(_userRepo.streamUser());
   }
 }

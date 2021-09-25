@@ -7,7 +7,6 @@ class AuthController extends GetxController {
   final AuthRepo _authRepo;
 
   Rxn<Auth> currentAuth = Rxn<Auth>();
-  // Rxn<User> currentUser = Rxn<User>();
 
   AuthController({required AuthRepo authRepo}) : _authRepo = authRepo;
 
