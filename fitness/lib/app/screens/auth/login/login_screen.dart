@@ -1,5 +1,6 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/image/image.dart';
+import 'package:fitness/app/controllers/auth/auth_controller.dart';
 import 'package:fitness/app/screens/auth/auth.dart';
 import 'package:fitness/app/screens/auth/login/login_screen_controller.dart';
 import 'package:fitness/app/theme/theme.dart';

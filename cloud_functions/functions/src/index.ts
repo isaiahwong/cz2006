@@ -9,6 +9,8 @@ import * as helper from "./helper";
 //   response.send("Hello from Firebase!");
 // });
 
+exports.social = require("./social/social");
+
 /**
  * Get current time called from server
  * @return {number} current Datetime
