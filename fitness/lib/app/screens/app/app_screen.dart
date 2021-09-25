@@ -1,12 +1,11 @@
 import 'package:fitness/app/components/panel/sliding_panel.dart';
-import 'package:fitness/app/screens/explore/explore_screen.dart';
+import 'package:fitness/app/screens/app/app_screen_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:fitness/app/screens/screens.dart';
-import 'package:fitness/app/controllers/controllers.dart';
 
 class BaseScreen extends StatelessWidget {
   static List<BottomNavigationBarItem> _barItems = [

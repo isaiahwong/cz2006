@@ -9,14 +9,11 @@ import 'model/model.dart';
 class WorkoutRepo {
   final FirebaseFirestore _store;
   late final CollectionReference collection;
-  late final StreamSubscription<User> userStream;
 
   WorkoutRepo({required UserRepo userRepo})
       : _store = FirebaseFirestore.instance {
-    userRepo.streamUser().listen((user) {
-      collection =
-          FirebaseFirestore.instance.collection('/users/${user.id}/workouts');
-    });
+    collection =
+        FirebaseFirestore.instance.collection('/users/${userRepo.id}/workouts');
   }
 
   factory WorkoutRepo.get() {
@@ -45,7 +42,10 @@ class WorkoutRepo {
   }
 
   Stream<List<Workout>> streamWorkouts() {
-    return collection.snapshots().map(
+    return _store
+        .collection("/users/tjbV11j8nEac5DJTUKPyHqJxilE3/workouts")
+        .snapshots()
+        .map(
           (snapshot) => snapshot.docs
               .map(
                 (document) => Workout.fromJson(

@@ -16,7 +16,6 @@ class AuthController extends GetxController {
 
   @override
   void onReady() async {
-    //run every time auth state changes
     ever(currentAuth, handleAuthChanged);
     currentAuth.bindStream(_authRepo.onAuthChanged());
 

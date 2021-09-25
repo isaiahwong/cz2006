@@ -3,9 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'workout.g.dart';
 
 enum WorkoutType {
-  @JsonValue("cycling")
+  @JsonValue(1)
   CYCLING,
-  @JsonValue("HIIT")
+  @JsonValue(2)
   HIIT,
 }
 

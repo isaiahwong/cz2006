@@ -1,4 +1,3 @@
-import 'package:fitness/repo/workout/model/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'routine_log.g.dart';

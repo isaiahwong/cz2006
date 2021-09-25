@@ -54,7 +54,7 @@ K _$enumDecode<K, V>(
 }
 
 const _$RoutineIntervalTypeEnumMap = {
-  RoutineIntervalType.WARMUP: 'Warmup',
-  RoutineIntervalType.SET: 'Set',
-  RoutineIntervalType.DROPSET: 'Dropset',
+  RoutineIntervalType.WARMUP: 1,
+  RoutineIntervalType.SET: 2,
+  RoutineIntervalType.DROPSET: 3,
 };
