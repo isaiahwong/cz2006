@@ -1,14 +1,15 @@
 import * as functions from "firebase-functions";
 import * as lx from "luxon";
 import * as helper from "./helper";
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 
+// The Firebase Admin SDK to access Firestore.
+import admin = require("firebase-admin");
+
+admin.initializeApp();
+
+/**
+ * Exports from sub directories
+ */
 exports.social = require("./social/social");
 
 /**
