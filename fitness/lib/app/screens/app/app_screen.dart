@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel.dart';
+import 'package:fitness/app/screens/explore/explore_screen.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class BaseScreen extends StatelessWidget {
   ];
   static List<Widget> _screens = [
     DashboardScreen(),
-    SocialScreen(),
+    ExploreScreen(),
     ProfileScreen(),
   ];
 
