@@ -10,13 +10,10 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
   return Exercise(
     id: json['id'] as String,
     name: json['name'] as String,
-    defaultWarmups: json['default_warmups'] as int,
+    defaultWarmups: json['default_warmups'] as int? ?? '',
     defaultSets: json['default_sets'] as int,
     defaultReps: json['default_reps'] as int,
     defaultRestDuration: json['default_rest_duration'] as int,
-    // next: json['next'] == null
-    //     ? null
-    //     : Exercise.fromJson(json['next'] as Map<String, dynamic>) ?? '',
   );
 }
 

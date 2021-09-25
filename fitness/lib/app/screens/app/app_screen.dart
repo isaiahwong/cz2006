@@ -16,7 +16,7 @@ class BaseScreen extends StatelessWidget {
   ];
   static List<Widget> _screens = [
     DashboardScreen(),
-    SocialScreen(),
+    ExploreScreen(),
     ProfileScreen(),
   ];
 

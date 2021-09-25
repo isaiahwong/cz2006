@@ -25,9 +25,11 @@ void main() async {
     initWhenAuth: () {
       WorkoutRepo workoutRepo = WorkoutRepo(userRepo: userRepo);
       ExerciseRepo exerciseRepo = ExerciseRepo();
+      SocialRepo socialRepo = SocialRepo(userRepo.id);
 
       Get.lazyPut<ExerciseRepo>(() => exerciseRepo);
       Get.lazyPut<WorkoutRepo>(() => workoutRepo);
+      Get.lazyPut<SocialRepo>(() => socialRepo);
     },
   );
 

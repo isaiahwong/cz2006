@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SocialScreen extends StatelessWidget {
+class ExploreWorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("Social Screen Build");
     return Container(
       child: Center(
-        child: Text("Screen 2"),
+        child: Text("Explore Workout"),
       ),
     );
   }
