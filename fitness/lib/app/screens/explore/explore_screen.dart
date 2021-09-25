@@ -1,4 +1,6 @@
 import 'package:fitness/app/screens/explore/explore_controller.dart';
+import 'package:fitness/app/screens/explore/workout_screen.dart';
+import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,24 +37,48 @@ class ExploreBodyScreen extends StatelessWidget {
     return GetBuilder<ExploreController>(
       init: ExploreController(),
       builder: (_) {
-        return Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 8),
-              width: Get.width,
-              child: CupertinoSegmentedControl<int>(
-                groupValue: _.getTabIndex,
-                children: _headerWidgets,
-                selectedColor: primaryColor,
-                unselectedColor: lightGrey,
-                onValueChanged: (int value) {
-                  _.tabIndex = value;
-                },
+        return Container(
+          padding: EdgeInsets.all(8),
+          height: Get.height,
+          width: Get.width,
+          // padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SegmentedControl(_),
+              Expanded(
+                child: _bodyWidgets(_),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
+    );
+  }
+
+  PageView _bodyWidgets(ExploreController _) {
+    return PageView(
+      controller: _.pageController,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        ExploreWorkoutScreen(),
+        SocialWidget(),
+      ],
+    );
+  }
+
+  Container SegmentedControl(ExploreController _) {
+    return Container(
+      margin: EdgeInsets.only(top: 8),
+      width: Get.width,
+      child: CupertinoSegmentedControl<int>(
+        groupValue: _.getTabIndex,
+        children: _headerWidgets,
+        selectedColor: primaryColor,
+        unselectedColor: lightGrey,
+        onValueChanged: (int value) {
+          _.tabIndex = value;
+        },
+      ),
     );
   }
 }
