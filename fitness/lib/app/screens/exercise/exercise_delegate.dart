@@ -1,12 +1,10 @@
 import 'package:fitness/repo/exercise/model.dart';
-import 'package:fitness/repo/workout/workout.dart';
 
 abstract class ExerciseDelegate {
   Map<String, Exercise> exercises = {};
   void onExerciseSelected(Exercise ex);
   void onExerciseRemoved(Exercise ex);
   void onExerciseChanged(Exercise ex);
-  void onExercisesChanged(List<Exercise> exercises);
   bool exists(Exercise ex);
   bool notExists(Exercise ex);
   void onExerciseSelectionDone();

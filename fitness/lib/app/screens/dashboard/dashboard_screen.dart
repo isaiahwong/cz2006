@@ -13,7 +13,7 @@ class DashboardScreen extends GetView<DashboardScreenController> {
 
   void onWorkoutSelected(Workout workout) {
     if (workout is HIIT)
-      Get.toNamed(RoutePaths.WORKOUT_DETAILS, arguments: workout);
+      Get.toNamed(RoutePaths.WORKOUT_DETAILS, arguments: workout.copyWith());
   }
 
   Widget _hiitCard({required double height, required HIIT hiit}) {

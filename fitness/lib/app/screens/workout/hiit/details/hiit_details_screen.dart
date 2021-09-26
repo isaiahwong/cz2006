@@ -179,28 +179,30 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
   Widget build(BuildContext context) {
     return SlidingPanel(
       tag: RoutePaths.WORKOUT_DETAILS,
-      child: Scaffold(
-        backgroundColor: lightGrey,
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Padding(
-                padding: screenPadding,
-                child: CustomScrollView(
-                  controller: ScrollController(),
-                  slivers: [
-                    _appBar(context),
-                    _title(context),
-                    SliverToBoxAdapter(child: SizedBox(height: 80)),
-                    _body(context),
-                  ],
+      child: GetBuilder<HIITDetailsController>(
+        builder: (_) => Scaffold(
+          backgroundColor: lightGrey,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: screenPadding,
+                  child: CustomScrollView(
+                    controller: ScrollController(),
+                    slivers: [
+                      _appBar(context),
+                      _title(context),
+                      SliverToBoxAdapter(child: SizedBox(height: 80)),
+                      _body(context),
+                    ],
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: _start(),
-              )
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _start(),
+                )
+              ],
+            ),
           ),
         ),
       ),

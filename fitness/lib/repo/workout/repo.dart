@@ -7,22 +7,22 @@ import 'package:get/get.dart';
 import 'model/model.dart';
 
 class WorkoutRepo {
-  final FirebaseFirestore _store;
-  late final UserRepo userRepo;
-  late CollectionReference collection;
+  late final UserRepo _userRepo;
+  CollectionReference collection;
 
-  WorkoutRepo({required this.userRepo}) : _store = FirebaseFirestore.instance {
-    collection =
-        FirebaseFirestore.instance.collection('/users/${userRepo.id}/workouts');
-  }
+  WorkoutRepo({required UserRepo userRepo})
+      : collection = FirebaseFirestore.instance
+            .collection('/users/${userRepo.id}/workouts'),
+        _userRepo = userRepo;
 
   factory WorkoutRepo.get() {
     return Get.find();
   }
 
   Future<Workout> createWorkout(Workout workout) async {
-    FirebaseFirestore.instance.collection('/users/${userRepo.id}/workouts');
+    FirebaseFirestore.instance.collection('/users/${_userRepo.id}/workouts');
     final result = await collection.add(workout.toJson());
+    // updates async
     collection.doc(result.id).update({"id": result.id});
     return workout.copyWith(id: result.id);
   }

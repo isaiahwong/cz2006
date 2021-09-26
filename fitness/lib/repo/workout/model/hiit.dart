@@ -31,7 +31,7 @@ class HIIT extends Workout {
     );
   }
 
-  HIIT addExercises(List<Exercise> exercises) {
+  HIIT setExercises(List<Exercise> exercises) {
     return copyWith(
       routines: exercises
           .map(
@@ -42,6 +42,25 @@ class HIIT extends Workout {
             ).generateIntervals(),
           )
           .toList(),
+    );
+  }
+
+  HIIT addExercise(Exercise exercise) {
+    return copyWith(
+      routines: routines
+        ..add(
+          Routine(
+            id: genRandStr(5),
+            exercise: exercise.copyWith(),
+            workout: this.id,
+          ).generateIntervals(),
+        ),
+    );
+  }
+
+  HIIT removeRoutineExercise(Exercise exercise) {
+    return copyWith(
+      routines: routines..removeWhere((r) => r.exercise.id == exercise.id),
     );
   }
 

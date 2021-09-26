@@ -40,6 +40,7 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   WorkoutName name;
   WorkoutType type;
   FormzStatus status;
+
   @override
   Map<String, Exercise> exercises = {};
 
@@ -65,6 +66,7 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
 
     final workoutIncrement = 0;
 
+    // Create initial workout
     final workout = await repo.createWorkout(HIIT(
       name: name.value.isNotEmpty
           ? name.value
@@ -83,25 +85,27 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   Future<void> createHIIT(Workout workout) async {
     if (exercises.isEmpty) return;
     repo.updateHIIT(
-      HIIT.fromWorkout(workout: workout).addExercises(
+      HIIT.fromWorkout(workout: workout).setExercises(
             exercises.values.toList(),
           ),
     );
     return;
   }
 
-  bool exists(Exercise ex) {
-    return exercises[ex.id] != null;
-  }
-
-  bool notExists(Exercise ex) {
-    return exercises[ex.id] == null;
-  }
-
   onNameChanged(String workoutName) {
     name = WorkoutName.dirty(workoutName);
     status = Formz.validate([name]);
     update();
+  }
+
+  @override
+  bool exists(Exercise ex) {
+    return exercises[ex.id] != null;
+  }
+
+  @override
+  bool notExists(Exercise ex) {
+    return exercises[ex.id] == null;
   }
 
   @override
@@ -125,19 +129,12 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   }
 
   @override
-  void onExercisesChanged(List<Exercise> exercises) {
-    exercises = List.from(exercises);
-    update();
+  void onExerciseSelectionDone() {
+    flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   }
 
-  @override
   void onTypeChanged(WorkoutType type) {
     this.type = type;
     update();
-  }
-
-  @override
-  void onExerciseSelectionDone() {
-    flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   }
 }

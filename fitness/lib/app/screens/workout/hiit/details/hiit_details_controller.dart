@@ -11,18 +11,23 @@ import 'package:get/get.dart';
 class HIITDetailsController extends GetxController with ExerciseDelegate {
   late HIIT hiit;
   final WorkoutRepo workoutRepo = WorkoutRepo.get();
-  late final SlidingPanelController panelController;
+  final SlidingPanelController panelController;
 
-  HIITDetailsController({SlidingPanelController? panelController}) {
-    this.panelController = panelController == null
-        ? SlidingPanelController.get(RoutePaths.WORKOUT_DETAILS)
-        : panelController;
-  }
+  @override
+  Map<String, Exercise> exercises = {};
+
+  HIITDetailsController({SlidingPanelController? panelController})
+      : panelController = panelController == null
+            ? SlidingPanelController.get(RoutePaths.WORKOUT_DETAILS)
+            : panelController;
 
   @override
   void onInit() {
     super.onInit();
+    // Get HIIT passed via argument
     hiit = Get.arguments;
+    hiit.routines
+        .forEach((r) => exercises[r.exercise.id] = r.exercise.copyWith());
   }
 
   void updateName(String name) async {
@@ -43,32 +48,38 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
 
   @override
   bool exists(Exercise ex) {
-    return false;
+    return exercises[ex.id] != null;
   }
 
   @override
   bool notExists(Exercise ex) {
-    return false;
+    return exercises[ex.id] == null;
   }
 
   @override
   void onExerciseChanged(Exercise ex) {
-    // TODO: implement onExerciseChanged
+    if (notExists(ex)) return;
+    exercises[ex.id] = ex.copyWith();
+    update();
   }
 
   @override
   void onExerciseRemoved(Exercise ex) {
-    // TODO: implement onExerciseRemoved
+    if (notExists(ex)) return;
+    exercises.remove(ex.id);
+    update();
   }
 
   @override
-  void onExerciseSelected(Exercise ex) {}
+  void onExerciseSelected(Exercise ex) {
+    exercises[ex.id] = ex;
+    update();
+  }
 
   @override
-  void onExercisesChanged(List<Exercise> exercises) {}
-
-  @override
-  void onExerciseSelectionDone() {
+  void onExerciseSelectionDone() async {
+    hiit = hiit.setExercises(exercises.values.toList());
+    await workoutRepo.updateHIIT(hiit);
     panelController.close();
     update();
   }

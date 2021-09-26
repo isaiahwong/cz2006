@@ -36,7 +36,7 @@ class ExerciseListScreen extends GetView<ExerciseController> {
       shape:
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       pinned: true,
-      toolbarHeight: 20.0,
+      toolbarHeight: 22.0,
       backgroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
         title: Padding(
