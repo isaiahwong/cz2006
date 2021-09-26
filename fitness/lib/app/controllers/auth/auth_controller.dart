@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  // final UserRepo _userRepo;
   final AuthRepo _authRepo;
 
   Rxn<Auth> currentAuth = Rxn<Auth>();
@@ -27,9 +28,7 @@ class AuthController extends GetxController {
       Get.offAllNamed(RoutePaths.LOGIN);
       return;
     }
-    // if (user.uid != null) {
-    //   currentUser.bindStream(_userRepo.streamUser(user.uid));
-    // }
+    await Future.delayed(Duration(milliseconds: 500));
     Get.offAllNamed(RoutePaths.APP);
   }
 }

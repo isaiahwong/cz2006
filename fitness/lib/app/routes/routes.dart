@@ -14,7 +14,12 @@ class RoutePaths {
 
 class Routes {
   static final routes = [
-    GetPage(name: RoutePaths.ROOT, page: () => SplashScreen()),
+    GetPage(
+      name: RoutePaths.ROOT,
+      page: () => SplashScreen(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 200),
+    ),
     GetPage(
         name: RoutePaths.LOGIN,
         page: () => LoginScreen(),
@@ -25,10 +30,11 @@ class Routes {
       binding: RegisterUserBindings(),
     ),
     GetPage(
-      name: RoutePaths.APP,
-      page: () => AppScreen(),
-      binding: AppScreenBindings(),
-    ),
+        name: RoutePaths.APP,
+        page: () => AppScreen(),
+        binding: AppScreenBindings(),
+        transition: Transition.fadeIn,
+        transitionDuration: Duration(milliseconds: 1000)),
     GetPage(
       name: RoutePaths.WORKOUT_ACTIVE,
       page: () => P2PVideo(),

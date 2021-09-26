@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/image/image.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -5,12 +6,24 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: SizedBox(
-          height: 40,
-          width: 40,
-          child: Text("Fitness"),
+    return Scaffold(
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: logoIcon,
+              width: 50,
+            ),
+            SizedBox(width: 10),
+            Text(
+              "SoFit",
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 50,
+                  ),
+            ),
+          ],
         ),
       ),
     );

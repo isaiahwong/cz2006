@@ -57,6 +57,7 @@ class HIIT extends Workout {
         ),
     );
   }
+  
 
   HIIT removeRoutineExercise(Exercise exercise) {
     return copyWith(
