@@ -1,6 +1,7 @@
 gen-all:
 	make gen-dart-target
 	make gen-python-target
+	make gen-go-target
 
 gen-dart:
 	if [ ! -d "gen" ]; then \
@@ -31,4 +32,12 @@ gen-python:
 
 gen-python-target:
 	python3 -m grpc_tools.protoc -I./ --python_out=../pose/src/api --grpc_python_out=../pose/src/api ./*.proto
-		
+
+gen-go-target:
+	protoc \
+		-I./ \
+		--go_out ../hiit/api \
+		--go-grpc_out ../hiit/api \
+		--go_opt paths=source_relative \
+		--go-grpc_opt paths=source_relative \
+		./*.proto

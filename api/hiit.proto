@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package hiit;
 
+option go_package = "hiit/";
+
 message Empty {}
 
 message Session {
