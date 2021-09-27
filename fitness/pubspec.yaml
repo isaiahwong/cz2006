@@ -37,6 +37,9 @@ dependencies:
   reorderables: ^0.4.1
   flow_builder: ^0.0.4
 
+  hiit_api:
+    path: api/
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package hiit;
+
+message Empty {}
+
+message Session {
+  string name = 4;
+}
+
+service HIITService {
+  rpc Join(Session) returns (stream Empty);
+}

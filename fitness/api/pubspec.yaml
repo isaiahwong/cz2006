@@ -1,0 +1,16 @@
+name: hiit_api
+description: Dart package which camera proto api
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.7.0-0 <3.0.0"
+
+dependencies:
+  grpc: ^3.0.1
+  protobuf: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.1.1
