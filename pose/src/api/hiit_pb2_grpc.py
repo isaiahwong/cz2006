@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import hiit_pb2 as hiit__pb2
+import api.hiit_pb2 as hiit__pb2
 
 
 class HIITServiceStub(object):
@@ -14,17 +14,28 @@ class HIITServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Join = channel.unary_stream(
-                '/hiit.HIITService/Join',
-                request_serializer=hiit__pb2.Session.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+        self.Sub = channel.stream_stream(
+            '/hiit.HIITService/Sub',
+            request_serializer=hiit__pb2.Ping.SerializeToString,
+            response_deserializer=hiit__pb2.Data.FromString,
+        )
+        self.Pub = channel.unary_unary(
+            '/hiit.HIITService/Pub',
+            request_serializer=hiit__pb2.DataSession.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
 
 
 class HIITServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def Join(self, request, context):
+    def Sub(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Pub(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -33,23 +44,29 @@ class HIITServiceServicer(object):
 
 def add_HIITServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Join': grpc.unary_stream_rpc_method_handler(
-                    servicer.Join,
-                    request_deserializer=hiit__pb2.Session.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
+        'Sub': grpc.stream_stream_rpc_method_handler(
+            servicer.Sub,
+            request_deserializer=hiit__pb2.Ping.FromString,
+            response_serializer=hiit__pb2.Data.SerializeToString,
+        ),
+        'Pub': grpc.unary_unary_rpc_method_handler(
+            servicer.Pub,
+            request_deserializer=hiit__pb2.DataSession.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'hiit.HIITService', rpc_method_handlers)
+        'hiit.HIITService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
-
  # This class is part of an EXPERIMENTAL API.
+
+
 class HIITService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Join(request,
+    def Sub(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +76,25 @@ class HIITService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/Join',
-            hiit__pb2.Session.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+        return grpc.experimental.stream_stream(request_iterator, target, '/hiit.HIITService/Sub',
+                                               hiit__pb2.Ping.SerializeToString,
+                                               hiit__pb2.Data.FromString,
+                                               options, channel_credentials,
+                                               insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Pub(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/Pub',
+                                             hiit__pb2.DataSession.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

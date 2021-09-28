@@ -109,8 +109,6 @@ func New(opt ...Option) (*Server, error) {
 		Name:           opts.name,
 	}
 
-	// Register HealthService
-	hiit.RegisterHIITServiceServer(insecureGrpc, server)
 	reflection.Register(server.GRPCServer)
 	return server, nil
 }

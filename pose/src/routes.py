@@ -2,6 +2,10 @@ import json
 import logging
 import uuid
 import asyncio
+import grpc
+import api.hiit_pb2
+import api.hiit_pb2_grpc
+from seed.seed import exercises
 
 from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
@@ -16,6 +20,19 @@ logger = logging.getLogger("pc")
 async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
+    topic = params["topic"]
+    id = params["id"]
+
+    # End function if exercise not in
+    if not topic in exercises:
+        return web.Response(
+            status=404,
+            content_type="application/json",
+        )
+
+    # Create GRPC
+    channel = grpc.insecure_channel('localhost:50051')
+    stub = api.hiit_pb2_grpc.HIITServiceStub(channel)
 
     pc = RTCPeerConnection()
     pc_id = "PeerConnection(%s)" % uuid.uuid4()
@@ -47,7 +64,10 @@ async def offer(request):
         if track.kind == "video":
             pc.addTrack(
                 VideoTransformTrack(
-                    relay.subscribe(track), transform=params["video_transform"]
+                    track=relay.subscribe(track),
+                    transform=params["video_transform"],
+                    hiit_stub=stub,
+                    exercise=exercises[topic](id=id, topic=topic),
                 )
             )
 

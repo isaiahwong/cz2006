@@ -14,9 +14,13 @@ import 'hiit.pb.dart' as $0;
 export 'hiit.pb.dart';
 
 class HIITServiceClient extends $grpc.Client {
-  static final _$join = $grpc.ClientMethod<$0.Session, $0.Empty>(
-      '/hiit.HIITService/Join',
-      ($0.Session value) => value.writeToBuffer(),
+  static final _$sub = $grpc.ClientMethod<$0.Ping, $0.Data>(
+      '/hiit.HIITService/Sub',
+      ($0.Ping value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Data.fromBuffer(value));
+  static final _$pub = $grpc.ClientMethod<$0.DataSession, $0.Empty>(
+      '/hiit.HIITService/Pub',
+      ($0.DataSession value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   HIITServiceClient($grpc.ClientChannel channel,
@@ -24,10 +28,14 @@ class HIITServiceClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.Empty> join($0.Session request,
+  $grpc.ResponseStream<$0.Data> sub($async.Stream<$0.Ping> request,
       {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$join, $async.Stream.fromIterable([request]),
-        options: options);
+    return $createStreamingCall(_$sub, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> pub($0.DataSession request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$pub, request, options: options);
   }
 }
 
@@ -35,19 +43,28 @@ abstract class HIITServiceBase extends $grpc.Service {
   $core.String get $name => 'hiit.HIITService';
 
   HIITServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Session, $0.Empty>(
-        'Join',
-        join_Pre,
-        false,
+    $addMethod($grpc.ServiceMethod<$0.Ping, $0.Data>(
+        'Sub',
+        sub,
         true,
-        ($core.List<$core.int> value) => $0.Session.fromBuffer(value),
+        true,
+        ($core.List<$core.int> value) => $0.Ping.fromBuffer(value),
+        ($0.Data value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DataSession, $0.Empty>(
+        'Pub',
+        pub_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.DataSession.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.Empty> join_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.Session> request) async* {
-    yield* join(call, await request);
+  $async.Future<$0.Empty> pub_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.DataSession> request) async {
+    return pub(call, await request);
   }
 
-  $async.Stream<$0.Empty> join($grpc.ServiceCall call, $0.Session request);
+  $async.Stream<$0.Data> sub(
+      $grpc.ServiceCall call, $async.Stream<$0.Ping> request);
+  $async.Future<$0.Empty> pub($grpc.ServiceCall call, $0.DataSession request);
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/isaiahwong/hiit/internal"
+	"github.com/isaiahwong/hiit/service"
 )
 
 func main() {
@@ -23,8 +24,21 @@ func main() {
 		l.Fatalf("NewServer: %v", err)
 	}
 
-	select {
-	case <-ctx.Done():
-		s.Gracefully(ctx)
+	// Register service
+	err = service.New(
+		ctx,
+		service.WithLogger(l),
+		service.WithGrpc(s.GRPCServer),
+		service.WithServiceTimeout(config.ServiceTimeout),
+	)
+	if err != nil {
+		l.Fatalf("NewService: %v", err)
 	}
+
+	// Start Server
+	if err := s.Serve(ctx); err != nil {
+		l.Fatalf("Serve: %v", err)
+	}
+	<-ctx.Done()
+	s.Gracefully(ctx)
 }

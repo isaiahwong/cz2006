@@ -2,6 +2,7 @@ import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/camera/pose.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/model/model.dart';
 import 'package:flutter/cupertino.dart';
@@ -169,6 +170,9 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
             width: double.infinity,
             textColor: Colors.white,
             backgroundColor: primaryColor,
+            onPressed: () {
+              Get.to(P2PVideo());
+            },
           ),
         ),
       ),

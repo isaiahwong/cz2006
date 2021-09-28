@@ -15,29 +15,30 @@ import (
 
 type Service struct {
 	production     bool
-	test           bool
 	logger         *logrus.Logger
 	grpcServer     *grpc.Server
 	policy         *bluemonday.Policy
 	validate       *validator.Validate
 	serviceTimeout time.Duration
+	pubsub         map[string]chan *hiit.Data
 
 	hiit.UnimplementedHIITServiceServer
 }
 
-func NewService(ctx context.Context, opt ...ServiceOption) error {
+func New(ctx context.Context, opt ...ServiceOption) error {
 	// Default Service options
 	s := &Service{
 		logger:   internal.NewLogrusLogger(),
 		policy:   bluemonday.StrictPolicy(),
 		validate: validator.New(),
+		pubsub:   make(map[string]chan *hiit.Data),
 	}
 	// Apply options
 	for _, o := range opt {
 		o(s)
 	}
 	if s.grpcServer == nil {
-		return errors.New("grpcServer is nil. RegisterService requires type *grpc.Server")
+		return errors.New("grpcServer is nil. Service requires type *grpc.Server")
 	}
 
 	hiit.RegisterHIITServiceServer(s.grpcServer, s)

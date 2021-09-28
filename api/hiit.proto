@@ -4,12 +4,27 @@ package hiit;
 
 option go_package = "hiit/";
 
-message Empty {}
+message Empty{}
+
+message Data {
+  string state = 1;
+  int32 count = 2;
+}
+
+message DataSession {
+  Data data = 1;
+  Session session = 2;
+}
+
+message Ping {}
 
 message Session {
-  string name = 4;
+  string id = 1;
+  string topic = 2;
 }
 
 service HIITService {
-  rpc Join(Session) returns (stream Empty);
+  rpc Sub(stream Ping) returns (stream Data);
+  rpc Pub(DataSession) returns (Empty);
+
 }

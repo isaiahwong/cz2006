@@ -83,6 +83,8 @@ class _P2PVideoState extends State<P2PVideo> {
     );
     request.body = json.encode(
       {
+        "id": "123",
+        "topic": "zqGtynZryICLHwM3KKme",
         "sdp": des!.sdp,
         "type": des.type,
         "video_transform": transformType,

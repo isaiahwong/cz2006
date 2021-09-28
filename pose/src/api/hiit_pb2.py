@@ -17,9 +17,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hiit.proto',
   package='hiit',
   syntax='proto3',
-  serialized_options=None,
+  serialized_options=b'Z\005hiit/',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"\x17\n\x07Session\x12\x0c\n\x04name\x18\x04 \x01(\t23\n\x0bHIITService\x12$\n\x04Join\x12\r.hiit.Session\x1a\x0b.hiit.Empty0\x01\x62\x06proto3'
+  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"$\n\x04\x44\x61ta\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\"G\n\x0b\x44\x61taSession\x12\x18\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\n.hiit.Data\x12\x1e\n\x07session\x18\x02 \x01(\x0b\x32\r.hiit.Session\"\x06\n\x04Ping\"$\n\x07Session\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05topic\x18\x02 \x01(\t2W\n\x0bHIITService\x12!\n\x03Sub\x12\n.hiit.Ping\x1a\n.hiit.Data(\x01\x30\x01\x12%\n\x03Pub\x12\x11.hiit.DataSession\x1a\x0b.hiit.EmptyB\x07Z\x05hiit/b\x06proto3'
 )
 
 
@@ -50,18 +50,25 @@ _EMPTY = _descriptor.Descriptor(
 )
 
 
-_SESSION = _descriptor.Descriptor(
-  name='Session',
-  full_name='hiit.Session',
+_DATA = _descriptor.Descriptor(
+  name='Data',
+  full_name='hiit.Data',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='hiit.Session.name', index=0,
-      number=4, type=9, cpp_type=9, label=1,
+      name='state', full_name='hiit.Data.state', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='count', full_name='hiit.Data.count', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -78,10 +85,118 @@ _SESSION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=29,
-  serialized_end=52,
+  serialized_end=65,
 )
 
+
+_DATASESSION = _descriptor.Descriptor(
+  name='DataSession',
+  full_name='hiit.DataSession',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='data', full_name='hiit.DataSession.data', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='session', full_name='hiit.DataSession.session', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=67,
+  serialized_end=138,
+)
+
+
+_PING = _descriptor.Descriptor(
+  name='Ping',
+  full_name='hiit.Ping',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=140,
+  serialized_end=146,
+)
+
+
+_SESSION = _descriptor.Descriptor(
+  name='Session',
+  full_name='hiit.Session',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hiit.Session.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='topic', full_name='hiit.Session.topic', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=148,
+  serialized_end=184,
+)
+
+_DATASESSION.fields_by_name['data'].message_type = _DATA
+_DATASESSION.fields_by_name['session'].message_type = _SESSION
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['Data'] = _DATA
+DESCRIPTOR.message_types_by_name['DataSession'] = _DATASESSION
+DESCRIPTOR.message_types_by_name['Ping'] = _PING
 DESCRIPTOR.message_types_by_name['Session'] = _SESSION
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -92,6 +207,27 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Empty)
 
+Data = _reflection.GeneratedProtocolMessageType('Data', (_message.Message,), {
+  'DESCRIPTOR' : _DATA,
+  '__module__' : 'hiit_pb2'
+  # @@protoc_insertion_point(class_scope:hiit.Data)
+  })
+_sym_db.RegisterMessage(Data)
+
+DataSession = _reflection.GeneratedProtocolMessageType('DataSession', (_message.Message,), {
+  'DESCRIPTOR' : _DATASESSION,
+  '__module__' : 'hiit_pb2'
+  # @@protoc_insertion_point(class_scope:hiit.DataSession)
+  })
+_sym_db.RegisterMessage(DataSession)
+
+Ping = _reflection.GeneratedProtocolMessageType('Ping', (_message.Message,), {
+  'DESCRIPTOR' : _PING,
+  '__module__' : 'hiit_pb2'
+  # @@protoc_insertion_point(class_scope:hiit.Ping)
+  })
+_sym_db.RegisterMessage(Ping)
+
 Session = _reflection.GeneratedProtocolMessageType('Session', (_message.Message,), {
   'DESCRIPTOR' : _SESSION,
   '__module__' : 'hiit_pb2'
@@ -100,6 +236,7 @@ Session = _reflection.GeneratedProtocolMessageType('Session', (_message.Message,
 _sym_db.RegisterMessage(Session)
 
 
+DESCRIPTOR._options = None
 
 _HIITSERVICE = _descriptor.ServiceDescriptor(
   name='HIITService',
@@ -108,15 +245,25 @@ _HIITSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=54,
-  serialized_end=105,
+  serialized_start=186,
+  serialized_end=273,
   methods=[
   _descriptor.MethodDescriptor(
-    name='Join',
-    full_name='hiit.HIITService.Join',
+    name='Sub',
+    full_name='hiit.HIITService.Sub',
     index=0,
     containing_service=None,
-    input_type=_SESSION,
+    input_type=_PING,
+    output_type=_DATA,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Pub',
+    full_name='hiit.HIITService.Pub',
+    index=1,
+    containing_service=None,
+    input_type=_DATASESSION,
     output_type=_EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,

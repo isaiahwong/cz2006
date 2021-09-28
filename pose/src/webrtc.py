@@ -7,6 +7,8 @@ import aiohttp_cors
 
 import mediapipe as mp
 import numpy as np
+import api.hiit_pb2
+import api.hiit_pb2_grpc
 
 from aiortc import MediaStreamTrack
 
@@ -21,10 +23,12 @@ class VideoTransformTrack(MediaStreamTrack):
 
     kind = "video"
 
-    def __init__(self, track, transform):
+    def __init__(self, track, transform, hiit_stub: api.hiit_pb2_grpc.HIITServiceStub, exercise=None):
         super().__init__()  # don't forget this!
         self.track = track
         self.transform = transform
+        self.hiit_stub = hiit_stub
+        self.exercise = exercise
 
         # Initialises Media Pose
         self.pose = mp_pose.Pose(
@@ -38,6 +42,21 @@ class VideoTransformTrack(MediaStreamTrack):
         image.flags.writeable = False
 
         results = self.pose.process(image)
+
+        try:
+            self.exercise.process(results.pose_landmarks.landmark)
+            self.hiit_stub.Pub(api.hiit_pb2.DataSession(
+                data=api.hiit_pb2.Data(
+                    state=self.exercise.state,
+                    count=self.exercise.count,
+                ),
+                session=api.hiit_pb2.Session(
+                    id=self.exercise.id,
+                    topic=self.exercise.topic,
+                )
+            ))
+        except Exception as e:
+            print(e)
 
         # Recolor back to BGR
         image.flags.writeable = True
@@ -53,4 +72,4 @@ class VideoTransformTrack(MediaStreamTrack):
         new_frame = VideoFrame.from_ndarray(image, format="bgr24")
         new_frame.pts = frame.pts
         new_frame.time_base = frame.time_base
-        return frame
+        return new_frame
