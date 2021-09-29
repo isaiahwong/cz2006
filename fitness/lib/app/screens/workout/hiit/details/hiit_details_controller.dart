@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/exercise/exercise.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
@@ -11,14 +16,19 @@ import 'package:get/get.dart';
 class HIITDetailsController extends GetxController with ExerciseDelegate {
   late HIIT hiit;
   final WorkoutRepo workoutRepo = WorkoutRepo.get();
+  late final StreamSubscription keyboardSub;
+  late final TextEditingController hiitNameController;
+
   final SlidingPanelController panelController;
+
+  bool editing = false;
 
   @override
   Map<String, Exercise> exercises = {};
 
   HIITDetailsController({SlidingPanelController? panelController})
       : panelController = panelController == null
-            ? SlidingPanelController.get(RoutePaths.WORKOUT_DETAILS)
+            ? SlidingPanelController.get(RoutePaths.HIIT_DETAILS)
             : panelController;
 
   @override
@@ -28,12 +38,33 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
     hiit = Get.arguments;
     hiit.routines
         .forEach((r) => exercises[r.exercise.id] = r.exercise.copyWith());
+
+    hiitNameController = TextEditingController(text: hiit.name);
+    keyboardSub =
+        KeyboardVisibilityController().onChange.listen(onKeyboardDismiss);
   }
 
-  void updateName(String name) async {
-    hiit = hiit.copyWith(name: name.trimRight());
+  @override
+  void onClose() {
+    keyboardSub.cancel();
+    super.onClose();
+  }
+
+  void onKeyboardDismiss(bool visible) async {
+    if (visible) return;
+    hiit = hiit.copyWith(name: hiitNameController.text.trimRight());
     await workoutRepo.updateHIIT(hiit);
+    editing = false;
     update();
+  }
+
+  void onEdit(String _) {
+    editing = true;
+    update();
+  }
+
+  void onWorkoutStart() {
+    Get.toNamed(RoutePaths.HIIT_ACTIVE, arguments: hiit.copyWith());
   }
 
   void onNewRoutine() {

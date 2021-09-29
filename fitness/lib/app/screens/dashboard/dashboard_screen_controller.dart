@@ -18,6 +18,10 @@ class DashboardScreenController extends GetxController {
     super.onReady();
   }
 
+  void onHIITSelected(HIIT hiit) {
+    Get.toNamed(RoutePaths.HIIT_DETAILS, arguments: hiit.copyWith());
+  }
+
   void onCreate() {
     panelController.open(panel: CreateWorkoutScreen.get());
   }

@@ -6,7 +6,6 @@ from av import VideoFrame
 import aiohttp_cors
 
 import mediapipe as mp
-import numpy as np
 import api.hiit_pb2
 import api.hiit_pb2_grpc
 

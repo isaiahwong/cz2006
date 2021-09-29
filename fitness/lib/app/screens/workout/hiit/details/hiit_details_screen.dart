@@ -2,17 +2,17 @@ import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
-import 'package:fitness/app/screens/workout/camera/pose.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/model/model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 
 import 'hiit_details_controller.dart';
 
 class HIITDetailsScreen extends GetView<HIITDetailsController> {
-  const HIITDetailsScreen({Key? key}) : super(key: key);
+  HIITDetailsScreen({Key? key}) : super(key: key);
 
   Widget _appBar(BuildContext context) {
     return SliverAppBar(
@@ -54,18 +54,18 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
   Widget _title(BuildContext context) {
     return SliverToBoxAdapter(
       child: NakedTextField(
-        controller: TextEditingController(text: controller.hiit.name),
-        onChanged: (name) => controller.updateName(name),
+        controller: controller.hiitNameController,
+        onChanged: controller.onEdit,
         hintText: controller.hiit.name,
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
             .headline2!
             .copyWith(fontWeight: FontWeight.w900),
-        hintStyle: Theme.of(context)
-            .textTheme
-            .headline2!
-            .copyWith(fontWeight: FontWeight.w900),
+        hintStyle: Theme.of(context).textTheme.headline2!.copyWith(
+              fontWeight: FontWeight.w900,
+              color: controller.editing ? accentColor : primaryColor,
+            ),
       ),
     );
   }
@@ -130,21 +130,24 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
 
   Widget _body(BuildContext context) {
     return SliverToBoxAdapter(
+      child: KeyboardDismissOnTap(
         child: Container(
-      padding: screenPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: margin(
-          children: [
-            _newRoutine(context),
-            ...controller.hiit.routines
-                .map<Widget>((routine) => _routineItem(context, routine))
-                .toList()
-          ],
-          margin: EdgeInsets.only(bottom: 15),
+          padding: screenPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: margin(
+              children: [
+                _newRoutine(context),
+                ...controller.hiit.routines
+                    .map<Widget>((routine) => _routineItem(context, routine))
+                    .toList()
+              ],
+              margin: EdgeInsets.only(bottom: 15),
+            ),
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _start() {
@@ -170,9 +173,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
             width: double.infinity,
             textColor: Colors.white,
             backgroundColor: primaryColor,
-            onPressed: () {
-              Get.to(P2PVideo());
-            },
+            onPressed: controller.onWorkoutStart,
           ),
         ),
       ),
@@ -182,7 +183,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
   @override
   Widget build(BuildContext context) {
     return SlidingPanel(
-      tag: RoutePaths.WORKOUT_DETAILS,
+      tag: RoutePaths.HIIT_DETAILS,
       child: GetBuilder<HIITDetailsController>(
         builder: (_) => Scaffold(
           backgroundColor: lightGrey,

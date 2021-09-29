@@ -15,6 +15,13 @@ RoutineInterval _$RoutineIntervalFromJson(Map<String, dynamic> json) {
         ? null
         : RoutineLog.fromJson(json['currentLog'] as Map<String, dynamic>),
     type: _$enumDecode(_$RoutineIntervalTypeEnumMap, json['type']),
+    defaultWarmups: json['defaultWarmups'] as int,
+    defaultSets: json['defaultSets'] as int,
+    defaultReps: json['defaultReps'] as int,
+    defaultRestDuration: json['defaultRestDuration'] as int,
+    logs: (json['logs'] as List<dynamic>)
+        .map((e) => RoutineLog.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -23,8 +30,13 @@ Map<String, dynamic> _$RoutineIntervalToJson(RoutineInterval instance) =>
       'id': instance.id,
       'iteration': instance.iteration,
       'routine': instance.routine,
-      'currentLog': instance.currentLog?.toJson(),
+      'currentLog': instance.currentLog.toJson(),
+      'logs': instance.logs.map((e) => e.toJson()).toList(),
       'type': _$RoutineIntervalTypeEnumMap[instance.type],
+      'defaultWarmups': instance.defaultWarmups,
+      'defaultSets': instance.defaultSets,
+      'defaultReps': instance.defaultReps,
+      'defaultRestDuration': instance.defaultRestDuration,
     };
 
 K _$enumDecode<K, V>(

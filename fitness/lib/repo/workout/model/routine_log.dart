@@ -10,10 +10,10 @@ class RoutineLog {
   bool completed;
 
   RoutineLog({
-    required this.id,
+    this.id = "",
     required this.reps,
-    required this.interval,
-    required this.completed,
+    this.interval = "",
+    this.completed = false,
   });
 
   factory RoutineLog.fromJson(Map<String, dynamic> json) =>

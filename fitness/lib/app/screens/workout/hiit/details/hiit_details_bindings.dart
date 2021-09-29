@@ -7,8 +7,8 @@ class HIITDetailsBindings extends Bindings {
   @override
   void dependencies() async {
     final panelController =
-        SlidingPanelController(tag: RoutePaths.WORKOUT_DETAILS);
+        SlidingPanelController(tag: RoutePaths.HIIT_DETAILS);
     Get.lazyPut(() => HIITDetailsController(panelController: panelController));
-    Get.lazyPut(() => panelController, tag: RoutePaths.WORKOUT_DETAILS);
+    Get.lazyPut(() => panelController, tag: RoutePaths.HIIT_DETAILS);
   }
 }

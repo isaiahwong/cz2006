@@ -8,8 +8,8 @@ class RoutePaths {
 
   static const REGISTER = '/auth/register';
   static const APP = '/app';
-  static const WORKOUT_ACTIVE = '/workout/active';
-  static const WORKOUT_DETAILS = '/workout/details';
+  static const HIIT_ACTIVE = '/workout/hiit/active';
+  static const HIIT_DETAILS = '/workout/hiit/details';
 }
 
 class Routes {
@@ -36,11 +36,12 @@ class Routes {
         transition: Transition.fadeIn,
         transitionDuration: Duration(milliseconds: 1000)),
     GetPage(
-      name: RoutePaths.WORKOUT_ACTIVE,
-      page: () => P2PVideo(),
+      name: RoutePaths.HIIT_ACTIVE,
+      page: () => ActiveHIITScreen(),
+      binding: ActiveHIITBindings(),
     ),
     GetPage(
-      name: RoutePaths.WORKOUT_DETAILS,
+      name: RoutePaths.HIIT_DETAILS,
       page: () => HIITDetailsScreen(),
       binding: HIITDetailsBindings(),
     )

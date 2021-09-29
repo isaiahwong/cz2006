@@ -11,11 +11,6 @@ import 'dashboard_screen_controller.dart';
 class DashboardScreen extends GetView<DashboardScreenController> {
   const DashboardScreen({Key? key}) : super(key: key);
 
-  void onWorkoutSelected(Workout workout) {
-    if (workout is HIIT)
-      Get.toNamed(RoutePaths.WORKOUT_DETAILS, arguments: workout.copyWith());
-  }
-
   Widget _hiitCard({required double height, required HIIT hiit}) {
     return ColumnCard(
       height: height,
@@ -23,7 +18,7 @@ class DashboardScreen extends GetView<DashboardScreenController> {
       subtitle: "5th May",
       statusBarTitle: "${hiit.routines.length}",
       statusBarSubtitle: "${hiit.routines.length > 1 ? "Routines" : "Routine"}",
-      onTap: () => onWorkoutSelected(hiit),
+      onTap: () => controller.onHIITSelected(hiit),
     );
   }
 

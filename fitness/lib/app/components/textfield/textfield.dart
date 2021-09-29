@@ -80,7 +80,7 @@ class NakedTextField extends StatelessWidget {
   final String? errorText;
   final TextAlign? textAlign;
   final double? fontSize;
-  final ValueChanged? onChanged;
+  final ValueChanged<String>? onChanged;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final TextEditingController? controller;
