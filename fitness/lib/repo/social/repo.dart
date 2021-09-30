@@ -1,4 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitness/repo/repo.dart';
 
 import 'model.dart';
@@ -15,6 +16,19 @@ class SocialRepo {
       : _store = FirebaseFirestore.instance,
         _functions = FirebaseFunctions.instanceFor(region: "asia-east2") {
     docRef = FirebaseFirestore.instance.collection("users").doc(userId);
+  }
+
+  /// Find users based on name field
+  Future<List<User>> findUsers(String name) async {
+    var snapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .where("name", isEqualTo: name)
+        .get();
+    List<User> _users = [];
+    for (var i = 0; i < snapshot.docs.length; i++) {
+      _users.add(User.fromJson(snapshot.docs[i].data()));
+    }
+    return _users;
   }
 
   /// Get users from current user sub collecion

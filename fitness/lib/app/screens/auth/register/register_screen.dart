@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fitness/app/components/image/image.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness/app/screens/auth/register/register_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
@@ -23,12 +24,8 @@ class RegisterScreen extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 child: GestureDetector(
                   onTap: registerController.pickImage,
-                  child: CircleAvatar(
-                    minRadius: 50,
-                    // backgroundColor: Theme.of(context).primaryColor,
-                    backgroundImage: registerController.imageFile == null
-                        ? null
-                        : registerController.getImagePath,
+                  child: ProfileImage(
+                    imageProvider: FileImage(registerController.imageFile!),
                   ),
                 ),
               ),

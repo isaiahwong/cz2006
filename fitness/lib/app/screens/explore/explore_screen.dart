@@ -1,4 +1,4 @@
-import 'package:fitness/app/screens/explore/explore_controller.dart';
+import 'package:fitness/app/screens/explore/controller/explore_controller.dart';
 import 'package:fitness/app/screens/explore/workout_screen.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
@@ -20,7 +20,6 @@ class ExploreScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headline3,
         ),
       ),
-      backgroundColor: grey,
       body: ExploreBodyScreen(),
     );
   }
