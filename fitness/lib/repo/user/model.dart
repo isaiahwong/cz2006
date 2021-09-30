@@ -8,6 +8,8 @@ class User {
   final String name;
   final String email;
   @JsonKey(defaultValue: 0)
+  final int dateOfBirth;
+  @JsonKey(defaultValue: 0)
   final int height;
   @JsonKey(defaultValue: "")
   final String profilePicture;
@@ -19,6 +21,7 @@ class User {
     required this.id,
     required this.email,
     required this.name,
+    this.dateOfBirth = 0,
     this.height = 0,
     this.profilePicture = "",
   });
@@ -27,6 +30,7 @@ class User {
     String? id,
     String? name,
     String? email,
+    int? dateOfBirth,
     int? height,
     String? profilePicture,
   }) {

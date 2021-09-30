@@ -38,6 +38,8 @@ dependencies:
   reorderables: ^0.4.1
   flow_builder: ^0.0.4
   image_picker: ^0.8.4+2
+  intl: ^0.17.0
+
 
 
   hiit_api:

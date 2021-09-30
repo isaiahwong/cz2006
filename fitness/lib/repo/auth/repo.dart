@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
-import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/repo/auth/auth.dart';
 import 'package:fitness/repo/user/model.dart';
 import 'package:fitness/repo/user/repo.dart';
@@ -19,6 +18,8 @@ class AuthRepo {
     required String name,
     required String email,
     required String password,
+    required int dateOfBirth,
+    String? localImagePath,
   }) async {
     // Firebase Auth
     final cred = await _auth.createUserWithEmailAndPassword(
@@ -28,8 +29,15 @@ class AuthRepo {
       id: user.uid,
       email: user.email!,
       name: name,
+      dateOfBirth: dateOfBirth,
     );
-    return _userRepo.createUser(newUser);
+    _userRepo.createUser(newUser);
+    if (localImagePath != null) {
+      var url = await _userRepo.uploadProfileImage(newUser.id, localImagePath);
+      print("Url: ${url}");
+      await _userRepo.updateUserField({"profilePicture": url});
+    }
+    return;
   }
 
   Future<void> signin({
