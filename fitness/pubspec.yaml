@@ -30,12 +30,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   cloud_firestore: ^2.5.0
   cloud_functions: ^3.0.0
+  firebase_storage: ^10.0.3
   google_fonts: ^2.1.0
   json_annotation: ^4.0.1
   flutter_webrtc: ^0.6.6
   sliding_up_panel: ^2.0.0+1
   reorderables: ^0.4.1
   flow_builder: ^0.0.4
+  image_picker: ^0.8.4+2
+
 
   hiit_api:
     path: api/
