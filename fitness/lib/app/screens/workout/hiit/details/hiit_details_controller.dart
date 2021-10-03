@@ -27,7 +27,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   Map<String, Exercise> exercises = {};
 
   HIITDetailsController({SlidingPanelController? panelController})
-      : panelController = panelController == null
+      : this.panelController = panelController == null
             ? SlidingPanelController.get(RoutePaths.HIIT_DETAILS)
             : panelController;
 

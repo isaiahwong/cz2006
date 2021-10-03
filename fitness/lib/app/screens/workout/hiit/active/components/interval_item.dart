@@ -1,82 +1,24 @@
-import 'package:fitness/common/format.dart';
 import 'package:fitness/app/components/space/space.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+typedef ItemSelected = void Function(RoutineInterval interval);
+
 class IntervalItem extends StatelessWidget {
   final bool active;
   final RoutineInterval interval;
   final RoutineInterval? nextInterval;
+  final ItemSelected onSelected;
 
   const IntervalItem({
     Key? key,
     required this.interval,
+    required this.onSelected,
     this.nextInterval,
     this.active = false,
   }) : super(key: key);
-
-  void _onRoutineSelected(
-    BuildContext context,
-    RoutineInterval interval,
-  ) {
-    // BlocProvider.of<ActiveWorkoutBloc>(context).add(
-    //   ActiveWorkoutCurrentRoutine(interval: interval),
-    // );
-  }
-
-  // Widget _routineWeightsLoaded(BuildContext context) {
-  //   if (!interval.hasWeightsLoaded) return SizedBox.shrink();
-
-  //   return Container(
-  //     padding: EdgeInsets.only(
-  //       top: 12,
-  //       right: 35,
-  //     ),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.end,
-  //       children: [
-  //         ...margin(
-  //             children: interval.routinePlan!.equipment!.weights
-  //                 .where((w) => w.quantity != 0)
-  //                 .map(
-  //                   (w) => Column(children: [
-  //                     Container(
-  //                       width: 30,
-  //                       height: 30,
-  //                       decoration: BoxDecoration(
-  //                         border: Border.all(
-  //                           color: active ? Colors.white : Colors.black,
-  //                           width: 2,
-  //                         ),
-  //                         borderRadius: BorderRadius.circular(100),
-  //                       ),
-  //                       child: Center(
-  //                         child: Text("${prettyDP(w.weight)}",
-  //                             style: Theme.of(context)
-  //                                 .textTheme
-  //                                 .bodyText2!
-  //                                 .copyWith(
-  //                                     color: active
-  //                                         ? Colors.white
-  //                                         : Colors.black)),
-  //                       ),
-  //                     ),
-  //                     SizedBox(height: 5),
-  //                     Text("x ${w.quantity}",
-  //                         style:
-  //                             Theme.of(context).textTheme.bodyText2!.copyWith(
-  //                                   color: active ? Colors.white : Colors.black,
-  //                                 ))
-  //                   ]),
-  //                 )
-  //                 .toList(),
-  //             margin: EdgeInsets.only(left: 5)),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _details(BuildContext context) {
     final color = active
@@ -114,20 +56,6 @@ class IntervalItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: margin(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "t",
-                      // prettyDP(interval.routinePlan!.weight),
-                      style: textStyle,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      "kg",
-                      style: subTextStyle,
-                    ),
-                  ],
-                ),
                 SizedBox(width: 20),
                 Row(
                   children: [
@@ -160,7 +88,7 @@ class IntervalItem extends StatelessWidget {
               : CupertinoIcons.circle,
           color: active
               ? Colors.white
-              : interval.type == 1
+              : interval.type == RoutineIntervalType.WARMUP
                   ? orange
                   : primaryColor,
         ),
@@ -173,14 +101,14 @@ class IntervalItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _onRoutineSelected(context, interval),
+      onTap: () => onSelected(interval),
       child: Container(
         constraints: BoxConstraints(
           minHeight: 50,
         ),
 
         // height: 80,
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
             color: active
@@ -200,7 +128,6 @@ class IntervalItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _details(context),
-            // _routineWeightsLoaded(context),
             // _details(context),
             // _groupItem(context)
           ],

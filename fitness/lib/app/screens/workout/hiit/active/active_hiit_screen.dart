@@ -1,5 +1,6 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/panel.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/workout/hiit/active/active.dart';
 import 'package:fitness/app/screens/workout/hiit/active/components/components.dart';
 import 'package:fitness/app/theme/theme.dart';
@@ -42,7 +43,7 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
   Widget _appBar(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      toolbarHeight: 45.0,
+      toolbarHeight: 90.0,
       backgroundColor: Colors.white,
       leading: SizedBox.shrink(),
       flexibleSpace: FlexibleSpaceBar(
@@ -82,7 +83,7 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
                     radius: 100.0,
                     textColor: Colors.white,
                     backgroundColor: red,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: controller.onHIITEnd,
                   ),
                 ],
               ),
@@ -92,7 +93,7 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
                   controller.hiit.name,
                   style: Theme.of(context)
                       .textTheme
-                      .headline3!
+                      .headline1!
                       .copyWith(fontWeight: FontWeight.w900),
                 ),
               ),
@@ -125,9 +126,13 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
           ),
           ...routine.intervals
               .map<Widget>(
-                (routine) => IntervalItem(
-                  interval: routine,
-                  active: routine.id == currentInterval?.id,
+                (interval) => IntervalItem(
+                  interval: interval,
+                  onSelected: (interval) => controller.onIntervalSelected(
+                    routine,
+                    interval,
+                  ),
+                  active: interval.id == currentInterval?.id,
                 ),
               )
               .toList()
@@ -173,10 +178,12 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
     return WillPopScope(
       onWillPop: () async => Navigator.of(context).userGestureInProgress,
       child: SlidingPanel(
+        tag: RoutePaths.HIIT_ACTIVE,
         maxHeight: MediaQuery.of(context).size.height * 0.68,
         disableBody: true,
         backdropOpacity: 0.2,
         child: FullScreenPanel(
+          tag: RoutePaths.HIIT_ACTIVE,
           body: GetBuilder<ActiveHIITController>(
             builder: (controller) => Container(
               padding: EdgeInsets.only(top: 46),
@@ -187,6 +194,11 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
                 slivers: [
                   _appBar(context),
                   _body(context),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 200,
+                    ),
+                  ),
                 ],
               ),
             ),

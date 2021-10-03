@@ -34,7 +34,7 @@ class Routes {
         page: () => AppScreen(),
         binding: AppScreenBindings(),
         transition: Transition.fadeIn,
-        transitionDuration: Duration(milliseconds: 1000)),
+        transitionDuration: Duration(milliseconds: 700)),
     GetPage(
       name: RoutePaths.HIIT_ACTIVE,
       page: () => ActiveHIITScreen(),

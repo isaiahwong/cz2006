@@ -9,9 +9,11 @@ import 'panel.dart';
 class FullScreenPanel extends StatelessWidget {
   final Widget body;
   final Widget? footer;
+  final String? tag;
 
   const FullScreenPanel({
     Key? key,
+    this.tag,
     required this.body,
     this.footer,
   }) : super(key: key);
@@ -21,23 +23,19 @@ class FullScreenPanel extends StatelessWidget {
     final double _panelMaxSize = MediaQuery.of(context).size.height;
 
     return GetBuilder<FullScreenPanelController>(
-      init: FullScreenPanelController.to(),
+      init: Get.find<FullScreenPanelController>(tag: tag),
       builder: (state) {
-        return SafeArea(
-          child: Scaffold(
-            body: _FullScreenPanel(
-              body: body,
-              controller: state.controller,
-              panelMinSize: state.status is FullScreenStatusInactive ? 0 : 90,
-              panelMaxSize: _panelMaxSize,
-              panel: state.panel,
-              panelBorderRadiusEnd: 20,
-              panelBorderRadiusBegin: 0,
-              panelHeader: state.panelHeader,
-              hideAppBar: true,
-              footer: footer,
-            ),
-          ),
+        return _FullScreenPanel(
+          body: body,
+          controller: state.controller,
+          panelMinSize: state.status is FullScreenStatusInactive ? 0 : 90,
+          panelMaxSize: _panelMaxSize,
+          panel: state.panel,
+          panelBorderRadiusEnd: 20,
+          panelBorderRadiusBegin: 0,
+          panelHeader: state.panelHeader,
+          hideAppBar: true,
+          footer: footer,
         );
       },
     );

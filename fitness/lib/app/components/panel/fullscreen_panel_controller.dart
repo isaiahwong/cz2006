@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FullScreenPanelController extends GetxController {
+  static FullScreenPanelController get(String tag) => Get.find(tag: tag);
   static Widget placeholder = SizedBox.shrink();
 
   late final FullScreenController controller;
@@ -20,10 +21,6 @@ class FullScreenPanelController extends GetxController {
     if (this.panel == null) this.panel = placeholder;
     if (this.panelHeader == null) this.panelHeader = PanelHeader();
     this.controller = controller == null ? FullScreenController() : controller;
-  }
-
-  factory FullScreenPanelController.to() {
-    return Get.find();
   }
 
   open() {

@@ -11,7 +11,8 @@ class Routine {
   final String workout;
   final Exercise exercise;
   final int score;
-
+  @JsonKey(ignore: true)
+  final Routine? next;
   final List<RoutineInterval> intervals;
   final bool completed;
 
@@ -25,6 +26,7 @@ class Routine {
     this.intervals = const [],
     this.score = 0,
     this.completed = false,
+    this.next,
   });
 
   factory Routine.fromJson(Map<String, dynamic> json) =>
@@ -76,6 +78,7 @@ class Routine {
     int? defaultReps,
     int? defaultRestDuration,
     bool? completed,
+    Routine? next,
   }) {
     return Routine(
       id: id ?? this.id,
@@ -84,6 +87,7 @@ class Routine {
       exercise: exercise ?? this.exercise,
       score: score ?? this.score,
       completed: completed ?? this.completed,
+      next: next ?? this.next,
     );
   }
 }
