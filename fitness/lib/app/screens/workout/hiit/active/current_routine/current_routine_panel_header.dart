@@ -32,8 +32,9 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
 
   Widget restWorkoutBar(BuildContext context) {
     if (controller.currentInterval == null) return SizedBox.shrink();
-    final next = controller.currentInterval?.next;
-    final nextRoutine = controller.currentRoutine?.next;
+    final next =
+        controller.currentRoutine?.nextInterval(controller.currentInterval);
+    final nextRoutine = controller.hiit.nextRoutine(controller.currentRoutine);
     final name = controller.currentRoutine?.exercise.name ??
         nextRoutine?.exercise.name ??
         "";
@@ -68,7 +69,8 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: controller.currentInterval!.type == 1
+                    color: controller.currentInterval!.type ==
+                            RoutineIntervalType.WARMUP
                         ? orange
                         : primaryColor,
                   ),
@@ -82,15 +84,13 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "1",
-                  // "${zeroPrefix(context.select((TimerBloc bloc) => bloc.state.current.inMinutes))}:",
+                  "${zeroPrefix(controller.timerController.current.inMinutes)}:",
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
                 ),
                 Text(
-                  ":00",
-                  // zeroPrefix(context.select((TimerBloc bloc) => bloc.state.seconds)),
+                  zeroPrefix(controller.timerController.current.inSeconds),
                   style: Theme.of(context).textTheme.headline5!.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
@@ -182,6 +182,7 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
             onTap: () => controller.openPanel(),
             onLongPressStart: (_) => controller.openPanel(),
             child: Container(
+              color: Colors.white,
               height: 80,
               width: double.infinity,
               padding:

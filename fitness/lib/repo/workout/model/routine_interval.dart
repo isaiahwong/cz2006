@@ -27,8 +27,6 @@ class RoutineInterval {
   final int defaultSets;
   final int defaultReps;
   final int defaultRestDuration;
-  @JsonKey(ignore: true)
-  final RoutineInterval? next;
 
   RoutineInterval({
     this.id = '',
@@ -41,7 +39,6 @@ class RoutineInterval {
     required this.defaultReps,
     required this.defaultRestDuration,
     List<RoutineLog> logs = const [],
-    this.next,
   })  : this.logs = List.from(logs),
         this.currentLog = currentLog != null
             ? currentLog
@@ -67,7 +64,6 @@ class RoutineInterval {
     int? defaultSets,
     int? defaultReps,
     int? defaultRestDuration,
-    RoutineInterval? next,
   }) {
     return RoutineInterval(
       id: id ?? this.id,
@@ -79,7 +75,6 @@ class RoutineInterval {
       defaultSets: defaultSets ?? this.defaultSets,
       defaultReps: defaultReps ?? this.defaultReps,
       defaultRestDuration: defaultRestDuration ?? this.defaultRestDuration,
-      next: next,
     );
   }
 

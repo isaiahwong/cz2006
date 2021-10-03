@@ -47,7 +47,7 @@ class ActiveHIITScreen extends GetView<ActiveHIITController> {
       backgroundColor: Colors.white,
       leading: SizedBox.shrink(),
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: screenPadding.copyWith(top: 10.0),
+        titlePadding: screenPadding.copyWith(top: 10.0, right: 0),
         title: Container(
           color: Colors.white,
           width: double.infinity,

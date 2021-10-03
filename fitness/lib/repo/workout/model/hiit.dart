@@ -57,7 +57,6 @@ class HIIT extends Workout {
         ),
     );
   }
-  
 
   HIIT removeRoutineExercise(Exercise exercise) {
     return copyWith(
@@ -77,5 +76,12 @@ class HIIT extends Workout {
       name: name ?? this.name,
       routines: List<Routine>.from(routines ?? this.routines).toList(),
     );
+  }
+
+  Routine? nextRoutine(Routine? current) {
+    if (current == null) return current;
+    final i = routines.indexWhere((r) => r.id == current.id);
+    if (i == -1 || i == routines.length - 1) return null;
+    return routines[i + 1].copyWith();
   }
 }
