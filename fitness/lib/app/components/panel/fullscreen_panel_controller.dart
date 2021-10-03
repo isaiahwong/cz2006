@@ -28,4 +28,10 @@ class FullScreenPanelController extends GetxController {
     controller.show();
     update();
   }
+
+  hide() {
+    status = FullScreenStatusHidden();
+    controller.hide();
+    update();
+  }
 }

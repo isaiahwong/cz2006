@@ -12,8 +12,10 @@ class ActiveHIITBindings extends Bindings {
     Get.delete<FullScreenPanelController>(force: true);
     final panelController = SlidingPanelController(tag: RoutePaths.HIIT_ACTIVE);
     final timerController = TimerController();
-    final fullscreenController =
-        FullScreenPanelController(panelHeader: CurrentRoutinePanelHeader());
+    final fullscreenController = FullScreenPanelController(
+      panelHeader: CurrentRoutinePanelHeader(),
+      panel: CurrentRoutinePanel(),
+    );
 
     Get.lazyPut(() => ActiveHIITController(
           timerController: timerController,

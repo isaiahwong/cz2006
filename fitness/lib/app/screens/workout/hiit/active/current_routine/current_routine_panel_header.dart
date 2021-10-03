@@ -179,8 +179,8 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
         return Stack(children: [
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => controller.openPanel(),
-            onLongPressStart: (_) => controller.openPanel(),
+            onTap: () => controller.onOpenPanel(),
+            onLongPressStart: (_) => controller.onOpenPanel(),
             child: Container(
               color: Colors.white,
               height: 80,
