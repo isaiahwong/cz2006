@@ -34,13 +34,17 @@ class ActiveHIITController extends GetxController {
     hiit = hiit = Get.arguments;
   }
 
-  void onOpenPanel() {
+  void onOpenFullPanel() {
     if (currentInterval == null) return;
     fullscreenController.open();
   }
 
-  void onHidePanel() {
+  void onHideFullPanel() {
     fullscreenController.hide();
+  }
+
+  void onSlidingPanelClose() {
+    panelController.close();
   }
 
   void onIntervalSelected(Routine routine, RoutineInterval interval) {

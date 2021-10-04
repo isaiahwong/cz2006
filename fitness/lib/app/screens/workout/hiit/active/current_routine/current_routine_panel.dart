@@ -119,7 +119,7 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
 
   Widget _down() {
     return GestureDetector(
-      onTap: () => controller.onHidePanel,
+      onTap: () => controller.onHideFullPanel,
       child: Container(
         padding: EdgeInsets.only(
           left: 20,
