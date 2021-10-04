@@ -114,6 +114,31 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
     );
   }
 
+  Widget _cyclingTile(BuildContext context) {
+    return CustomTile(
+      title: "Add cycling paths",
+      leading: Icon(CupertinoIcons.graph_circle, color: darkGrey),
+      trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
+      onTap: () {
+        context
+            .flow<CreateWorkoutRoute>()
+            .update((_) => CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS);
+      },
+      // child: SizedBox.shrink(),
+    );
+  }
+
+  Widget _activityTile(BuildContext context) {
+    switch (controller.type) {
+      case WorkoutType.CYCLING:
+        return _cyclingTile(context);
+      case WorkoutType.HIIT:
+        return _exerciseTile(context);
+      default:
+        return SizedBox.shrink();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -129,7 +154,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
                 Divider(color: lightGrey),
                 _typeTile(context),
                 Divider(color: lightGrey),
-                _exerciseTile(context),
+                _activityTile(context),
                 Divider(color: lightGrey),
               ],
             ),

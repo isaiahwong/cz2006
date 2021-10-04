@@ -12,6 +12,7 @@ enum CreateWorkoutRoute {
   NEW_WORKOUT_MAIN,
   NEW_WORKOUT_TYPE,
   NEW_WORKOUT_EXERCISE,
+  NEW_WORKOUT_CYCLING_PATHS,
 }
 
 enum NewWorkoutError {
@@ -38,23 +39,20 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   final panelController = SlidingPanelController.get(RoutePaths.APP);
   final WorkoutRepo repo = WorkoutRepo.get();
 
-  WorkoutName name;
-  WorkoutType type;
-  FormzStatus status;
+  late WorkoutName name;
+  late WorkoutType type;
+  late FormzStatus status;
 
   @override
   Map<String, Exercise> exercises = {};
   Map<String, Coordinates> coordinates = {};
 
-  CreateWorkoutController({
-    this.type = WorkoutType.HIIT,
-    this.name = const WorkoutName.pure(),
-    this.status = FormzStatus.pure,
-  });
-
   @override
   void onInit() {
     super.onInit();
+    this.type = WorkoutType.HIIT;
+    this.name = const WorkoutName.pure();
+    this.status = FormzStatus.pure;
   }
 
   close() {

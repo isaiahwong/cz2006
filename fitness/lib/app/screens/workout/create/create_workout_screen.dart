@@ -2,6 +2,7 @@ import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/create/create_workout_controller.dart';
+import 'package:fitness/app/screens/workout/create/create_workout_cycling_screen.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -18,7 +19,7 @@ class CreateWorkoutScreen extends StatefulWidget {
   final NavigatorObserver? observer;
   final CreateWorkoutController controller;
 
-  List<Page> router(CreateWorkoutRoute state, List<Page> pages) {
+  List<Page> router(CreateWorkoutRoute state) {
     switch (state) {
       case CreateWorkoutRoute.NEW_WORKOUT_EXERCISE:
         return [
@@ -33,6 +34,11 @@ class CreateWorkoutScreen extends StatefulWidget {
         return [
           CreateWorkoutMainScreen.page(),
           CreateWorkoutTypeScreen.page(),
+        ];
+      case CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS:
+        return [
+          CreateWorkoutMainScreen.page(),
+          CreateWorkoutCyclingScreen.page(),
         ];
       default:
         return [CreateWorkoutMainScreen.page()];
@@ -66,7 +72,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
         child: GetBuilder<CreateWorkoutController>(
           init: widget.controller,
           builder: (workoutController) => FlowBuilder<CreateWorkoutRoute>(
-            onGeneratePages: (state, pages) => widget.router(state, pages),
+            onGeneratePages: (state, pages) => widget.router(state),
             // Observers when screen pops.
             observers: _observers,
             controller: workoutController.flowController,
