@@ -1,6 +1,7 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
+import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -43,6 +44,7 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
 
   @override
   Map<String, Exercise> exercises = {};
+  Map<String, Coordinates> coordinates = {};
 
   CreateWorkoutController({
     this.type = WorkoutType.HIIT,
@@ -65,19 +67,31 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
     panelController.close();
 
     final workoutIncrement = 0;
-
+    final workout;
     // Create initial workout
-    final workout = await repo.createWorkout(HIIT(
-      name: name.value.isNotEmpty
-          ? name.value
-          : WorkoutName.dirty("Workout $workoutIncrement").value,
-    ));
+    if (this.type == WorkoutType.HIIT) {
+      workout = await repo.createWorkout(HIIT(
+        name: name.value.isNotEmpty
+            ? name.value
+            : WorkoutName.dirty("Workout $workoutIncrement").value,
+      ));
+    } else {
+      workout = await repo.createWorkout(Cycling(
+        name: name.value.isNotEmpty
+            ? name.value
+            : WorkoutName.dirty("Workout $workoutIncrement").value,
+      ));
+    }
 
     switch (this.type) {
       case WorkoutType.HIIT:
         createHIIT(workout);
         return;
       case WorkoutType.CYCLING:
+        createCycling(workout);
+        return;
+      case WorkoutType.UNKNOWN:
+        print("UNKNOWN WorkoutType");
         return;
     }
   }
@@ -88,6 +102,16 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
       HIIT.fromWorkout(workout: workout).setExercises(
             exercises.values.toList(),
           ),
+    );
+    return;
+  }
+
+  Future<void> createCycling(Workout workout) async {
+    if (coordinates.isEmpty) return;
+    repo.updateCycling(
+      Cycling.fromWorkout(workout: workout).setCoordinates(
+        coordinates.values.toList(),
+      ),
     );
     return;
   }

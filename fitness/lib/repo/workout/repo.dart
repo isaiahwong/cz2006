@@ -35,6 +35,10 @@ class WorkoutRepo {
     return collection.doc(workout.id).set(workout.toJson());
   }
 
+  Future<void> updateCycling(Cycling workout) {
+    return collection.doc(workout.id).set(workout.toJson());
+  }
+
   Future<Workout> getUser(String id) {
     return collection.doc(id).get().then(
           (document) =>
@@ -50,11 +54,9 @@ class WorkoutRepo {
               case WorkoutType.UNKNOWN:
                 break;
               case WorkoutType.CYCLING:
-                break;
+                return Cycling.fromJson(data);
               case WorkoutType.HIIT:
-                return HIIT.fromJson(
-                  data,
-                );
+                return HIIT.fromJson(data);
             }
             return Workout.fromJson(
               data,
