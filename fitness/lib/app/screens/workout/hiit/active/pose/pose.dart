@@ -254,7 +254,6 @@ class _P2PVideoState extends State<P2PVideo> {
                     ],
                   ),
                 ),
-                Expanded(child: Container()),
                 InkWell(
                   onTap: _loading
                       ? () {}

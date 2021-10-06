@@ -12,16 +12,14 @@ import (
 
 func (svc *Service) Pub(ctx context.Context, msg *hiit.DataSession) (*hiit.Empty, error) {
 	id := msg.Session.Id
-	topic := msg.Session.Topic
-
-	pub := svc.pubsub[fmt.Sprintf("%s:%s", id, topic)]
+	pub := svc.pubsub[fmt.Sprintf("%s", id)]
 	if pub == nil {
-		return nil, errors.New("Id topic does not exist")
+		return nil, errors.New("Id does not exist")
 	}
 
 	pub <- msg.Data
 
-	return nil, nil
+	return &hiit.Empty{}, nil
 }
 
 func (svc *Service) Sub(stream hiit.HIITService_SubServer) error {
@@ -29,28 +27,26 @@ func (svc *Service) Sub(stream hiit.HIITService_SubServer) error {
 	defer cancel()
 
 	id := internal.GetMetadataValue(ctx, "id")
-	topic := internal.GetMetadataValue(ctx, "topic")
 
 	if id == "" {
 		return errors.New("Invalid ID")
 	}
 
-	if topic == "" {
-		return errors.New("Invalid topic")
-	}
+	fmt.Println(id)
 
 	listen := make(chan *hiit.Data)
-	svc.pubsub[fmt.Sprintf("%s:%s", id, topic)] = listen
+	svc.pubsub[fmt.Sprintf("%s", id)] = listen
 
 	errCh := internal.NewErrorChannel()
-	defer func() {
+	close := func() {
 		errCh.Close()
 		close(listen)
-		delete(svc.pubsub, fmt.Sprintf("%s:%s", id, topic))
-	}()
+		delete(svc.pubsub, fmt.Sprintf("%s", id))
+	}
 
 	// Monitor client's alive status
 	go func() {
+		defer close()
 		for {
 			_, err := stream.Recv()
 			if err != nil {
@@ -86,11 +82,13 @@ func (svc *Service) Sub(stream hiit.HIITService_SubServer) error {
 
 	select {
 	case err := <-errCh.C:
+		fmt.Println(err)
 		if err != nil && err != io.EOF {
 			svc.logger.Errorf("%v %v", err)
 		}
 	case <-ctx.Done():
+		fmt.Println("done")
 	}
-
+	fmt.Println("here")
 	return nil
 }

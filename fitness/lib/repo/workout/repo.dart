@@ -1,22 +1,51 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/repo/repo.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hiit_api/hiit.dart';
+import 'package:grpc/grpc.dart';
 
 import 'model/model.dart';
 
 class WorkoutRepo {
   late final UserRepo _userRepo;
   CollectionReference collection;
+  final ClientChannel channel;
+  late final HIITServiceClient client;
 
   WorkoutRepo({required UserRepo userRepo})
       : collection = FirebaseFirestore.instance
             .collection('/users/${userRepo.id}/workouts'),
-        _userRepo = userRepo;
+        _userRepo = userRepo,
+        channel = ClientChannel(
+          '192.168.31.109',
+          port: 50051,
+          options:
+              const ChannelOptions(credentials: ChannelCredentials.insecure()),
+        ) {
+    client = HIITServiceClient(channel);
+  }
 
   factory WorkoutRepo.get() {
     return Get.find();
+  }
+
+  ResponseStream<Data> startHIITStream() {
+    return client.sub(_startStream(),
+        options: CallOptions(metadata: {
+          "id": UserController.get().user.value!.id,
+        }));
+  }
+
+  Stream<RoutineChange> _startStream() async* {
+    while (true) {
+      await Future.delayed(Duration(seconds: 1));
+
+      yield RoutineChange();
+    }
   }
 
   Future<Workout> createWorkout(Workout workout) async {

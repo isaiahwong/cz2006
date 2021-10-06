@@ -5,6 +5,8 @@ import 'package:fitness/app/screens/workout/timer/timer.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:get/get.dart';
 
+import 'pose/pose_controller.dart';
+
 class ActiveHIITBindings extends Bindings {
   @override
   void dependencies() {
@@ -22,6 +24,7 @@ class ActiveHIITBindings extends Bindings {
           panelController: panelController,
           fullscreenController: fullscreenController,
         ));
+    Get.lazyPut(() => PoseController());
     Get.lazyPut(() => fullscreenController, tag: RoutePaths.HIIT_ACTIVE);
     Get.lazyPut(() => timerController, tag: RoutePaths.HIIT_ACTIVE);
     Get.lazyPut(() => panelController, tag: RoutePaths.HIIT_ACTIVE);

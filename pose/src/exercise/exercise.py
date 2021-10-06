@@ -5,9 +5,10 @@ mp_pose = mp.solutions.pose
 
 
 class Movement:
-    def __init__(self, id="", topic=""):
+    def __init__(self, id="", exercise="", interval=""):
         self.id = id
-        self.topic = topic
+        self.exercise = exercise
+        self.interval = interval
 
     def calculate_angle(self, a, b, c):
         a = np.array(a)  # First
@@ -28,8 +29,8 @@ class Movement:
 
 
 class Squat(Movement):
-    def __init__(self, id="", topic=""):
-        super(Squat, self).__init__(id, topic)
+    def __init__(self, id="", exercise="", interval=""):
+        super(Squat, self).__init__(id, exercise, interval)
         self.state = None
         self.count = 0
 

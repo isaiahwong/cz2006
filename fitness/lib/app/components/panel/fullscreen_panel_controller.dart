@@ -10,6 +10,8 @@ class FullScreenPanelController extends GetxController {
   late final FullScreenController controller;
   FullScreenStatus status = FullScreenStatusInactive();
 
+  final List<VoidCallback> fullScreenListeners = [];
+
   Widget? panelHeader;
   Widget? panel;
 
@@ -21,6 +23,21 @@ class FullScreenPanelController extends GetxController {
     if (this.panel == null) this.panel = placeholder;
     if (this.panelHeader == null) this.panelHeader = PanelHeader();
     this.controller = controller == null ? FullScreenController() : controller;
+
+    this.controller.addListener(_onChange);
+  }
+
+  void _onChange() {
+    status = controller.isOpened
+        ? FullScreenStatusOpened()
+        : FullScreenStatusHidden();
+    update();
+
+    fullScreenListeners.forEach((l) => l());
+  }
+
+  void addFullScreenListener(VoidCallback onChange) {
+    fullScreenListeners.add(onChange);
   }
 
   open() {

@@ -3,7 +3,7 @@ import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
-  final AuthController authController = AuthController.to();
+  final AuthController authController = AuthController.get();
   final UserRepo _userRepo;
 
   Rxn<User> user = Rxn<User>();

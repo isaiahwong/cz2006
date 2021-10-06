@@ -39,7 +39,7 @@ func (c *hIITServiceClient) Sub(ctx context.Context, opts ...grpc.CallOption) (H
 }
 
 type HIITService_SubClient interface {
-	Send(*Ping) error
+	Send(*RoutineChange) error
 	Recv() (*Data, error)
 	grpc.ClientStream
 }
@@ -48,7 +48,7 @@ type hIITServiceSubClient struct {
 	grpc.ClientStream
 }
 
-func (x *hIITServiceSubClient) Send(m *Ping) error {
+func (x *hIITServiceSubClient) Send(m *RoutineChange) error {
 	return x.ClientStream.SendMsg(m)
 }
 
@@ -107,7 +107,7 @@ func _HIITService_Sub_Handler(srv interface{}, stream grpc.ServerStream) error {
 
 type HIITService_SubServer interface {
 	Send(*Data) error
-	Recv() (*Ping, error)
+	Recv() (*RoutineChange, error)
 	grpc.ServerStream
 }
 
@@ -119,8 +119,8 @@ func (x *hIITServiceSubServer) Send(m *Data) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *hIITServiceSubServer) Recv() (*Ping, error) {
-	m := new(Ping)
+func (x *hIITServiceSubServer) Recv() (*RoutineChange, error) {
+	m := new(RoutineChange)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

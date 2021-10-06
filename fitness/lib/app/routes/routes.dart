@@ -1,5 +1,5 @@
 import 'package:fitness/app/screens/screens.dart';
-import 'package:fitness/app/screens/workout/camera/pose.dart';
+import 'package:fitness/app/screens/workout/hiit/active/pose/pose.dart';
 import 'package:get/get.dart';
 
 class RoutePaths {

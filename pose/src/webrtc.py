@@ -48,14 +48,16 @@ class VideoTransformTrack(MediaStreamTrack):
                 data=api.hiit_pb2.Data(
                     state=self.exercise.state,
                     count=self.exercise.count,
+                    interval=self.exercise.interval,
                 ),
                 session=api.hiit_pb2.Session(
                     id=self.exercise.id,
-                    topic=self.exercise.topic,
+                    exercise=self.exercise.exercise,
                 )
             ))
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         # Recolor back to BGR
         image.flags.writeable = True
@@ -72,3 +74,34 @@ class VideoTransformTrack(MediaStreamTrack):
         new_frame.pts = frame.pts
         new_frame.time_base = frame.time_base
         return new_frame
+
+    def image_resize(self, image, width=None, height=None, inter=cv2.INTER_AREA):
+        # initialize the dimensions of the image to be resized and
+        # grab the image size
+        dim = None
+        (h, w) = image.shape[:2]
+
+        # if both the width and height are None, then return the
+        # original image
+        if width is None and height is None:
+            return image
+
+        # check to see if the width is None
+        if width is None:
+            # calculate the ratio of the height and construct the
+            # dimensions
+            r = height / float(h)
+            dim = (int(w * r), height)
+
+        # otherwise, the height is None
+        else:
+            # calculate the ratio of the width and construct the
+            # dimensions
+            r = width / float(w)
+            dim = (width, int(h * r))
+
+        # resize the image
+        resized = cv2.resize(image, dim, interpolation=inter)
+
+        # return the resized image
+        return resized

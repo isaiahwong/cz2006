@@ -11,7 +11,7 @@ class AuthController extends GetxController {
 
   AuthController({required AuthRepo authRepo}) : _authRepo = authRepo;
 
-  factory AuthController.to() {
+  factory AuthController.get() {
     return Get.find();
   }
 

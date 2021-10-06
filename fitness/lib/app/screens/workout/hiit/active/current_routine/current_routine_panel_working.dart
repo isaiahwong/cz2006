@@ -1,5 +1,7 @@
 import 'package:fitness/app/components/button/button.dart';
+import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/screens/workout/hiit/active/active.dart';
+import 'package:fitness/app/screens/workout/hiit/active/pose/pose_screen.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/cupertino.dart';
@@ -111,7 +113,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${controller.currentInterval!.currentLog.reps}",
+                "${controller.count}",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       color: Colors.white,
                     ),
@@ -131,7 +133,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
     );
   }
 
-  Widget _previousWeightRepRow(BuildContext context) {
+  Widget _current(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.headline6!.copyWith(
           color: Colors.grey[500],
           fontWeight: FontWeight.w900,
@@ -140,28 +142,41 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
     final subtextStyle = Theme.of(context).textTheme.headline6!.copyWith(
           color: Colors.grey[500],
         );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Previous",
-          style: Theme.of(context).textTheme.headline5!.copyWith(
-                color: Colors.grey[500],
+    return Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${controller.currentRoutine!.exercise.name} ${controller.currentInterval!.iteration}",
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
               ),
-        ),
-        Row(
-          children: [
-            SizedBox(width: 10),
-            Row(
-              children: [
-                Text("20", style: textStyle),
-                SizedBox(width: 5),
-                Text("Reps", style: subtextStyle),
-              ],
-            ),
-          ],
-        )
-      ],
+            ],
+          ),
+          controller.poseStarted
+              ? GestureDetector(
+                  onTap: controller.stopPose,
+                  child: Icon(
+                    CupertinoIcons.circle_fill,
+                    size: 30,
+                    color: red,
+                  ),
+                )
+              : GestureDetector(
+                  onTap: controller.startPose,
+                  child: Icon(
+                    CupertinoIcons.circle,
+                    size: 30,
+                    color: green,
+                  ),
+                )
+        ],
+      ),
     );
   }
 
@@ -184,6 +199,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
   ) {
     return Row(
       children: [
+        _repsCard(context),
         SizedBox(width: 15),
         _repsCard(context),
       ],
@@ -203,23 +219,23 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
   Widget build(BuildContext context) {
     return GetBuilder<ActiveHIITController>(
       builder: (controller) => Container(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          bottom: 5,
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _title(context),
+            PoseScreen(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _previousWeightRepRow(context),
-                SizedBox(height: 20),
-                _row(context),
-                SizedBox(height: 20),
-                _addSetBtn(context),
+                ...margin(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  children: [
+                    _current(context),
+                    SizedBox(height: 20),
+                    _row(context),
+                    SizedBox(height: 20),
+                    _addSetBtn(context),
+                  ],
+                )
               ],
             ),
           ],

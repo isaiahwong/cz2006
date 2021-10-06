@@ -7,8 +7,6 @@ import (
 	"reflect"
 	"strings"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	hiit "github.com/isaiahwong/hiit/api"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -86,13 +84,14 @@ func New(opt ...Option) (*Server, error) {
 
 	// Create a new gRPC server
 	insecureGrpc := grpc.NewServer(
-		grpc.MaxRecvMsgSize(1024*1024*20),
-		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			grpc_logrus.UnaryServerInterceptor(
-				logrus.NewEntry(logger),
-				grpc_logrus.WithDecider(LoggerDecider),
-			),
-		)),
+		grpc.MaxRecvMsgSize(1024 * 1024 * 20),
+		// Remove logging
+		// grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+		// 	grpc_logrus.UnaryServerInterceptor(
+		// 		logrus.NewEntry(logger),
+		// 		grpc_logrus.WithDecider(LoggerDecider),
+		// 	),
+		// )),
 	)
 
 	// Create a new network listener

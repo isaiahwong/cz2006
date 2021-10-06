@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/repo/exercise/repo.dart';
@@ -46,7 +48,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      builder: (context, widget) => widget!,
+      builder: (context, widget) => widget,
       theme: theme(context),
       title: "SoFit",
       debugShowCheckedModeBanner: false,

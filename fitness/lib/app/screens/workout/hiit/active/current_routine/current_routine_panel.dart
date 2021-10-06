@@ -156,9 +156,6 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
         if (controller.currentInterval == null) return SizedBox.shrink();
 
         return Container(
-          padding: EdgeInsets.only(
-            top: 10,
-          ),
           color: lightGrey,
           width: double.infinity,
           child: SafeArea(

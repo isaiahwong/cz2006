@@ -16,7 +16,7 @@ class HIITServiceStub(object):
         """
         self.Sub = channel.stream_stream(
             '/hiit.HIITService/Sub',
-            request_serializer=hiit__pb2.Ping.SerializeToString,
+            request_serializer=hiit__pb2.RoutineChange.SerializeToString,
             response_deserializer=hiit__pb2.Data.FromString,
         )
         self.Pub = channel.unary_unary(
@@ -46,7 +46,7 @@ def add_HIITServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
         'Sub': grpc.stream_stream_rpc_method_handler(
             servicer.Sub,
-            request_deserializer=hiit__pb2.Ping.FromString,
+            request_deserializer=hiit__pb2.RoutineChange.FromString,
             response_serializer=hiit__pb2.Data.SerializeToString,
         ),
         'Pub': grpc.unary_unary_rpc_method_handler(
@@ -77,7 +77,7 @@ class HIITService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.stream_stream(request_iterator, target, '/hiit.HIITService/Sub',
-                                               hiit__pb2.Ping.SerializeToString,
+                                               hiit__pb2.RoutineChange.SerializeToString,
                                                hiit__pb2.Data.FromString,
                                                options, channel_credentials,
                                                insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

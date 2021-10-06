@@ -21,11 +21,12 @@ const Data$json = const {
   '2': const [
     const {'1': 'state', '3': 1, '4': 1, '5': 9, '10': 'state'},
     const {'1': 'count', '3': 2, '4': 1, '5': 5, '10': 'count'},
+    const {'1': 'interval', '3': 3, '4': 1, '5': 9, '10': 'interval'},
   ],
 };
 
 /// Descriptor for `Data`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dataDescriptor = $convert.base64Decode('CgREYXRhEhQKBXN0YXRlGAEgASgJUgVzdGF0ZRIUCgVjb3VudBgCIAEoBVIFY291bnQ=');
+final $typed_data.Uint8List dataDescriptor = $convert.base64Decode('CgREYXRhEhQKBXN0YXRlGAEgASgJUgVzdGF0ZRIUCgVjb3VudBgCIAEoBVIFY291bnQSGgoIaW50ZXJ2YWwYAyABKAlSCGludGVydmFs');
 @$core.Deprecated('Use dataSessionDescriptor instead')
 const DataSession$json = const {
   '1': 'DataSession',
@@ -37,21 +38,24 @@ const DataSession$json = const {
 
 /// Descriptor for `DataSession`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List dataSessionDescriptor = $convert.base64Decode('CgtEYXRhU2Vzc2lvbhIeCgRkYXRhGAEgASgLMgouaGlpdC5EYXRhUgRkYXRhEicKB3Nlc3Npb24YAiABKAsyDS5oaWl0LlNlc3Npb25SB3Nlc3Npb24=');
-@$core.Deprecated('Use pingDescriptor instead')
-const Ping$json = const {
-  '1': 'Ping',
+@$core.Deprecated('Use routineChangeDescriptor instead')
+const RoutineChange$json = const {
+  '1': 'RoutineChange',
+  '2': const [
+    const {'1': 'routine', '3': 1, '4': 1, '5': 9, '10': 'routine'},
+  ],
 };
 
-/// Descriptor for `Ping`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pingDescriptor = $convert.base64Decode('CgRQaW5n');
+/// Descriptor for `RoutineChange`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List routineChangeDescriptor = $convert.base64Decode('Cg1Sb3V0aW5lQ2hhbmdlEhgKB3JvdXRpbmUYASABKAlSB3JvdXRpbmU=');
 @$core.Deprecated('Use sessionDescriptor instead')
 const Session$json = const {
   '1': 'Session',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'topic', '3': 2, '4': 1, '5': 9, '10': 'topic'},
+    const {'1': 'exercise', '3': 2, '4': 1, '5': 9, '10': 'exercise'},
   ],
 };
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEg4KAmlkGAEgASgJUgJpZBIUCgV0b3BpYxgCIAEoCVIFdG9waWM=');
+final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEg4KAmlkGAEgASgJUgJpZBIaCghleGVyY2lzZRgCIAEoCVIIZXhlcmNpc2U=');

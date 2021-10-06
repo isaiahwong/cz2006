@@ -9,6 +9,7 @@ message Empty{}
 message Data {
   string state = 1;
   int32 count = 2;
+  string interval = 3;
 }
 
 message DataSession {
@@ -16,15 +17,17 @@ message DataSession {
   Session session = 2;
 }
 
-message Ping {}
+message RoutineChange {
+  string routine = 1;
+}
 
 message Session {
   string id = 1;
-  string topic = 2;
+  string exercise = 2;
 }
 
 service HIITService {
-  rpc Sub(stream Ping) returns (stream Data);
+  rpc Sub(stream RoutineChange) returns (stream Data);
   rpc Pub(DataSession) returns (Empty);
 
 }

@@ -42,6 +42,7 @@ class Data extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Data', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.O3)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'interval')
     ..hasRequiredFields = false
   ;
 
@@ -49,6 +50,7 @@ class Data extends $pb.GeneratedMessage {
   factory Data({
     $core.String? state,
     $core.int? count,
+    $core.String? interval,
   }) {
     final _result = create();
     if (state != null) {
@@ -56,6 +58,9 @@ class Data extends $pb.GeneratedMessage {
     }
     if (count != null) {
       _result.count = count;
+    }
+    if (interval != null) {
+      _result.interval = interval;
     }
     return _result;
   }
@@ -97,6 +102,15 @@ class Data extends $pb.GeneratedMessage {
   $core.bool hasCount() => $_has(1);
   @$pb.TagNumber(2)
   void clearCount() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get interval => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set interval($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasInterval() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInterval() => clearField(3);
 }
 
 class DataSession extends $pb.GeneratedMessage {
@@ -164,53 +178,71 @@ class DataSession extends $pb.GeneratedMessage {
   Session ensureSession() => $_ensure(1);
 }
 
-class Ping extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Ping', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+class RoutineChange extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoutineChange', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'routine')
     ..hasRequiredFields = false
   ;
 
-  Ping._() : super();
-  factory Ping() => create();
-  factory Ping.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Ping.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  RoutineChange._() : super();
+  factory RoutineChange({
+    $core.String? routine,
+  }) {
+    final _result = create();
+    if (routine != null) {
+      _result.routine = routine;
+    }
+    return _result;
+  }
+  factory RoutineChange.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoutineChange.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  Ping clone() => Ping()..mergeFromMessage(this);
+  RoutineChange clone() => RoutineChange()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Ping copyWith(void Function(Ping) updates) => super.copyWith((message) => updates(message as Ping)) as Ping; // ignore: deprecated_member_use
+  RoutineChange copyWith(void Function(RoutineChange) updates) => super.copyWith((message) => updates(message as RoutineChange)) as RoutineChange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Ping create() => Ping._();
-  Ping createEmptyInstance() => create();
-  static $pb.PbList<Ping> createRepeated() => $pb.PbList<Ping>();
+  static RoutineChange create() => RoutineChange._();
+  RoutineChange createEmptyInstance() => create();
+  static $pb.PbList<RoutineChange> createRepeated() => $pb.PbList<RoutineChange>();
   @$core.pragma('dart2js:noInline')
-  static Ping getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Ping>(create);
-  static Ping? _defaultInstance;
+  static RoutineChange getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoutineChange>(create);
+  static RoutineChange? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get routine => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set routine($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoutine() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoutine() => clearField(1);
 }
 
 class Session extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Session', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'topic')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'exercise')
     ..hasRequiredFields = false
   ;
 
   Session._() : super();
   factory Session({
     $core.String? id,
-    $core.String? topic,
+    $core.String? exercise,
   }) {
     final _result = create();
     if (id != null) {
       _result.id = id;
     }
-    if (topic != null) {
-      _result.topic = topic;
+    if (exercise != null) {
+      _result.exercise = exercise;
     }
     return _result;
   }
@@ -245,12 +277,12 @@ class Session extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get topic => $_getSZ(1);
+  $core.String get exercise => $_getSZ(1);
   @$pb.TagNumber(2)
-  set topic($core.String v) { $_setString(1, v); }
+  set exercise($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasTopic() => $_has(1);
+  $core.bool hasExercise() => $_has(1);
   @$pb.TagNumber(2)
-  void clearTopic() => clearField(2);
+  void clearExercise() => clearField(2);
 }
 

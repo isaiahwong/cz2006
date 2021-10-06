@@ -14,9 +14,9 @@ import 'hiit.pb.dart' as $0;
 export 'hiit.pb.dart';
 
 class HIITServiceClient extends $grpc.Client {
-  static final _$sub = $grpc.ClientMethod<$0.Ping, $0.Data>(
+  static final _$sub = $grpc.ClientMethod<$0.RoutineChange, $0.Data>(
       '/hiit.HIITService/Sub',
-      ($0.Ping value) => value.writeToBuffer(),
+      ($0.RoutineChange value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Data.fromBuffer(value));
   static final _$pub = $grpc.ClientMethod<$0.DataSession, $0.Empty>(
       '/hiit.HIITService/Pub',
@@ -28,7 +28,7 @@ class HIITServiceClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.Data> sub($async.Stream<$0.Ping> request,
+  $grpc.ResponseStream<$0.Data> sub($async.Stream<$0.RoutineChange> request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$sub, request, options: options);
   }
@@ -43,12 +43,12 @@ abstract class HIITServiceBase extends $grpc.Service {
   $core.String get $name => 'hiit.HIITService';
 
   HIITServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Ping, $0.Data>(
+    $addMethod($grpc.ServiceMethod<$0.RoutineChange, $0.Data>(
         'Sub',
         sub,
         true,
         true,
-        ($core.List<$core.int> value) => $0.Ping.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.RoutineChange.fromBuffer(value),
         ($0.Data value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.DataSession, $0.Empty>(
         'Pub',
@@ -65,6 +65,6 @@ abstract class HIITServiceBase extends $grpc.Service {
   }
 
   $async.Stream<$0.Data> sub(
-      $grpc.ServiceCall call, $async.Stream<$0.Ping> request);
+      $grpc.ServiceCall call, $async.Stream<$0.RoutineChange> request);
   $async.Future<$0.Empty> pub($grpc.ServiceCall call, $0.DataSession request);
 }

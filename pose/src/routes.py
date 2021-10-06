@@ -20,11 +20,12 @@ logger = logging.getLogger("pc")
 async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
-    topic = params["topic"]
+    exercise = params["exercise"]
+    interval = params["interval"]
     id = params["id"]
 
     # End function if exercise not in
-    if not topic in exercises:
+    if not exercise in exercises:
         return web.Response(
             status=404,
             content_type="application/json",
@@ -60,16 +61,18 @@ async def offer(request):
     @pc.on("track")
     def on_track(track):
         log_info("Track %s received", track.kind)
-
         if track.kind == "video":
-            pc.addTrack(
-                VideoTransformTrack(
-                    track=relay.subscribe(track),
-                    transform=params["video_transform"],
-                    hiit_stub=stub,
-                    exercise=exercises[topic](id=id, topic=topic),
+            vtrack = VideoTransformTrack(
+                track=relay.subscribe(track),
+                transform=params["video_transform"],
+                hiit_stub=stub,
+                exercise=exercises[exercise](
+                    id=id,
+                    exercise=exercise,
+                    interval=interval
                 )
             )
+            pc.addTrack(vtrack)
 
         @track.on("ended")
         async def on_ended():
