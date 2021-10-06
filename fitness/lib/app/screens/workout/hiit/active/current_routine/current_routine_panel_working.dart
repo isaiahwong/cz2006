@@ -99,7 +99,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
     );
   }
 
-  Widget _repsCard(BuildContext context) {
+  Widget _repsCard(BuildContext context, int reps) {
     return Expanded(
       child: GestureDetector(
         onTap: () => _onRepsTap(context),
@@ -113,7 +113,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${controller.count}",
+                "$reps",
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       color: Colors.white,
                     ),
@@ -199,9 +199,9 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
   ) {
     return Row(
       children: [
-        _repsCard(context),
+        _repsCard(context, controller.count),
         SizedBox(width: 15),
-        _repsCard(context),
+        _repsCard(context, controller.currentInterval!.defaultReps),
       ],
     );
   }
