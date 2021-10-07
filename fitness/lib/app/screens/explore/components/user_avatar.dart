@@ -1,32 +1,28 @@
-import 'package:fitness/repo/social/social.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-/// Used at user friends and workout
+/// Minimum details shown about user
 class UserAvatar extends StatelessWidget {
-  final UserSnippet userSnippet;
-
-  UserAvatar(this.userSnippet);
+  UserAvatar({
+    required this.name,
+    required this.profileImage,
+  });
+  final String name;
+  final String profileImage;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            minRadius: 20,
-            maxRadius: 40,
-            backgroundImage: NetworkImage(userSnippet.profilePicture.isNotEmpty
-                ? userSnippet.profilePicture
-                : "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Get.theme.primaryColor, width: 2),
           ),
-          Text(
-            userSnippet.name == "" ? userSnippet.name : "No one",
-          ),
-        ],
-      ),
+          child: Image(image: NetworkImage(profileImage)),
+        ),
+        Text(name),
+      ],
     );
   }
 }

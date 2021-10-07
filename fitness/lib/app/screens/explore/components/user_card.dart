@@ -1,54 +1,49 @@
-import 'package:fitness/repo/repo.dart';
+import 'package:fitness/app/theme/theme.dart';
+import 'package:fitness/common/common.dart';
+
+import 'package:fitness/repo/user/user.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
-/// Widget use to display users with some infomation
-class ExploreUserCard extends StatelessWidget {
+/// Used at user friends and workout
+class UserCard extends StatelessWidget {
   final User user;
-  final Widget? action;
-  ExploreUserCard(this.user, this.action);
+  final List<Widget> actionWidgets;
+  UserCard(this.user, this.actionWidgets);
 
   @override
   Widget build(BuildContext context) {
+    print(user.profilePicture);
+    print("Username: ${user.name}");
     return Card(
-      color: Colors.white,
-      child: Row(
-        children: [
-          _profileImage(),
-          _userNameAge(),
-          Spacer(),
-          action ?? Container(width: 0),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            CircleAvatar(
+              minRadius: 20,
+              maxRadius: 40,
+              backgroundImage: NetworkImage(user.profilePicture.isNotEmpty
+                  ? user.profilePicture
+                  : "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"),
+            ),
+            SizedBox(width: 8),
+            Text(
+              user.name.isNotEmpty
+                  ? user.name + ", " + getAge(user.dateOfBirth).toString()
+                  : "Unknown",
+              style: Get.textTheme.headline3!.copyWith(color: darkGrey),
+            ),
+            Spacer(),
+            actions(),
+            SizedBox(width: 10),
+          ],
+        ),
       ),
     );
   }
 
-  /// Name age and workout type
-  Widget _userNameAge() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Text(
-          user.name,
-          style: Get.theme.textTheme.bodyText1
-              ?.copyWith(fontWeight: FontWeight.w600),
-        ),
-        // TODO: Date of birth
-        Text(
-          "insert dob",
-          style: Get.theme.textTheme.bodyText1
-              ?.copyWith(fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
-
-  CircleAvatar _profileImage() {
-    return CircleAvatar(
-      minRadius: 40,
-      child: Image.network(user.profilePicture),
-    );
-  }
+  Widget actions() => Column(children: actionWidgets);
 }
-
-// TODO: Create action widget with function
