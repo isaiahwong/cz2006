@@ -1,3 +1,4 @@
+import 'package:fitness/app/screens/explore/components/popup_dialog.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class SocialController extends GetxController {
   /// Perform santization and search of users
   void searchText(String text) async {
     print("Search Users: ${text.trim()}");
-    foundUsers = await socialRepo.findUsers(text);
+    foundUsers = await socialRepo.findUsers(text.trim());
     print("Number of users found: ${foundUsers.length}");
     if (foundUsers.length > 0) {
       /// Update to user list screen
@@ -42,10 +43,16 @@ class SocialController extends GetxController {
         "Search results",
         "No users found",
         backgroundColor: Colors.white60,
-        snackStyle: SnackStyle.GROUNDED,
+        snackStyle: SnackStyle.FLOATING,
         snackPosition: SnackPosition.TOP,
       );
     }
+  }
+
+  /// Send request to user
+  Future<void> sendRequest(String id) async {
+    // await socialRepo.sendRequest(id);
+    customPopUp("Request Sent!", successIcon(Get.theme.primaryColor));
   }
 
   /// Clear search results and search text

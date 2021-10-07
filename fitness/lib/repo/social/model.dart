@@ -75,6 +75,15 @@ class UserSnippet {
     );
   }
 
+  /// Convert User to userSnippet
+  static UserSnippet fromUser(User user) {
+    return UserSnippet(
+      user.id,
+      user.name,
+      user.profilePicture,
+    );
+  }
+
   factory UserSnippet.fromJson(Map<String, dynamic> json) =>
       _$UserSnippetFromJson(json);
 

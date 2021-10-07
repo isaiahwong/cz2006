@@ -60,7 +60,7 @@ class SocialRepo {
 
   /// - Cloud Functions HTTPS callable
   /// Send request to user
-  Future<void> sendRequst(String responderId) async {
+  Future<void> sendRequest(String responderId) async {
     /// Consturct a friend request
     try {
       await _functions
