@@ -1,14 +1,13 @@
-import 'package:fitness/repo/seed.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'coordinates.dart';
 
-class ExerciseRepo {
+class CoordinatesRepo {
   CollectionReference collection;
 
-  ExerciseRepo()
+  CoordinatesRepo()
       : collection = FirebaseFirestore.instance.collection('/coordinates');
-  Future<List<Coordinates>> getExercises() async {
+  Future<List<Coordinates>> getCoordinates() async {
     final snapshot = await collection.get();
     return snapshot.docs
         .map<Coordinates>(

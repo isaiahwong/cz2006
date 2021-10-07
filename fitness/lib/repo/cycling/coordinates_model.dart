@@ -11,11 +11,13 @@ class Coordinates {
         .toList();
   }
 
+  final String id;
   final String name;
   final double x;
   final double y;
 
   Coordinates({
+    required this.id,
     required this.name,
     required this.x,
     required this.y,
@@ -25,6 +27,10 @@ class Coordinates {
       _$CoordinatesFromJson(json);
 
   Map<String, dynamic> toJson() => _$CoordinatesToJson(this);
+
+  String get getID {
+    return id;
+  }
 
   String get getName {
     return name;
@@ -44,6 +50,7 @@ class Coordinates {
     double? y,
   }) {
     return Coordinates(
+      id: id ?? this.id,
       name: name ?? this.name,
       x: x ?? this.x,
       y: y ?? this.y,

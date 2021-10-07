@@ -1,16 +1,31 @@
+import 'package:fitness/app/screens/cycling/coordinates_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mapbox_navigation/library.dart';
 import 'package:get/get.dart';
 
-class CreateWorkoutCyclingScreen extends GetView<CreateWorkoutController> {
-  static Page page() =>
-      CupertinoPage<void>(child: CreateWorkoutCyclingScreen());
+class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
+  static Page page(
+          {ScrollController? scrollController,
+          CoordinatesController? coordinatesController}) =>
+      CupertinoPage<void>(
+        child: GetBuilder(
+          init: coordinatesController,
+          builder: (_) => CreateWorkoutCyclingScreen(
+            scrollController: scrollController,
+          ),
+        ),
+      );
 
-  const CreateWorkoutCyclingScreen({Key? key}) : super(key: key);
+  const CreateWorkoutCyclingScreen({
+    Key? key,
+    this.scrollController,
+  }) : super(key: key);
 
+  final ScrollController? scrollController;
   void goBack(BuildContext context) {
     context
         .flow<CreateWorkoutRoute>()
