@@ -3,25 +3,23 @@ import 'package:get/get.dart';
 
 class ProfileImage extends StatelessWidget {
   final ImageProvider? imageProvider;
-  ProfileImage({this.imageProvider});
+  final double size;
+  ProfileImage({this.imageProvider, this.size = 100});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: size,
+      width: size,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Get.theme.primaryColor.withOpacity(1),
         shape: BoxShape.circle,
+        border: Border.all(color: Get.theme.primaryColor, width: 4),
       ),
-      constraints: BoxConstraints(maxHeight: 120),
-      height: 100,
-      width: 100,
       child: imageProvider == null
           ? placeholder()
-          : Image(
-              image: imageProvider!,
-              fit: BoxFit.cover,
-            ),
+          : CircleAvatar(backgroundImage: imageProvider),
     );
   }
 

@@ -59,6 +59,7 @@ class RegisterController extends GetxController {
         lastDate: DateTime.now());
     if (picked != null) {
       selectedDate = picked;
+      _dateOfBirth = selectedDate.millisecondsSinceEpoch;
     }
     print(getAge(selectedDate.millisecondsSinceEpoch));
     update();

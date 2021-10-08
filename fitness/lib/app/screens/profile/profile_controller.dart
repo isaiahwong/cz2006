@@ -1,10 +1,10 @@
-import 'package:fitness/repo/auth/auth.dart';
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/repo/repo.dart';
-import 'package:fitness/repo/user/model.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   AuthRepo authRepo = Get.find();
+  Rxn<User> user = UserController.get().user;
 
   @override
   void onInit() {

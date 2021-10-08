@@ -1,5 +1,4 @@
 import 'package:fitness/app/screens/explore/controller/explore_controller.dart';
-import 'package:fitness/app/screens/explore/workout_screen.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +33,6 @@ class ExploreBodyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ExploreController>(
-      init: ExploreController(),
       builder: (_) {
         return Container(
           padding: EdgeInsets.all(8),
@@ -44,24 +42,11 @@ class ExploreBodyScreen extends StatelessWidget {
           child: Column(
             children: [
               SegmentedControl(_),
-              Expanded(
-                child: _bodyWidgets(_),
-              ),
+              Expanded(child: _.screens[_.getTabIndex]),
             ],
           ),
         );
       },
-    );
-  }
-
-  PageView _bodyWidgets(ExploreController _) {
-    return PageView(
-      controller: _.pageController,
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        ExploreWorkoutScreen(),
-        SocialWidget(),
-      ],
     );
   }
 

@@ -1,5 +1,5 @@
+import 'package:fitness/app/components/image/image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 /// Minimum details shown about user
 class UserAvatar extends StatelessWidget {
@@ -14,13 +14,15 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Get.theme.primaryColor, width: 2),
-          ),
-          child: Image(image: NetworkImage(profileImage)),
-        ),
+        ProfileImage(imageProvider: NetworkImage(profileImage), size: 80),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     border: Border.all(color: Get.theme.primaryColor, width: 2),
+        //   ),
+        //   child: Image(image: NetworkImage(profileImage)),
+        // ),
+        SizedBox(height: 4),
         Text(name),
       ],
     );

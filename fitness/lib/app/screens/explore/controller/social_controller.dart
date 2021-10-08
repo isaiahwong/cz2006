@@ -1,15 +1,20 @@
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/screens/explore/components/popup_dialog.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SocialController extends GetxController {
   static SocialController to = Get.find();
   late SocialRepo socialRepo;
 
-  List<User> friends = [];
-  List<FriendRequest> requests = [];
+  Rx<List<Friend>> _friends = Rx([]);
+  Rx<List<Friend>> _requests = Rx([]);
+
+  /// Data to display to user
+  List<UserSnippet> friends = [];
+  List<UserSnippet> requests = [];
 
   List<User> foundUsers = [];
 
@@ -25,9 +30,53 @@ class SocialController extends GetxController {
   @override
   void onReady() async {
     /// Call repo
-    requests = await socialRepo.getRequests();
-    friends = await socialRepo.getFriends();
+    _friends.bindStream(socialRepo.streamFriends());
+    _requests.bindStream(socialRepo.streamRequest());
+
+    ever(_friends, _friendsHandler);
+    ever(_requests, _requestHandler);
+
     super.onReady();
+  }
+
+  @override
+  void onClose() {
+    if (!_friends.subject.isClosed) {
+      _friends.close();
+    }
+    if (!_requests.subject.isClosed) {
+      _requests.close();
+    }
+
+    super.onClose();
+  }
+
+  /// Handler to filter friends
+  _friendsHandler(List<Friend> f) async {
+    friends.clear();
+    String _userId = UserController.get().user.value!.id;
+    for (int i = 0; i < f.length; i++) {
+      if (_userId != f[i].initiator.id) {
+        friends.add(f[i].initiator);
+      } else {
+        friends.add(f[i].responder);
+      }
+    }
+    // TODO: Update the specific widget id
+    update(["SocialScreen"]);
+  }
+
+  /// Handler to filter requests
+  _requestHandler(List<Friend> f) async {
+    requests.clear();
+    String _userId = UserController.get().user.value!.id;
+    for (int i = 0; i < f.length; i++) {
+      if (_userId == f[i].responder.id) {
+        requests.add(f[i].initiator);
+      }
+    }
+
+    update(["SocialScreen"]);
   }
 
   /// Perform santization and search of users
@@ -36,22 +85,21 @@ class SocialController extends GetxController {
     foundUsers = await socialRepo.findUsers(text.trim());
     print("Number of users found: ${foundUsers.length}");
     if (foundUsers.length > 0) {
-      /// Update to user list screen
-      update();
+      update(["SocialScreen"]);
     } else {
-      Get.snackbar(
-        "Search results",
-        "No users found",
-        backgroundColor: Colors.white60,
-        snackStyle: SnackStyle.FLOATING,
-        snackPosition: SnackPosition.TOP,
+      Fluttertoast.showToast(
+        msg: "No users found",
+        backgroundColor: Colors.white,
+        timeInSecForIosWeb: 2,
+        gravity: ToastGravity.TOP,
+        textColor: Colors.black,
       );
     }
   }
 
   /// Send request to user
   Future<void> sendRequest(String id) async {
-    // await socialRepo.sendRequest(id);
+    await socialRepo.sendRequest(id);
     customPopUp("Request Sent!", successIcon(Get.theme.primaryColor));
   }
 
@@ -61,6 +109,9 @@ class SocialController extends GetxController {
     foundUsers.clear();
 
     /// Update screen
-    update();
+    update(["SocialScreen"]);
   }
+
+  // * Getters
+  int get foundUsersLength => foundUsers.length;
 }
