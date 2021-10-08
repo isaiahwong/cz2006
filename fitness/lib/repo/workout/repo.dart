@@ -21,7 +21,7 @@ class WorkoutRepo {
             .collection('/users/${userRepo.id}/workouts'),
         _userRepo = userRepo,
         channel = ClientChannel(
-          '172.21.146.189',
+          '192.168.31.109',
           port: 50051,
           options:
               const ChannelOptions(credentials: ChannelCredentials.insecure()),
