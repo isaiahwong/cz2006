@@ -30,9 +30,11 @@ class RegisterController extends GetxController {
       maxHeight: 400,
       maxWidth: 400,
     );
-    print(pickedFiled!.path);
-    imageFile = File(pickedFiled.path);
-    update();
+    // print(pickedFiled!.path);
+    if (pickedFiled != null) {
+      imageFile = File(pickedFiled.path);
+      update();
+    }
   }
 
   // User registration using email and password
