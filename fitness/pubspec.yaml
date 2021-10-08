@@ -43,7 +43,7 @@ dependencies:
     path: api/
   flutter_keyboard_visibility: 5.0.3
   sleek_circular_slider: 2.0.1
-  flutter_mapbox_navigation: ^0.0.26
+  flutter_mapbox_navigation: 0.0.26
 
 dev_dependencies:
   flutter_test:

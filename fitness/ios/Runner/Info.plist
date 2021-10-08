@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoiemVyb3RveGljaXR5IiwiYSI6ImNrdHpmbGl4OTA3cHoydnFndHFpN24wbXcifQ.99WUyaAUQulHdM8Fs7NGMw</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
@@ -29,6 +31,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) to keep track of your workout!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) to keep track of your cycling location!</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) Microphone Usage</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -44,8 +48,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoiemVyb3RveGljaXR5IiwiYSI6ImNrdHpmbGl4OTA3cHoydnFndHFpN24wbXcifQ.99WUyaAUQulHdM8Fs7NGMw</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
