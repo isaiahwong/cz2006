@@ -1,19 +1,19 @@
 FROM python:3.7-buster
 
+WORKDIR /app
+
 RUN apt update
 
 RUN apt install -y python3-opencv
 
-RUN mkdir /app
-
-WORKDIR /app
-
-ADD requirements.txt /app
+COPY src/requirements.txt .
 
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 
-ADD . /app
+COPY src .
 
-ENTRYPOINT ["gunicorn", "main:app", "--bind", ":8080", "--worker-class", "aiohttp.GunicornWebWorker"]
+CMD ["python", "main.py"]
+# ENTRYPOINT ["gunicorn", "src/main:app", "--bind", ":8080", "--worker-class", "aiohttp.GunicornWebWorker"]
+

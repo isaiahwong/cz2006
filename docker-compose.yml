@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  hiit_relay:
+    image: isaiahwong/twozerozerosix-hiit_relay:latest
+    ports:
+      - "50051:50051" # Public port
+    restart: unless-stopped
+
+  pose_rtc:
+    image: isaiahwong/twozerozerosix-pose_rtc:latest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
