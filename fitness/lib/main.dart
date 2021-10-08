@@ -2,6 +2,7 @@
 
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,10 @@ void main() async {
       WorkoutRepo workoutRepo = WorkoutRepo(userRepo: userRepo);
       ExerciseRepo exerciseRepo = ExerciseRepo();
       SocialRepo socialRepo = SocialRepo(userRepo.id);
+      CoordinatesRepo coordinateRepo = CoordinatesRepo();
 
       Get.put<ExerciseRepo>(exerciseRepo, permanent: true);
+      Get.put<CoordinatesRepo>(coordinateRepo, permanent: true);
       Get.put<WorkoutRepo>(workoutRepo, permanent: true);
       Get.put<SocialRepo>(socialRepo, permanent: true);
     },

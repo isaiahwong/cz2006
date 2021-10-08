@@ -1,5 +1,6 @@
 import 'package:fitness/app/screens/cycling/coordinates_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
+import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   static Widget component(
       {ScrollController? scrollController,
       CoordinatesController? coordinatesController}) {
+    Get.lazyPut(() => CoordinatesRepo());
     return GetBuilder(
       init: coordinatesController,
       builder: (_) => CreateWorkoutCyclingScreen(

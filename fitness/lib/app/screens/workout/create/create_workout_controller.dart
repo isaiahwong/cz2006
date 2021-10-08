@@ -3,6 +3,7 @@ import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/cycling/coordinates_model.dart';
+import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -40,6 +41,7 @@ class CreateWorkoutController extends GetxController
       FlowController(CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   final panelController = SlidingPanelController.get(RoutePaths.APP);
   final WorkoutRepo repo = WorkoutRepo.get();
+  final CoordinatesRepo coordinateRepo = CoordinatesRepo();
 
   late WorkoutName name;
   late WorkoutType type;
