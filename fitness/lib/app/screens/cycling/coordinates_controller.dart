@@ -1,5 +1,5 @@
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
-import 'package:fitness/repo/cycling/coordinates.dart';
+import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:get/get.dart';
 
@@ -29,15 +29,15 @@ class CoordinatesController extends GetxController {
     super.onInit();
     coordinates = await coordinatesRepo.getCoordinates();
     coordinates = List.from(coordinates)
-      ..map((e) => delegateController.exists(e)
+      ..map((e) => delegateController.coordsExists(e)
           ? delegateController.coordinates[e.id]
           : e);
     filteredCoordinates = List.from(coordinates);
     update();
   }
 
-  bool isSelected(Coordinates coordinates) {
-    return delegateController.exists(coordinates);
+  bool isSelected(Coordinates c) {
+    return delegateController.coordsExists(c);
   }
 
   void onFilter(String query) {
@@ -53,17 +53,16 @@ class CoordinatesController extends GetxController {
     update();
   }
 
-  Coordinates? onSelected(Coordinates coordinates) {
-    if (isSelected(coordinates))
-      return delegateController.coordinates[coordinates.id];
-    delegateController.onCoordinatesSelected(coordinates);
+  Coordinates? onSelected(Coordinates c) {
+    if (isSelected(c)) return delegateController.coordinates[c.id];
+    delegateController.onCoordinatesSelected(c);
     update();
-    return coordinates;
+    return c;
   }
 
-  void onRemove(Coordinates coordinates) {
-    if (!isSelected(coordinates)) return;
-    delegateController.onCoordinatesRemoved(coordinates);
+  void onRemove(Coordinates c) {
+    if (!isSelected(c)) return;
+    delegateController.onCoordinatesRemoved(c);
     update();
   }
 }

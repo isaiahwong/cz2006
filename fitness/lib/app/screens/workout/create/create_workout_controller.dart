@@ -1,5 +1,6 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
+import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
@@ -33,7 +34,8 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
   }
 }
 
-class CreateWorkoutController extends GetxController with ExerciseDelegate {
+class CreateWorkoutController extends GetxController
+    with ExerciseDelegate, CoordinatesDelegate {
   final FlowController<CreateWorkoutRoute> flowController =
       FlowController(CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   final panelController = SlidingPanelController.get(RoutePaths.APP);
@@ -158,5 +160,42 @@ class CreateWorkoutController extends GetxController with ExerciseDelegate {
   void onTypeChanged(WorkoutType type) {
     this.type = type;
     update();
+  }
+
+  //CoordinatesDelegate
+
+  @override
+  void onCoordinatesSelected(Coordinates c) {
+    coordinates[c.id] = c;
+    update();
+  }
+
+  @override
+  void onCoordinatesRemoved(Coordinates c) {
+    if (coordsNotExists(c)) return;
+    coordinates.remove(c.id);
+    update();
+  }
+
+  @override
+  void onCoordinatesChanged(Coordinates c) {
+    if (coordsNotExists(c)) return;
+    coordinates[c.id] = c.copyWith();
+    update();
+  }
+
+  @override
+  bool coordsExists(Coordinates c) {
+    return coordinates[c.id] != null;
+  }
+
+  @override
+  bool coordsNotExists(Coordinates c) {
+    return coordinates[c.id] == null;
+  }
+
+  @override
+  void onCoordinatesSelectionDone() {
+    flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   }
 }

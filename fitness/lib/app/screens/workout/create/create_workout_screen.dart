@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/screens/cycling/coordinates_controller.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/create/create_workout_controller.dart';
@@ -38,10 +39,17 @@ class CreateWorkoutScreen extends StatefulWidget {
       case CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS:
         return [
           CreateWorkoutMainScreen.page(),
-          CreateWorkoutCyclingScreen.page(),
+          CreateWorkoutCyclingScreen.page(
+            //Error calling CoordinatesController()
+            coordinatesController: CoordinatesController(
+              delegateController: controller,
+            ),
+          ),
         ];
       default:
-        return [CreateWorkoutMainScreen.page()];
+        return [
+          CreateWorkoutMainScreen.page(),
+        ];
     }
   }
 

@@ -20,12 +20,24 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
         ),
       );
 
+  static Widget component(
+      {ScrollController? scrollController,
+      CoordinatesController? coordinatesController}) {
+    return GetBuilder(
+      init: coordinatesController,
+      builder: (_) => CreateWorkoutCyclingScreen(
+        scrollController: scrollController,
+      ),
+    );
+  }
+
+  final ScrollController? scrollController;
+
   const CreateWorkoutCyclingScreen({
     Key? key,
     this.scrollController,
   }) : super(key: key);
 
-  final ScrollController? scrollController;
   void goBack(BuildContext context) {
     context
         .flow<CreateWorkoutRoute>()
@@ -35,6 +47,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        /* 
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.white,
@@ -65,7 +78,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
           ),
           Divider(color: lightGrey),
         ],
-      ),
-    );
+      ), */
+        );
   }
 }
