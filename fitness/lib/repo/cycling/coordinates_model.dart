@@ -45,6 +45,7 @@ class Coordinates {
   }
 
   Coordinates copyWith({
+    String? id,
     String? name,
     double? x,
     double? y,
