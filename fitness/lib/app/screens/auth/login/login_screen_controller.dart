@@ -23,7 +23,7 @@ class LoginScreenController extends GetxController {
 
   // User registration using email and password
   void login() async {
-    error = _validate();
+    
 
     if (error.isNotEmpty) {
       update();

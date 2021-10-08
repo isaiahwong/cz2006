@@ -15,6 +15,8 @@ class RegisterController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  String error = "";
+
   ImagePicker _imagePicker = ImagePicker();
   RegisterController({required AuthRepo authRepo}) : _authRepo = authRepo;
 
@@ -35,8 +37,19 @@ class RegisterController extends GetxController {
     update();
   }
 
+  //validation for Register
+  String _validate() {
+    if (nameController.text.isEmpty) return "Please enter your name";
+    if (emailController.text.isEmpty) return "Please fill in email.";
+    if (!emailController.text.isEmail) return "Please enter valid email.";
+    if (passwordController.text.isEmpty) return "Please fill in password.";
+    return "";
+  }
+
   // User registration using email and password
   register() async {
+    error = _validate();
+
     await _authRepo.register(
       name: nameController.text,
       email: emailController.text,
