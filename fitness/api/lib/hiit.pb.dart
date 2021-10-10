@@ -286,3 +286,338 @@ class Session extends $pb.GeneratedMessage {
   void clearExercise() => clearField(2);
 }
 
+class HIITUser extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITUser', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
+    ..hasRequiredFields = false
+  ;
+
+  HIITUser._() : super();
+  factory HIITUser({
+    $core.String? id,
+    $core.String? name,
+    $core.String? email,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (email != null) {
+      _result.email = email;
+    }
+    return _result;
+  }
+  factory HIITUser.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HIITUser.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HIITUser clone() => HIITUser()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HIITUser copyWith(void Function(HIITUser) updates) => super.copyWith((message) => updates(message as HIITUser)) as HIITUser; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HIITUser create() => HIITUser._();
+  HIITUser createEmptyInstance() => create();
+  static $pb.PbList<HIITUser> createRepeated() => $pb.PbList<HIITUser>();
+  @$core.pragma('dart2js:noInline')
+  static HIITUser getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITUser>(create);
+  static HIITUser? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get email => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set email($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEmail() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEmail() => clearField(3);
+}
+
+class CreateWaitingRoomRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateWaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: HIITUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  CreateWaitingRoomRequest._() : super();
+  factory CreateWaitingRoomRequest({
+    HIITUser? host,
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (host != null) {
+      _result.host = host;
+    }
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory CreateWaitingRoomRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CreateWaitingRoomRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CreateWaitingRoomRequest clone() => CreateWaitingRoomRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CreateWaitingRoomRequest copyWith(void Function(CreateWaitingRoomRequest) updates) => super.copyWith((message) => updates(message as CreateWaitingRoomRequest)) as CreateWaitingRoomRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CreateWaitingRoomRequest create() => CreateWaitingRoomRequest._();
+  CreateWaitingRoomRequest createEmptyInstance() => create();
+  static $pb.PbList<CreateWaitingRoomRequest> createRepeated() => $pb.PbList<CreateWaitingRoomRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CreateWaitingRoomRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CreateWaitingRoomRequest>(create);
+  static CreateWaitingRoomRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  HIITUser get host => $_getN(0);
+  @$pb.TagNumber(1)
+  set host(HIITUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHost() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHost() => clearField(1);
+  @$pb.TagNumber(1)
+  HIITUser ensureHost() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get hiit => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set hiit($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHiit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHiit() => clearField(2);
+}
+
+class WaitingRoomRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: HIITUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  WaitingRoomRequest._() : super();
+  factory WaitingRoomRequest({
+    HIITUser? user,
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (user != null) {
+      _result.user = user;
+    }
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory WaitingRoomRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WaitingRoomRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WaitingRoomRequest clone() => WaitingRoomRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WaitingRoomRequest copyWith(void Function(WaitingRoomRequest) updates) => super.copyWith((message) => updates(message as WaitingRoomRequest)) as WaitingRoomRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WaitingRoomRequest create() => WaitingRoomRequest._();
+  WaitingRoomRequest createEmptyInstance() => create();
+  static $pb.PbList<WaitingRoomRequest> createRepeated() => $pb.PbList<WaitingRoomRequest>();
+  @$core.pragma('dart2js:noInline')
+  static WaitingRoomRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WaitingRoomRequest>(create);
+  static WaitingRoomRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  HIITUser get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user(HIITUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  HIITUser ensureUser() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get hiit => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set hiit($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHiit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHiit() => clearField(2);
+}
+
+class WaitingRoomResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WaitingRoomResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..pc<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'users', $pb.PbFieldType.PM, subBuilder: HIITUser.create)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start')
+    ..hasRequiredFields = false
+  ;
+
+  WaitingRoomResponse._() : super();
+  factory WaitingRoomResponse({
+    $core.Iterable<HIITUser>? users,
+    $core.bool? start,
+  }) {
+    final _result = create();
+    if (users != null) {
+      _result.users.addAll(users);
+    }
+    if (start != null) {
+      _result.start = start;
+    }
+    return _result;
+  }
+  factory WaitingRoomResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WaitingRoomResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WaitingRoomResponse clone() => WaitingRoomResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WaitingRoomResponse copyWith(void Function(WaitingRoomResponse) updates) => super.copyWith((message) => updates(message as WaitingRoomResponse)) as WaitingRoomResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WaitingRoomResponse create() => WaitingRoomResponse._();
+  WaitingRoomResponse createEmptyInstance() => create();
+  static $pb.PbList<WaitingRoomResponse> createRepeated() => $pb.PbList<WaitingRoomResponse>();
+  @$core.pragma('dart2js:noInline')
+  static WaitingRoomResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WaitingRoomResponse>(create);
+  static WaitingRoomResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<HIITUser> get users => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.bool get start => $_getBF(1);
+  @$pb.TagNumber(2)
+  set start($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStart() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStart() => clearField(2);
+}
+
+class InviteWaitingRoomRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InviteWaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: HIITUser.create)
+    ..aOM<HIITUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: HIITUser.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  InviteWaitingRoomRequest._() : super();
+  factory InviteWaitingRoomRequest({
+    HIITUser? from,
+    HIITUser? to,
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (from != null) {
+      _result.from = from;
+    }
+    if (to != null) {
+      _result.to = to;
+    }
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory InviteWaitingRoomRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InviteWaitingRoomRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InviteWaitingRoomRequest clone() => InviteWaitingRoomRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InviteWaitingRoomRequest copyWith(void Function(InviteWaitingRoomRequest) updates) => super.copyWith((message) => updates(message as InviteWaitingRoomRequest)) as InviteWaitingRoomRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static InviteWaitingRoomRequest create() => InviteWaitingRoomRequest._();
+  InviteWaitingRoomRequest createEmptyInstance() => create();
+  static $pb.PbList<InviteWaitingRoomRequest> createRepeated() => $pb.PbList<InviteWaitingRoomRequest>();
+  @$core.pragma('dart2js:noInline')
+  static InviteWaitingRoomRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InviteWaitingRoomRequest>(create);
+  static InviteWaitingRoomRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  HIITUser get from => $_getN(0);
+  @$pb.TagNumber(1)
+  set from(HIITUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFrom() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFrom() => clearField(1);
+  @$pb.TagNumber(1)
+  HIITUser ensureFrom() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  HIITUser get to => $_getN(1);
+  @$pb.TagNumber(2)
+  set to(HIITUser v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTo() => clearField(2);
+  @$pb.TagNumber(2)
+  HIITUser ensureTo() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get hiit => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set hiit($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHiit() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHiit() => clearField(3);
+}
+

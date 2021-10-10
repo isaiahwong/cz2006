@@ -174,7 +174,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
             width: width,
             textColor: Colors.white,
             backgroundColor: primaryColor,
-            onPressed: controller.onWorkoutStart,
+            onPressed: controller.onSoloStart,
           ),
           CustomButton(
             "DUO",
@@ -182,7 +182,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
             width: width,
             textColor: Colors.white,
             backgroundColor: green,
-            onPressed: controller.onWorkoutStart,
+            onPressed: controller.onDuoStart,
           ),
         ],
       ),

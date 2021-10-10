@@ -17,8 +17,12 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HIITServiceClient interface {
-	Sub(ctx context.Context, opts ...grpc.CallOption) (HIITService_SubClient, error)
+	Sub(ctx context.Context, in *RoutineChange, opts ...grpc.CallOption) (HIITService_SubClient, error)
 	Pub(ctx context.Context, in *DataSession, opts ...grpc.CallOption) (*Empty, error)
+	CreateWaitingRoom(ctx context.Context, in *CreateWaitingRoomRequest, opts ...grpc.CallOption) (HIITService_CreateWaitingRoomClient, error)
+	JoinWaitingRoom(ctx context.Context, in *WaitingRoomRequest, opts ...grpc.CallOption) (HIITService_JoinWaitingRoomClient, error)
+	NotifyInvites(ctx context.Context, in *InviteWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error)
+	SubInvites(ctx context.Context, in *HIITUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error)
 }
 
 type hIITServiceClient struct {
@@ -29,27 +33,28 @@ func NewHIITServiceClient(cc grpc.ClientConnInterface) HIITServiceClient {
 	return &hIITServiceClient{cc}
 }
 
-func (c *hIITServiceClient) Sub(ctx context.Context, opts ...grpc.CallOption) (HIITService_SubClient, error) {
+func (c *hIITServiceClient) Sub(ctx context.Context, in *RoutineChange, opts ...grpc.CallOption) (HIITService_SubClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[0], "/hiit.HIITService/Sub", opts...)
 	if err != nil {
 		return nil, err
 	}
 	x := &hIITServiceSubClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
 type HIITService_SubClient interface {
-	Send(*RoutineChange) error
 	Recv() (*Data, error)
 	grpc.ClientStream
 }
 
 type hIITServiceSubClient struct {
 	grpc.ClientStream
-}
-
-func (x *hIITServiceSubClient) Send(m *RoutineChange) error {
-	return x.ClientStream.SendMsg(m)
 }
 
 func (x *hIITServiceSubClient) Recv() (*Data, error) {
@@ -69,12 +74,121 @@ func (c *hIITServiceClient) Pub(ctx context.Context, in *DataSession, opts ...gr
 	return out, nil
 }
 
+func (c *hIITServiceClient) CreateWaitingRoom(ctx context.Context, in *CreateWaitingRoomRequest, opts ...grpc.CallOption) (HIITService_CreateWaitingRoomClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[1], "/hiit.HIITService/CreateWaitingRoom", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hIITServiceCreateWaitingRoomClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HIITService_CreateWaitingRoomClient interface {
+	Recv() (*WaitingRoomResponse, error)
+	grpc.ClientStream
+}
+
+type hIITServiceCreateWaitingRoomClient struct {
+	grpc.ClientStream
+}
+
+func (x *hIITServiceCreateWaitingRoomClient) Recv() (*WaitingRoomResponse, error) {
+	m := new(WaitingRoomResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *hIITServiceClient) JoinWaitingRoom(ctx context.Context, in *WaitingRoomRequest, opts ...grpc.CallOption) (HIITService_JoinWaitingRoomClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[2], "/hiit.HIITService/JoinWaitingRoom", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hIITServiceJoinWaitingRoomClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HIITService_JoinWaitingRoomClient interface {
+	Recv() (*WaitingRoomResponse, error)
+	grpc.ClientStream
+}
+
+type hIITServiceJoinWaitingRoomClient struct {
+	grpc.ClientStream
+}
+
+func (x *hIITServiceJoinWaitingRoomClient) Recv() (*WaitingRoomResponse, error) {
+	m := new(WaitingRoomResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *hIITServiceClient) NotifyInvites(ctx context.Context, in *InviteWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/NotifyInvites", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hIITServiceClient) SubInvites(ctx context.Context, in *HIITUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[3], "/hiit.HIITService/SubInvites", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hIITServiceSubInvitesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HIITService_SubInvitesClient interface {
+	Recv() (*InviteWaitingRoomRequest, error)
+	grpc.ClientStream
+}
+
+type hIITServiceSubInvitesClient struct {
+	grpc.ClientStream
+}
+
+func (x *hIITServiceSubInvitesClient) Recv() (*InviteWaitingRoomRequest, error) {
+	m := new(InviteWaitingRoomRequest)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // HIITServiceServer is the server API for HIITService service.
 // All implementations must embed UnimplementedHIITServiceServer
 // for forward compatibility
 type HIITServiceServer interface {
-	Sub(HIITService_SubServer) error
+	Sub(*RoutineChange, HIITService_SubServer) error
 	Pub(context.Context, *DataSession) (*Empty, error)
+	CreateWaitingRoom(*CreateWaitingRoomRequest, HIITService_CreateWaitingRoomServer) error
+	JoinWaitingRoom(*WaitingRoomRequest, HIITService_JoinWaitingRoomServer) error
+	NotifyInvites(context.Context, *InviteWaitingRoomRequest) (*Empty, error)
+	SubInvites(*HIITUser, HIITService_SubInvitesServer) error
 	mustEmbedUnimplementedHIITServiceServer()
 }
 
@@ -82,11 +196,23 @@ type HIITServiceServer interface {
 type UnimplementedHIITServiceServer struct {
 }
 
-func (UnimplementedHIITServiceServer) Sub(HIITService_SubServer) error {
+func (UnimplementedHIITServiceServer) Sub(*RoutineChange, HIITService_SubServer) error {
 	return status.Errorf(codes.Unimplemented, "method Sub not implemented")
 }
 func (UnimplementedHIITServiceServer) Pub(context.Context, *DataSession) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Pub not implemented")
+}
+func (UnimplementedHIITServiceServer) CreateWaitingRoom(*CreateWaitingRoomRequest, HIITService_CreateWaitingRoomServer) error {
+	return status.Errorf(codes.Unimplemented, "method CreateWaitingRoom not implemented")
+}
+func (UnimplementedHIITServiceServer) JoinWaitingRoom(*WaitingRoomRequest, HIITService_JoinWaitingRoomServer) error {
+	return status.Errorf(codes.Unimplemented, "method JoinWaitingRoom not implemented")
+}
+func (UnimplementedHIITServiceServer) NotifyInvites(context.Context, *InviteWaitingRoomRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NotifyInvites not implemented")
+}
+func (UnimplementedHIITServiceServer) SubInvites(*HIITUser, HIITService_SubInvitesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubInvites not implemented")
 }
 func (UnimplementedHIITServiceServer) mustEmbedUnimplementedHIITServiceServer() {}
 
@@ -102,12 +228,15 @@ func RegisterHIITServiceServer(s *grpc.Server, srv HIITServiceServer) {
 }
 
 func _HIITService_Sub_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(HIITServiceServer).Sub(&hIITServiceSubServer{stream})
+	m := new(RoutineChange)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).Sub(m, &hIITServiceSubServer{stream})
 }
 
 type HIITService_SubServer interface {
 	Send(*Data) error
-	Recv() (*RoutineChange, error)
 	grpc.ServerStream
 }
 
@@ -117,14 +246,6 @@ type hIITServiceSubServer struct {
 
 func (x *hIITServiceSubServer) Send(m *Data) error {
 	return x.ServerStream.SendMsg(m)
-}
-
-func (x *hIITServiceSubServer) Recv() (*RoutineChange, error) {
-	m := new(RoutineChange)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 func _HIITService_Pub_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -145,6 +266,87 @@ func _HIITService_Pub_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HIITService_CreateWaitingRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CreateWaitingRoomRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).CreateWaitingRoom(m, &hIITServiceCreateWaitingRoomServer{stream})
+}
+
+type HIITService_CreateWaitingRoomServer interface {
+	Send(*WaitingRoomResponse) error
+	grpc.ServerStream
+}
+
+type hIITServiceCreateWaitingRoomServer struct {
+	grpc.ServerStream
+}
+
+func (x *hIITServiceCreateWaitingRoomServer) Send(m *WaitingRoomResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HIITService_JoinWaitingRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WaitingRoomRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).JoinWaitingRoom(m, &hIITServiceJoinWaitingRoomServer{stream})
+}
+
+type HIITService_JoinWaitingRoomServer interface {
+	Send(*WaitingRoomResponse) error
+	grpc.ServerStream
+}
+
+type hIITServiceJoinWaitingRoomServer struct {
+	grpc.ServerStream
+}
+
+func (x *hIITServiceJoinWaitingRoomServer) Send(m *WaitingRoomResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HIITService_NotifyInvites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InviteWaitingRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HIITServiceServer).NotifyInvites(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/hiit.HIITService/NotifyInvites",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HIITServiceServer).NotifyInvites(ctx, req.(*InviteWaitingRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HIITService_SubInvites_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HIITUser)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).SubInvites(m, &hIITServiceSubInvitesServer{stream})
+}
+
+type HIITService_SubInvitesServer interface {
+	Send(*InviteWaitingRoomRequest) error
+	grpc.ServerStream
+}
+
+type hIITServiceSubInvitesServer struct {
+	grpc.ServerStream
+}
+
+func (x *hIITServiceSubInvitesServer) Send(m *InviteWaitingRoomRequest) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 var _HIITService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "hiit.HIITService",
 	HandlerType: (*HIITServiceServer)(nil),
@@ -153,13 +355,31 @@ var _HIITService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Pub",
 			Handler:    _HIITService_Pub_Handler,
 		},
+		{
+			MethodName: "NotifyInvites",
+			Handler:    _HIITService_NotifyInvites_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Sub",
 			Handler:       _HIITService_Sub_Handler,
 			ServerStreams: true,
-			ClientStreams: true,
+		},
+		{
+			StreamName:    "CreateWaitingRoom",
+			Handler:       _HIITService_CreateWaitingRoom_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "JoinWaitingRoom",
+			Handler:       _HIITService_JoinWaitingRoom_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "SubInvites",
+			Handler:       _HIITService_SubInvites_Handler,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "hiit.proto",

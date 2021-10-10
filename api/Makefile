@@ -22,6 +22,7 @@ gen-dart:
 		./*.proto
 
 gen-dart-target:	
+	dart pub global activate protoc_plugin  
 	protoc \
 		-I ./ \
 		--dart_out=grpc:../fitness/api/lib \

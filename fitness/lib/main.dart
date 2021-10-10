@@ -14,6 +14,8 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness/app/controllers/controllers.dart';
 import 'package:fitness/app/theme/theme.dart';
+import 'package:grpc/grpc.dart';
+import 'package:hiit_api/hiit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +23,18 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await Firebase.initializeApp();
+  final hiitClient = HIITServiceClient(ClientChannel(
+    '192.168.31.109',
+    port: 50051,
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+  ));
 
   UserRepo userRepo = UserRepo();
   AuthRepo authRepo = AuthRepo(
     userRepo: userRepo,
     initWhenAuth: () {
-      WorkoutRepo workoutRepo = WorkoutRepo(userRepo: userRepo);
+      WorkoutRepo workoutRepo =
+          WorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
       ExerciseRepo exerciseRepo = ExerciseRepo();
       SocialRepo socialRepo = SocialRepo(userRepo.id);
       CoordinatesRepo coordinateRepo = CoordinatesRepo();
@@ -39,7 +47,8 @@ void main() async {
   );
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
-  Get.put<UserController>(UserController(userRepo: userRepo));
+  Get.put<UserController>(
+      UserController(userRepo: userRepo, hiitClient: hiitClient));
 
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);

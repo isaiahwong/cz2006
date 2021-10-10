@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/repo/repo.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiit_api/hiit.dart';
 import 'package:grpc/grpc.dart';
@@ -13,39 +12,41 @@ import 'model/model.dart';
 class WorkoutRepo {
   late final UserRepo _userRepo;
   CollectionReference collection;
-  final ClientChannel channel;
-  late final HIITServiceClient client;
+  late final HIITServiceClient hiitClient;
 
-  WorkoutRepo({required UserRepo userRepo})
-      : collection = FirebaseFirestore.instance
+  WorkoutRepo({
+    required UserRepo userRepo,
+    required this.hiitClient,
+  })  : collection = FirebaseFirestore.instance
             .collection('/users/${userRepo.id}/workouts'),
-        _userRepo = userRepo,
-        channel = ClientChannel(
-          '192.168.31.109',
-          port: 50051,
-          options:
-              const ChannelOptions(credentials: ChannelCredentials.insecure()),
-        ) {
-    client = HIITServiceClient(channel);
-  }
+        _userRepo = userRepo;
 
   factory WorkoutRepo.get() {
     return Get.find();
   }
 
   ResponseStream<Data> startHIITStream() {
-    return client.sub(_startStream(),
+    return hiitClient.sub(RoutineChange(),
         options: CallOptions(metadata: {
           "id": UserController.get().user.value!.id,
         }));
   }
 
-  Stream<RoutineChange> _startStream() async* {
-    while (true) {
-      await Future.delayed(Duration(seconds: 1));
-
-      yield RoutineChange();
-    }
+  ResponseStream<WaitingRoomResponse> createWaitingRoom(HIIT hiit) {
+    return hiitClient.createWaitingRoom(
+      CreateWaitingRoomRequest(
+        hiit: hiit.id,
+        host: HIITUser(
+          id: UserController.get().user.value!.id,
+          name: UserController.get().user.value!.name,
+        ),
+      ),
+      options: CallOptions(
+        metadata: {
+          "id": UserController.get().user.value!.id,
+        },
+      ),
+    );
   }
 
   Future<Workout> createWorkout(Workout workout) async {
