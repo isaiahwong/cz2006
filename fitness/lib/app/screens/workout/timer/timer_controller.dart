@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:fitness/app/screens/workout/timer/timer.dart';
 import 'package:fitness/common/ticker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TimerController extends GetxController {
   static TimerController get(String tag) => Get.find(tag: tag);
 
+  VoidCallback? _onTimerDone;
   Ticker _ticker = Ticker();
 
   TimerState state = TimerInitial();
@@ -14,6 +16,14 @@ class TimerController extends GetxController {
   int tick = 0;
 
   StreamSubscription<int>? _tickerSubscription;
+
+  set onTimerDone(VoidCallback callback) {
+    if (_onTimerDone != null) {
+      print("onTimerDone has been set prior. Reinstantiate to reset callback.");
+      return;
+    }
+    _onTimerDone = callback;
+  }
 
   Duration get current {
     final d = duration - DateTime.now().difference(start);
@@ -31,16 +41,19 @@ class TimerController extends GetxController {
   void _onTimerTicked() {
     tick = current.inSeconds;
     if (current.inSeconds > 0) {
-      state = TimerRunInProgress();
+      state = TimerInProgress();
     } else {
-      state = TimerRunComplete();
+      state = TimerComplete();
       _tickerSubscription?.cancel();
+      if (_onTimerDone != null) this._onTimerDone!();
     }
+    update();
   }
 
   void onTimerStart(Duration duration) {
-    state = TimerRunInProgress();
+    state = TimerInProgress();
     start = DateTime.now();
+    this.duration = duration;
     _tickerSubscription?.cancel();
     _tickerSubscription =
         _ticker.tick(ticks: duration).listen((duration) => _onTimerTicked());
@@ -48,28 +61,29 @@ class TimerController extends GetxController {
   }
 
   void onTimerPause() {
-    if (!(state is TimerRunInProgress)) return;
+    if (!(state is TimerInProgress)) return;
     _tickerSubscription?.pause();
-    state = TimerRunPause();
+    state = TimerPause();
     update();
   }
 
   void onTimerResume() {
-    if (!(state is TimerRunPause)) return;
+    if (!(state is TimerPause)) return;
     _tickerSubscription?.resume();
-    state = TimerRunInProgress();
+    state = TimerInProgress();
     update();
   }
 
   void onTimerCancel() {
     _tickerSubscription?.cancel();
-    state = TimerRunCanceled();
+    state = TimerCanceled();
+    update();
   }
 
   void onTimerSet(Duration duration) {
-    state = TimerRunPause();
+    state = TimerPause();
     start = DateTime.now();
-    duration = duration;
+    this.duration = duration;
     update();
   }
 }

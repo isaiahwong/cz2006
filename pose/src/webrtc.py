@@ -43,11 +43,11 @@ class VideoTransformTrack(MediaStreamTrack):
         results = self.pose.process(image)
 
         try:
-            self.exercise.process(results.pose_landmarks.landmark)
+            count = self.exercise.process(results.pose_landmarks.landmark)
             self.hiit_stub.Pub(api.hiit_pb2.DataSession(
                 data=api.hiit_pb2.Data(
                     state=self.exercise.state,
-                    count=self.exercise.count,
+                    count=count,
                     interval=self.exercise.interval,
                 ),
                 session=api.hiit_pb2.Session(

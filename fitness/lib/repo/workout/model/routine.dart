@@ -86,10 +86,33 @@ class Routine {
     );
   }
 
+  Routine updateInterval(RoutineInterval interval) {
+    return copyWith(
+      intervals: List<RoutineInterval>.from(intervals)
+          .map((i) => i.id == interval.id ? interval.copyWith() : i)
+          .toList(),
+    );
+  }
+
   RoutineInterval? nextInterval(RoutineInterval? current) {
     if (current == null) return current;
     final i = intervals.indexWhere((r) => r.id == current.id);
     if (i == -1 || i == intervals.length - 1) return null;
     return intervals[i + 1].copyWith();
+  }
+
+  bool isLastInterval(RoutineInterval interval) {
+    for (int i = 0; i < intervals.length; i++)
+      if (!intervals[i].currentLog.completed && intervals[i].id != interval.id)
+        return false;
+    return true;
+  }
+
+  RoutineInterval? getCurrentInterval() {
+    try {
+      return intervals.firstWhere((r) => !(r.currentLog.completed));
+    } catch (error) {
+      return null;
+    }
   }
 }

@@ -1,4 +1,3 @@
-import 'package:fitness/app/components/button/button.dart';
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/screens/workout/hiit/active/active.dart';
 import 'package:fitness/app/screens/workout/hiit/active/pose/pose_screen.dart';
@@ -199,7 +198,7 @@ class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
   ) {
     return Row(
       children: [
-        _repsCard(context, controller.count),
+        _repsCard(context, controller.currentReps),
         SizedBox(width: 15),
         _repsCard(context, controller.currentInterval!.defaultReps),
       ],

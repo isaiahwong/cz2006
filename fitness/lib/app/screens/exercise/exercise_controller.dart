@@ -66,7 +66,7 @@ class ExerciseController extends GetxController {
         defaultReps: reps,
         defaultSets: sets,
         defaultWarmups: warmups,
-        defaultRestDuration: (minutes ?? exercise.defaultRestMinutes * 60) +
+        defaultRestDuration: ((minutes ?? exercise.defaultRestMinutes) * 60) +
             (seconds ?? exercise.defaultRestSeconds),
       ),
     );

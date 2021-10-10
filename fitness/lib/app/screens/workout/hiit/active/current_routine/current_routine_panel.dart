@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CurrentRoutinePanel extends GetView<ActiveHIITController> {
-  final PageController _controller = PageController(initialPage: 0);
+import 'current_routine_panel_rest.dart';
 
-  void _onIntervalCompleted(RoutineInterval routine) {
+class CurrentRoutinePanel extends GetView<ActiveHIITController> {
+  void _onIntervalCompleted() {
     // Skip to next if completed
     // if (routine.routinePlan?.completed ?? true) {
     //   BlocProvider.of<ActiveWorkoutBloc>(context).add(ActiveWorkoutNext());
@@ -27,8 +27,7 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
     // );
   }
 
-  Widget _nextBtn(BuildContext) {
-    final currentInterval = controller.currentInterval!;
+  Widget _nextBtn() {
     return (controller.state is ActiveWorkoutWorking)
         ? Container(
             width: 50,
@@ -39,12 +38,13 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
             ),
             child: IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () => _onIntervalCompleted(currentInterval),
+              onPressed: controller.onIntervalCompleted,
               icon: Icon(CupertinoIcons.forward, size: 25),
               color: Colors.white,
             ),
           )
-        : CustomButton("SKIP",
+        : CustomButton(
+            "SKIP",
             fontSize: 14.0,
             fontWeight: FontWeight.w900,
             textColor: Colors.white,
@@ -52,7 +52,8 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
             radius: 100,
             height: 40,
             width: 100,
-            onPressed: () => _onRestSkip());
+            onPressed: controller.onRoutineSkip,
+          );
   }
 
   Widget _upcomingTitle(BuildContext context) {
@@ -111,7 +112,7 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _upcomingTitle(context),
-          _nextBtn(context),
+          _nextBtn(),
         ],
       ),
     );
@@ -139,18 +140,12 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
   List<Widget> _pages() {
     return [
       CurrentRoutinePanelWorking(),
-      // CurrentRoutinePanelRest(),
+      CurrentRoutinePanelRest(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    // return BlocListener<ActiveWorkoutBloc, ActiveWorkoutState>(
-    //   listener: (context, state) {
-    //     if (state is ActiveWorkoutRest)
-    //       _controller.animateToPage(1,
-    //           duration: Duration(milliseconds: 400), curve: Curves.easeIn);
-    //   },
     return GetBuilder<ActiveHIITController>(
       builder: (_) {
         if (controller.currentInterval == null) return SizedBox.shrink();
@@ -166,7 +161,7 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
                 _down(),
                 Expanded(
                   child: PageView.builder(
-                    controller: _controller,
+                    controller: controller.pageController,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return _pages()[index % 2];

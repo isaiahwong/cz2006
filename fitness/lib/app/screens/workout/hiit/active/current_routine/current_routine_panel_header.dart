@@ -1,6 +1,7 @@
 // import 'package:fitness/bloc/ui/app_panel/app_panel.dart';
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/timer/timer_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/common/format.dart';
 import 'package:fitness/repo/workout/model/model.dart';
@@ -77,39 +78,44 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
             ),
           ],
         ),
-        Row(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+        GetBuilder<TimerController>(
+          init: controller.timerController,
+          builder: (timerController) {
+            return Row(
               children: [
-                Text(
-                  "${zeroPrefix(controller.timerController.current.inMinutes)}:",
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${zeroPrefix(timerController.current.inMinutes)}:",
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                    ),
+                    Text(
+                      zeroPrefix(timerController.current.inSeconds),
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                    ),
+                  ],
                 ),
-                Text(
-                  zeroPrefix(controller.timerController.current.inSeconds),
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
+                SizedBox(width: 10),
+                CustomButton(
+                  "SKIP",
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w900,
+                  textColor: Colors.white,
+                  backgroundColor: primaryColor,
+                  radius: 100,
+                  height: 30,
+                  width: 80,
+                  onPressed: controller.onRoutineSkip,
                 ),
               ],
-            ),
-            SizedBox(width: 10),
-            CustomButton(
-              "SKIP",
-              fontSize: 12.0,
-              fontWeight: FontWeight.w900,
-              textColor: Colors.white,
-              backgroundColor: primaryColor,
-              radius: 100,
-              height: 30,
-              width: 80,
-              onPressed: () => _onRestSkip(context),
-            ),
-          ],
+            );
+          },
         ),
       ],
     );

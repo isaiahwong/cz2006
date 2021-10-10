@@ -2,10 +2,10 @@ abstract class TimerState {}
 
 class TimerInitial extends TimerState {}
 
-class TimerRunPause extends TimerState {}
+class TimerPause extends TimerState {}
 
-class TimerRunInProgress extends TimerState {}
+class TimerInProgress extends TimerState {}
 
-class TimerRunComplete extends TimerState {}
+class TimerComplete extends TimerState {}
 
-class TimerRunCanceled extends TimerState {}
+class TimerCanceled extends TimerState {}

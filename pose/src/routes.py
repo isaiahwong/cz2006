@@ -22,6 +22,8 @@ async def offer(request):
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
     exercise = params["exercise"]
     interval = params["interval"]
+    reps = params["reps"]
+
     id = params["id"]
 
     # End function if exercise not in
@@ -71,7 +73,8 @@ async def offer(request):
                 exercise=exercises[exercise](
                     id=id,
                     exercise=exercise,
-                    interval=interval
+                    interval=interval,
+                    reps=reps,
                 )
             )
             pc.addTrack(vtrack)
