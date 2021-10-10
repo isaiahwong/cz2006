@@ -5,8 +5,8 @@ import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-class CurrentRoutineRepsPanel extends GetView<ActiveHIITController> {
-  const CurrentRoutineRepsPanel({Key? key}) : super(key: key);
+class CurrentIntervalRepsPanel extends GetView<ActiveHIITController> {
+  const CurrentIntervalRepsPanel({Key? key}) : super(key: key);
 
   void _onRepsChanged({
     required BuildContext context,

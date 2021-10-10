@@ -7,16 +7,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CurrentRoutinePanelWorking extends GetView<ActiveHIITController> {
-  const CurrentRoutinePanelWorking({Key? key}) : super(key: key);
+class CurrentIntervalPanelWorking extends GetView<ActiveHIITController> {
+  const CurrentIntervalPanelWorking({Key? key}) : super(key: key);
 
   static Page page() => CupertinoPage<void>(
-        child: CurrentRoutinePanelWorking(),
+        child: CurrentIntervalPanelWorking(),
       );
 
   void _onRepsTap(BuildContext context) {
     // BlocProvider.of<SlidingPanelBloc>(context).add(SlidingPanelOpened(
-    //   panel: (_) => CurrentRoutineRepsPanel(),
+    //   panel: (_) => CurrentIntervalRepsPanel(),
     //   fixed: true,
     // ));
   }

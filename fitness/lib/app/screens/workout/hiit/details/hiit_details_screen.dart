@@ -150,7 +150,8 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
     );
   }
 
-  Widget _start() {
+  Widget _start(BuildContext context) {
+    final width = MediaQuery.of(context).size.width * 0.9 / 2;
     return Container(
       height: 80,
       width: double.infinity,
@@ -164,18 +165,26 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
           )
         ],
       ),
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: CustomButton(
-            "START",
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomButton(
+            "SOLO",
             radius: 20,
-            width: double.infinity,
+            width: width,
             textColor: Colors.white,
             backgroundColor: primaryColor,
             onPressed: controller.onWorkoutStart,
           ),
-        ),
+          CustomButton(
+            "DUO",
+            radius: 20,
+            width: width,
+            textColor: Colors.white,
+            backgroundColor: green,
+            onPressed: controller.onWorkoutStart,
+          ),
+        ],
       ),
     );
   }
@@ -204,7 +213,7 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: _start(),
+                  child: _start(context),
                 )
               ],
             ),

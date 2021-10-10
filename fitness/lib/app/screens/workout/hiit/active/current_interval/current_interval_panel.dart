@@ -6,27 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'current_routine_panel_rest.dart';
+import 'current_interval_panel_rest.dart';
 
-class CurrentRoutinePanel extends GetView<ActiveHIITController> {
-  void _onIntervalCompleted() {
-    // Skip to next if completed
-    // if (routine.routinePlan?.completed ?? true) {
-    //   BlocProvider.of<ActiveWorkoutBloc>(context).add(ActiveWorkoutNext());
-    //   return;
-    // }
-
-    // BlocProvider.of<ActiveWorkoutBloc>(context).add(
-    //   ActiveWorkoutRoutineCompleted(routine: routine),
-    // );
-  }
-
-  void _onRestSkip() {
-    // BlocProvider.of<ActiveWorkoutBloc>(context).add(
-    //   ActiveWorkoutRoutineSkip(),
-    // );
-  }
-
+class CurrentIntervalPanel extends GetView<ActiveHIITController> {
   Widget _nextBtn() {
     return (controller.state is ActiveWorkoutWorking)
         ? Container(
@@ -139,8 +121,8 @@ class CurrentRoutinePanel extends GetView<ActiveHIITController> {
 
   List<Widget> _pages() {
     return [
-      CurrentRoutinePanelWorking(),
-      CurrentRoutinePanelRest(),
+      CurrentIntervalPanelWorking(),
+      CurrentIntervalPanelRest(),
     ];
   }
 

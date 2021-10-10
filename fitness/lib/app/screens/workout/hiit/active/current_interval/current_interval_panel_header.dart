@@ -9,27 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
-  const CurrentRoutinePanelHeader({Key? key}) : super(key: key);
-
-  void _onRoutineCompleted(BuildContext context, RoutineInterval routine) {
-    // if (BlocProvider.of<ActiveWorkoutBloc>(context).state.workout.isLastRoutine(routine)) return;
-    // Skip to next if completed
-    // if (routine.routinePlan?.completed ?? true) {
-    //   BlocProvider.of<ActiveWorkoutBloc>(context).add(ActiveWorkoutNext());
-    //   return;
-    // }
-
-    // BlocProvider.of<ActiveWorkoutBloc>(context).add(
-    //   ActiveWorkoutRoutineCompleted(routine: routine),
-    // );
-  }
-
-  void _onRestSkip(BuildContext context) {
-    // BlocProvider.of<ActiveWorkoutBloc>(context).add(
-    //   ActiveWorkoutNext(),
-    // );
-  }
+class CurrentIntervalPanelHeader extends GetView<ActiveHIITController> {
+  const CurrentIntervalPanelHeader({Key? key}) : super(key: key);
 
   Widget restWorkoutBar(BuildContext context) {
     if (controller.currentInterval == null) return SizedBox.shrink();
@@ -158,8 +139,7 @@ class CurrentRoutinePanelHeader extends GetView<ActiveHIITController> {
           ),
           child: IconButton(
             padding: EdgeInsets.zero,
-            onPressed: () =>
-                _onRoutineCompleted(context, controller.currentInterval!),
+            onPressed: controller.onIntervalCompleted,
             icon: Icon(CupertinoIcons.forward, size: 20),
             color: Colors.white,
           ),

@@ -10,11 +10,11 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class CurrentRoutinePanelRest extends GetView<ActiveHIITController> {
-  const CurrentRoutinePanelRest({Key? key}) : super(key: key);
+class CurrentIntervalPanelRest extends GetView<ActiveHIITController> {
+  const CurrentIntervalPanelRest({Key? key}) : super(key: key);
 
   static Page page() => CupertinoPage<void>(
-        child: CurrentRoutinePanelRest(),
+        child: CurrentIntervalPanelRest(),
       );
 
   @override
