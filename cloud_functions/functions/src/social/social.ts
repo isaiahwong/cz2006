@@ -109,9 +109,9 @@ exports.sendRequest = functions
 
 /**
  * Accept or decline friend requests
- * @param {string} initiatorId
  * @param {string} friendId
  * @param {boolean} response
+ * @param {string} documentId
  * @return {Promise}
  */
 exports.respondRequest = functions
@@ -126,22 +126,24 @@ exports.respondRequest = functions
             .https
             .HttpsError("unauthenticated", "User not authenticated");
       }
-      if (data.initiatorId == null || data.response == null || data.friendId) {
+      if (data.response == null || data.friendId) {
         throw new functions
             .https
             .HttpsError("invalid-argument", "arguments not found");
       }
-      // Friend document id
+      // Friend user id
       const friendId: string = data.friendId;
       // Response of the friend request
       const requestResponse: boolean = data.response;
-      // user id
-      const initiatorId: string = data.initiatorId;
+
+      // Document id
+      const documentId: string = data.documentId;
 
       const currentUserId: string = context.auth.uid;
       const usersCol = admin
           .firestore()
           .collection(p.Collection.users);
+
       let friendStatus: m.user.SocialStatus = m.user.SocialStatus.PENDING;
       if (requestResponse) {
         friendStatus = m.user.SocialStatus.FRIEND;
@@ -152,15 +154,15 @@ exports.respondRequest = functions
       await usersCol
           .doc(currentUserId)
           .collection(p.UserSubCollections.friends)
-          .doc(friendId)
+          .doc(documentId)
           .update({
             "status": friendStatus,
           });
       // Update on other user as well
       await usersCol
-          .doc(initiatorId)
-          .collection(p.UserSubCollections.friends)
           .doc(friendId)
+          .collection(p.UserSubCollections.friends)
+          .doc(documentId)
           .update({
             "status": friendStatus,
           });
