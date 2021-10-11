@@ -1,5 +1,6 @@
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
+import 'package:fitness/repo/repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,6 +46,27 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
     );
   }
 
+  Widget _people(User user) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+      ),
+    );
+  }
+
+  Widget _peopleRow() {
+    return SliverToBoxAdapter(
+      child: GridView.count(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        crossAxisCount: 5,
+        children: controller.users.map<Widget>((u) => _people(u)).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -57,6 +79,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
                 controller: ScrollController(),
                 slivers: [
                   _appBar(context),
+                  _peopleRow(),
                 ],
               ),
             ),

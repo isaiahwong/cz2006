@@ -5,8 +5,9 @@ import hiit "github.com/isaiahwong/hiit/api"
 type WaitingRoom struct {
 	Host    *hiit.HIITUser
 	HIIT    string
-	Users   []*WaitingSub
+	Users   map[string]*WaitingSub
 	JoinSub chan (*WaitingSub)
+	Start   chan (string)
 }
 
 type WaitingSub struct {
