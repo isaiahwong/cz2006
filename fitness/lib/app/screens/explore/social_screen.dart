@@ -207,6 +207,7 @@ class SocialScreen extends StatelessWidget {
               [
                 ActionButton(
                   () => _.handleResponse(
+                    user.id,
                     requestDocument.id,
                     true,
                   ),
@@ -214,6 +215,7 @@ class SocialScreen extends StatelessWidget {
                 ),
                 ActionButton(
                   () => _.handleResponse(
+                    user.id,
                     requestDocument.id,
                     true,
                   ),
