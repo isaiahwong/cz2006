@@ -1,7 +1,7 @@
 import 'package:fitness/app/screens/explore/components/components.dart';
 import 'package:fitness/app/screens/explore/components/user_avatar.dart';
 import 'package:fitness/app/screens/explore/search_result_screen.dart';
-import 'package:fitness/app/screens/explore/controller/social_controller.dart';
+import 'package:fitness/app/screens/explore/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,7 +67,12 @@ class SocialScreen extends StatelessWidget {
                         ActionButton(() => _.sendRequest(_userSnippet.id));
 
                     /// Add UserAvatar Widget into List<Widget>
-                    _userAvatars.add(UserCard(_userSnippet, [sendAction]));
+                    _userAvatars.add(UserCard(
+                      _userSnippet.name,
+                      _userSnippet.profilePicture,
+                      [sendAction],
+                      age: _userSnippet.dateOfBirth,
+                    ));
                   }
                   return SearchResultScreen(_userAvatars);
                 }

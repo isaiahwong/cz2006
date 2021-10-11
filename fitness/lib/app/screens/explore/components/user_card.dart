@@ -8,14 +8,19 @@ import 'package:get/get.dart';
 
 /// Used at user friends and workout
 class UserCard extends StatelessWidget {
-  final User user;
+  final String username;
+  final String profilePic;
+  final int? age;
   final List<Widget> actionWidgets;
-  UserCard(this.user, this.actionWidgets);
+  UserCard(this.username, this.profilePic, this.actionWidgets, {this.age});
 
   @override
   Widget build(BuildContext context) {
-    print(user.profilePicture);
-    print("Username: ${user.name}");
+    String ageString = "";
+    if (age != null) {
+      ageString = getAge(age!).toString();
+    }
+    print("Username: ${username}");
     return Card(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -25,15 +30,13 @@ class UserCard extends StatelessWidget {
             CircleAvatar(
               minRadius: 20,
               maxRadius: 40,
-              backgroundImage: NetworkImage(user.profilePicture.isNotEmpty
-                  ? user.profilePicture
+              backgroundImage: NetworkImage(profilePic.isNotEmpty
+                  ? profilePic
                   : "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"),
             ),
             SizedBox(width: 8),
             Text(
-              user.name.isNotEmpty
-                  ? user.name + ", " + getAge(user.dateOfBirth).toString()
-                  : "Unknown",
+              username.isNotEmpty ? username + ", " + ageString : "Unknown",
               style: Get.textTheme.headline3!.copyWith(color: darkGrey),
             ),
             Spacer(),
