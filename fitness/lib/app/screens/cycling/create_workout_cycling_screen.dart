@@ -100,6 +100,9 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
         .map(
           (c) => SliverToBoxAdapter(
             child: CoordinatesTile(
+              onPressed: start
+                  ? controller.onStartSelected
+                  : controller.onDestinationSelected,
               coordinates: c,
               start: start,
               wayPoints: this.wayPoints,
@@ -112,7 +115,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   Container _mapboxUI(
       BuildContext context, ValueNotifier<List<WayPoint>> wayPoints) {
     return Container(
-      child: MapWidget(wayPoints),
+      child: MapWidget(),
     );
   }
 

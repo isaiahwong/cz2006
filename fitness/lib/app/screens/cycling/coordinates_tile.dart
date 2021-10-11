@@ -1,14 +1,18 @@
 part of 'coordinates.dart';
 
+typedef CoordinateCallBack = void Function(Coordinates);
+
 class CoordinatesTile extends StatefulWidget {
   final Coordinates coordinates;
   final bool start;
   final ValueNotifier<List<WayPoint>> wayPoints;
+  final CoordinateCallBack onPressed;
 
   CoordinatesTile(
       {Key? key,
       required this.coordinates,
       required this.start,
+      required this.onPressed,
       required this.wayPoints})
       : super(key: key);
 
@@ -48,7 +52,10 @@ class _CoordinatesTileState extends State<CoordinatesTile>
   }
 
   void onSelected() {
-    final coordinates = coordinatesController.onSelected(_coordinates);
+    // It will pass back
+    widget.onPressed(widget.coordinates);
+
+    // final coordinates = coordinatesController.onSelected(_coordinates);
     setState(() {
       if (_selectedOption == SelectedOption.START) {
         //TODO Update Start
