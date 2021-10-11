@@ -64,60 +64,133 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 	hiitWorkout := req.GetHiit()
 	host := req.GetHost()
 
-	waitingRoom := model.WaitingRoom{
+	waitingRoom := &model.WaitingRoom{
 		Host:    host,
 		HIIT:    hiitWorkout,
 		JoinSub: make(chan *model.WaitingSub),
+		Start:   make(chan string),
 	}
 
-	fmt.Println(host.GetName(), " created room")
+	fmt.Println(host.GetName(), "created room")
 
-	svc.waitingRooms[hiitWorkout] = &waitingRoom
+	svc.waitingRooms[hiitWorkout] = waitingRoom
+
 	errCh := internal.NewErrorChannel()
 	defer func() {
 		errCh.Close()
 		close(waitingRoom.JoinSub)
+		delete(svc.waitingRooms, hiitWorkout)
 	}()
 
 	go func() {
-		var userSub *model.WaitingSub
+		var err error
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case userSub, ok := <-waitingRoom.JoinSub:
+				if !ok {
+					return
+				}
+				err = svc.notifyWaiting(userSub, waitingRoom, stream)
+			case start, ok := <-waitingRoom.Start:
+				if !ok {
+					return
+				}
+				if start != waitingRoom.Host.Id {
+					return
+				}
+				// start logic
+			}
+
+			if err != nil {
+				errCh.C <- err
+				return
+			}
+
+		}
+	}()
+
+	return nil
+}
+
+func (svc *Service) notifyWaiting(userSub *model.WaitingSub, waitingRoom *model.WaitingRoom, stream hiit.HIITService_CreateWaitingRoomServer) error {
+	waitingRoom.Users[userSub.User.Id] = userSub
+
+	users := []*hiit.HIITUser{}
+	for _, u := range waitingRoom.Users {
+		users = append(users, u.User)
+	}
+
+	response := &hiit.WaitingRoomResponse{
+		Users: users,
+		Start: false,
+	}
+
+	// Notify all other subscribers
+	for _, u := range waitingRoom.Users {
+		if u.User.Id == userSub.User.Id {
+			continue
+		}
+
+		u.Listen <- response
+	}
+	return stream.Send(response)
+}
+
+func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HIITService_JoinWaitingRoomServer) error {
+	ctx, cancel := context.WithCancel(stream.Context())
+	defer cancel()
+
+	user := req.GetUser()
+	hiitWorkout := req.GetHiit()
+
+	waitingRoom := svc.waitingRooms[hiitWorkout]
+	if waitingRoom == nil {
+		return errors.New("Waiting Room does not exist")
+	}
+
+	listen := make(chan *hiit.WaitingRoomResponse)
+
+	waitingRoom.JoinSub <- &model.WaitingSub{
+		User:   user,
+		Listen: listen,
+	}
+
+	errCh := internal.NewErrorChannel()
+	defer func() {
+		errCh.Close()
+		close(listen)
+		delete(waitingRoom.Users, user.Id)
+	}()
+
+	go func() {
+		var data *hiit.WaitingRoomResponse
+		// send initial
+		users := []*hiit.HIITUser{}
+
+		for _, u := range waitingRoom.Users {
+			users = append(users, u.User)
+		}
+		stream.Send(&hiit.WaitingRoomResponse{
+			Users: users,
+			Start: false,
+		})
 
 		for {
 			select {
 			case <-ctx.Done():
 				return
-			case m, ok := <-waitingRoom.JoinSub:
+			case m, ok := <-listen:
 				if !ok {
 					return
 				}
-				userSub = m
+				data = m
 			}
-			waitingRoom.Users = append(waitingRoom.Users, userSub)
-
-			users := []*hiit.HIITUser{}
-			for _, u := range waitingRoom.Users {
-				users = append(users, u.User)
-			}
-
-			response := &hiit.WaitingRoomResponse{
-				Users: users,
-				Start: false,
-			}
-
-			if err := stream.Send(response); err != nil {
+			if err := stream.Send(data); err != nil {
 				errCh.C <- err
 				return
 			}
-
-			// Notify all other subscribers
-			for _, u := range waitingRoom.Users {
-				if u.User.Id == userSub.User.Id {
-					continue
-				}
-
-				u.Listen <- response
-			}
-
 		}
 	}()
 
