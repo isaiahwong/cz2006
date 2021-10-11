@@ -3,8 +3,13 @@ part of 'coordinates.dart';
 class CoordinatesTile extends StatefulWidget {
   final Coordinates coordinates;
   final bool start;
+  final ValueNotifier<List<WayPoint>> wayPoints;
 
-  CoordinatesTile({Key? key, required this.coordinates, required this.start})
+  CoordinatesTile(
+      {Key? key,
+      required this.coordinates,
+      required this.start,
+      required this.wayPoints})
       : super(key: key);
 
   @override
@@ -23,6 +28,7 @@ class _CoordinatesTileState extends State<CoordinatesTile>
   SelectedOption? _selectedOption;
   late Animation<double> _iconTurns;
   late AnimationController _animationController;
+  late var wayPoint;
 
   final _kExpand = Duration(milliseconds: 200);
   final GlobalKey<CustomExpansionTileState> _expansionKey = new GlobalKey();
@@ -38,6 +44,7 @@ class _CoordinatesTileState extends State<CoordinatesTile>
     _iconTurns = _animationController.drive(_halfTween.chain(_easeInTween));
     _coordinates = widget.coordinates;
     _selectedOption = widget.start ? SelectedOption.START : SelectedOption.END;
+    wayPoint = <WayPoint>[];
   }
 
   void onSelected() {
@@ -45,6 +52,12 @@ class _CoordinatesTileState extends State<CoordinatesTile>
     setState(() {
       if (_selectedOption == SelectedOption.START) {
         //TODO Update Start
+        this.wayPoint.add(
+              WayPoint(
+                  name: _coordinates.name,
+                  latitude: _coordinates.x,
+                  longitude: _coordinates.y),
+            );
       } else {
         //TODO Update End
       }

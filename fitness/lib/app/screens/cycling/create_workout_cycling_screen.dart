@@ -26,8 +26,9 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   }
 
   final ScrollController? scrollController;
+  final wayPoints = new ValueNotifier(<WayPoint>[]);
 
-  const CreateWorkoutCyclingScreen({
+  CreateWorkoutCyclingScreen({
     Key? key,
     this.scrollController,
   }) : super(key: key);
@@ -60,6 +61,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   }
 
   //bool start - Start = true End = false
+
   Widget _selectLocation(BuildContext context, bool start) => ExpansionTile(
         title: start
             ? Text(
@@ -100,34 +102,46 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
             child: CoordinatesTile(
               coordinates: c,
               start: start,
+              wayPoints: this.wayPoints,
             ),
           ),
         )
         .toList();
   }
 
-  Container _mapboxUI(BuildContext context) {
+  Container _mapboxUI(
+      BuildContext context, ValueNotifier<List<WayPoint>> wayPoints) {
     return Container(
-      child: MapWidget(),
+      child: MapWidget(wayPoints),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // decoration: boxShadowTop,
-      color: Colors.white,
-      child: Column(
-        children: [
-          _appBar(context),
-          Column(
-            children: [
-              _selectLocation(context, true),
-              _selectLocation(context, false),
-              _mapboxUI(context),
-            ],
-          ),
-        ],
+    return Scaffold(
+      body: ValueListenableBuilder<List<WayPoint>>(
+        valueListenable: wayPoints,
+        builder: (context, value, child) {
+          return Center(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  _appBar(context),
+                  Flexible(
+                    child: Column(
+                      children: [
+                        _mapboxUI(context, wayPoints),
+                        _selectLocation(context, true),
+                        _selectLocation(context, false),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
