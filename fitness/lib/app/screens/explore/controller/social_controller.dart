@@ -104,9 +104,13 @@ class SocialController extends GetxController {
   }
 
   /// Handle request match
-  Future<void> handleResponse(String documentId, bool respond) async {
+  Future<void> handleResponse(
+    String userId,
+    String documentId,
+    bool respond,
+  ) async {
     await socialRepo.respondRequest(
-      Get.find<UserController>().user.value!.id,
+      userId,
       documentId,
       respond,
     );

@@ -217,7 +217,7 @@ class SocialScreen extends StatelessWidget {
                   () => _.handleResponse(
                     user.id,
                     requestDocument.id,
-                    true,
+                    false,
                   ),
                   Icons.person_remove_outlined,
                   color: Colors.red,

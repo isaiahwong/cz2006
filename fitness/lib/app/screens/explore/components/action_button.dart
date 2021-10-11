@@ -1,3 +1,4 @@
+import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,7 @@ class ActionButton extends StatelessWidget {
   ActionButton(
     this.action,
     this.icon, {
-    this.color = Colors.blueAccent,
+    this.color = primaryColor,
     this.label = "",
   });
   @override

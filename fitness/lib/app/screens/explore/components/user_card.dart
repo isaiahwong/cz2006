@@ -18,7 +18,7 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String ageString = "";
     if (age != null) {
-      ageString = getAge(age!).toString();
+      ageString = ", " + getAge(age!).toString();
     }
     print("Username: ${username}");
     return Card(
@@ -36,7 +36,7 @@ class UserCard extends StatelessWidget {
             ),
             SizedBox(width: 8),
             Text(
-              username.isNotEmpty ? username + ", " + ageString : "Unknown",
+              username.isNotEmpty ? username + ageString : "Unknown",
               style: Get.textTheme.headline3!.copyWith(color: darkGrey),
             ),
             Spacer(),
@@ -49,7 +49,6 @@ class UserCard extends StatelessWidget {
   }
 
   Widget actions() => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: actionWidgets,
-      );
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: actionWidgets);
 }
