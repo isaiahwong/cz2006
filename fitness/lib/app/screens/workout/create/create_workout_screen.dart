@@ -2,8 +2,8 @@ import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/screens/cycling/coordinates_controller.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/cycling/coordinates.dart';
 import 'package:fitness/app/screens/workout/create/create_workout_controller.dart';
-import 'package:fitness/app/screens/workout/create/create_workout_cycling_screen.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -40,7 +40,6 @@ class CreateWorkoutScreen extends StatefulWidget {
         return [
           CreateWorkoutMainScreen.page(),
           CreateWorkoutCyclingScreen.page(
-            //Error calling CoordinatesController()
             coordinatesController: CoordinatesController(
               delegateController: controller,
             ),
