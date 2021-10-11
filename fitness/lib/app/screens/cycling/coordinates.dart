@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/cycling/coordinates.dart';
 

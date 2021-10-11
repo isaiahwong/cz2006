@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 /// Action button used in user avatar
 class ActionButton extends StatelessWidget {
-  final Color color = Get.theme.primaryColor;
-  final String label = "label";
+  final Color? color;
+  final String? label;
+
+  /// Choose icon for action
+  final IconData icon;
   final Function action;
-  ActionButton(this.action, {color, label});
+
+  ActionButton(
+    this.action,
+    this.icon, {
+    this.color = Colors.blueAccent,
+    this.label = "",
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -16,7 +24,7 @@ class ActionButton extends StatelessWidget {
         action();
       },
       child: Icon(
-        Icons.person_add_alt,
+        icon,
         color: color,
         semanticLabel: label,
       ),

@@ -63,8 +63,10 @@ class SocialScreen extends StatelessWidget {
                     var _userSnippet = _.foundUsers[i];
 
                     /// Create actions, send friend request
-                    var sendAction =
-                        ActionButton(() => _.sendRequest(_userSnippet.id));
+                    var sendAction = ActionButton(
+                      () => _.sendRequest(_userSnippet.id),
+                      Icons.person_add_alt,
+                    );
 
                     /// Add UserAvatar Widget into List<Widget>
                     _userAvatars.add(UserCard(
@@ -183,7 +185,7 @@ class SocialScreen extends StatelessWidget {
       width: double.infinity,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         itemCount: _.requests.length > maxRequests
             ? _.requests.length + 1
             : _.requests.length,
@@ -194,9 +196,33 @@ class SocialScreen extends StatelessWidget {
               print("View more from request");
             });
           }
-          var user = _.requests[index];
+          var requestDocument = _.requests[index];
+          var user = requestDocument.initiator;
 
-          return UserAvatar(name: user.name, profileImage: user.profilePicture);
+          return Container(
+            height: Get.height * 0.15,
+            child: UserCard(
+              user.name,
+              user.profilePicture,
+              [
+                ActionButton(
+                  () => _.handleResponse(
+                    requestDocument.id,
+                    true,
+                  ),
+                  Icons.person_add_alt,
+                ),
+                ActionButton(
+                  () => _.handleResponse(
+                    requestDocument.id,
+                    true,
+                  ),
+                  Icons.person_remove_outlined,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

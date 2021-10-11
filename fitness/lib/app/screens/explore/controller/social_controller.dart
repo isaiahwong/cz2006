@@ -14,7 +14,7 @@ class SocialController extends GetxController {
 
   /// Data to display to user
   List<UserSnippet> friends = [];
-  List<UserSnippet> requests = [];
+  List<Friend> requests = [];
 
   List<User> foundUsers = [];
 
@@ -72,7 +72,7 @@ class SocialController extends GetxController {
     String _userId = UserController.get().user.value!.id;
     for (int i = 0; i < f.length; i++) {
       if (_userId == f[i].responder.id) {
-        requests.add(f[i].initiator);
+        requests.add(f[i]);
       }
     }
 
@@ -101,6 +101,15 @@ class SocialController extends GetxController {
   Future<void> sendRequest(String id) async {
     await socialRepo.sendRequest(id);
     customPopUp("Request Sent!", successIcon(Get.theme.primaryColor));
+  }
+
+  /// Handle request match
+  Future<void> handleResponse(String documentId, bool respond) async {
+    await socialRepo.respondRequest(
+      Get.find<UserController>().user.value!.id,
+      documentId,
+      respond,
+    );
   }
 
   /// Clear search results and search text

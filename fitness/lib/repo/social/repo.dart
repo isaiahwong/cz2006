@@ -115,16 +115,16 @@ class SocialRepo {
     return;
   }
 
-  /// Responding to friend request, either accept or decline
+  /// Select userId with response, either accept or decline
   Future<void> respondRequest(
-    String requestId,
     String userId,
+    String documentId,
     bool response,
   ) async {
     try {
       await _functions.httpsCallable("social-respondRequest").call({
-        "requestId": requestId,
-        "initiatorId": userId,
+        "friendId": userId,
+        "documentId": documentId,
         "response": response,
       });
     } catch (e) {

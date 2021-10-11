@@ -48,5 +48,8 @@ class UserCard extends StatelessWidget {
     );
   }
 
-  Widget actions() => Column(children: actionWidgets);
+  Widget actions() => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: actionWidgets,
+      );
 }
