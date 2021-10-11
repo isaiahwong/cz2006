@@ -1,17 +1,45 @@
 import 'package:fitness/app/controllers/auth/auth_controller.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
+import 'package:hiit_api/hiit.dart';
 
 class UserController extends GetxController {
   final AuthController authController = AuthController.get();
+
   final UserRepo _userRepo;
+
+  HIITServiceClient hiitClient;
 
   Rxn<User> user = Rxn<User>();
 
-  UserController({required UserRepo userRepo}) : _userRepo = userRepo;
+  bool _init = false;
+
+  UserController({required UserRepo userRepo, required this.hiitClient})
+      : _userRepo = userRepo {
+    user.listen(onUserChange);
+  }
 
   factory UserController.get() {
     return Get.find();
+  }
+
+  void onUserChange(User? user) {
+    if (user == null) return;
+    if (!_init) initWhenAuth();
+  }
+
+  void initWhenAuth() {
+    connect();
+    _init = true;
+    update();
+  }
+
+  void connect() {
+    hiitClient.subInvites(HIITUser(
+      id: user.value!.id,
+      name: user.value!.name,
+      email: user.value!.email,
+    ));
   }
 
   @override

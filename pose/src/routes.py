@@ -22,6 +22,8 @@ async def offer(request):
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
     exercise = params["exercise"]
     interval = params["interval"]
+    reps = params["reps"]
+
     id = params["id"]
 
     # End function if exercise not in
@@ -32,8 +34,8 @@ async def offer(request):
         )
 
     # Create GRPC
-    channel = grpc.insecure_channel('localhost:50051')
-    stub = api.hiit_pb2_grpc.HIITServiceStub(channel)
+    grpc_channel = grpc.insecure_channel('localhost:50051')
+    stub = api.hiit_pb2_grpc.HIITServiceStub(grpc_channel)
 
     pc = RTCPeerConnection()
     pc_id = "PeerConnection(%s)" % uuid.uuid4()
@@ -45,11 +47,13 @@ async def offer(request):
     log_info("Created for %s", request.remote)
 
     @pc.on("datachannel")
-    def on_datachannel(channel):
+    async def on_datachannel(channel):
         @channel.on("message")
         def on_message(message):
             if isinstance(message, str) and message.startswith("ping"):
                 channel.send("pong" + message[4:])
+
+        await channel._RTCDataChannel__transport._data_channel_flush()
 
     @pc.on("connectionstatechange")
     async def on_connectionstatechange():
@@ -69,7 +73,8 @@ async def offer(request):
                 exercise=exercises[exercise](
                     id=id,
                     exercise=exercise,
-                    interval=interval
+                    interval=interval,
+                    reps=reps,
                 )
             )
             pc.addTrack(vtrack)

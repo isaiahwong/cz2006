@@ -1,7 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fitness/repo/repo.dart';
 
-import 'model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Sub collection of user
@@ -19,8 +18,9 @@ class SocialRepo {
 
   /// Find users based on name field
   Future<List<User>> findUsers(String name) async {
-    var snapshot = await FirebaseFirestore.instance
+    var snapshot = await _store
         .collection("users")
+        .where("id", isNotEqualTo: userId)
         .where("name", isEqualTo: name)
         .get();
     List<User> _users = [];
@@ -31,36 +31,79 @@ class SocialRepo {
   }
 
   /// Get users from current user sub collecion
-  Future<List<User>> getFriends() async {
-    var snapshots = await docRef.collection("friends").get();
-    List<User> _friends = [];
+  Future<List<Friend>> getFriends() async {
+    var snapshots = await docRef
+        .collection("friends")
+        .where("status", isEqualTo: SocialStatus.FRIEND.toString())
+        .get();
+    List<Friend> _friends = [];
     for (var i = 0; i < snapshots.docs.length; i++) {
-      _friends.add(User.fromJson(snapshots.docs[i].data()));
+      _friends.add(Friend.fromJson(snapshots.docs[i].data()));
     }
     return _friends;
   }
 
+  /// Get user's friend in stream
+  Stream<List<Friend>> streamFriends() {
+    return docRef
+        .collection("friends")
+        .where("status", isEqualTo: SocialStatus.FRIEND.name)
+        .limit(10)
+        .snapshots(includeMetadataChanges: false)
+        .map((event) {
+      List<Friend> _friends = [];
+      for (int i = 0; i < event.docs.length; i++) {
+        _friends.add(Friend.fromJson(event.docs[i].data()));
+      }
+      return _friends;
+    });
+  }
+
   /// Get all the request from collection
-  Future<List<FriendRequest>> getRequests() async {
+  Future<List<Friend>> getRequests() async {
     var snapshots = await docRef
-        .collection("requests")
-        .where("initiator.id", isNotEqualTo: userId)
+        .collection("friends")
+        .where("responder.id", isEqualTo: userId)
+        .where("status", isEqualTo: SocialStatus.PENDING.toString())
         .get();
 
-    List<FriendRequest> _requests = [];
+    List<Friend> _requests = [];
 
     /// Parse to usersnippet
     for (var i = 0; i < snapshots.docs.length; i++) {
-      _requests.add(FriendRequest.fromJson(snapshots.docs[i].data()));
+      _requests.add(Friend.fromJson(snapshots.docs[i].data()));
     }
 
     print("Number of friend requests: ${_requests.length}");
     return _requests;
   }
 
+  /// Stream version of friend requests
+  Stream<List<Friend>> streamRequest() {
+    print(userId);
+    print(SocialStatus.PENDING.name);
+    return docRef
+        .collection("friends")
+        .limit(10)
+        .where("responder.id", isEqualTo: userId)
+        .where("status", isEqualTo: SocialStatus.PENDING.name)
+        .snapshots(includeMetadataChanges: true)
+        .map((event) {
+      print("Friend requests: ${event.docs.length}");
+      List<Friend> _friends = [];
+      for (int i = 0; i < event.docs.length; i++) {
+        print(event.docs[i].data());
+        _friends.add(Friend.fromJson(event.docs[i].data()));
+      }
+      return _friends;
+    });
+  }
+
   /// - Cloud Functions HTTPS callable
   /// Send request to user
   Future<void> sendRequest(String responderId) async {
+    print("Initiator id: ${userId} && responderId: ${responderId}");
+
     /// Consturct a friend request
     try {
       await _functions
@@ -72,14 +115,33 @@ class SocialRepo {
     return;
   }
 
-  Future<void> respondRequest(String requestId, bool response) async {
+  /// Responding to friend request, either accept or decline
+  Future<void> respondRequest(
+    String requestId,
+    String userId,
+    bool response,
+  ) async {
     try {
       await _functions.httpsCallable("social-respondRequest").call({
         "requestId": requestId,
+        "initiatorId": userId,
         "response": response,
       });
     } catch (e) {
       print(e.toString());
     }
   }
+
+  /// Fetch user document based on given id
+  /// - Assume user exists
+  Future<User> getUser(String userId) async {
+    var result = await _store.collection("users").doc(userId).get();
+    User user = User.fromJson(result.data()!);
+    return user;
+  }
+
+  /// Invite friend to workout
+  Future<void> inviteWorkout(
+    String workoutId,
+  ) async {}
 }

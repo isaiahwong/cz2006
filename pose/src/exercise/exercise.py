@@ -29,13 +29,13 @@ class Movement:
 
 
 class Squat(Movement):
-    def __init__(self, id="", exercise="", interval=""):
+    def __init__(self, id="", exercise="", interval="", reps=0):
         super(Squat, self).__init__(id, exercise, interval)
         self.state = None
         self.count = 0
+        self.reps = reps
 
     def process(self, landmarks):
-        count = 0
        # Get coordinates
         right_hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,
                      landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
@@ -62,3 +62,10 @@ class Squat(Movement):
             self.state = "up"
         if right_angle > 120 and left_angle > 120:
             self.state = "up"
+
+        count = self.count
+        # reset rep counter
+        if self.count == self.reps:
+            self.count = 0
+
+        return count

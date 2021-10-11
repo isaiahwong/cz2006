@@ -1,6 +1,5 @@
 import 'package:fitness/app/components/panel/panel.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/workout/hiit/active/components/components.dart';
 import 'package:fitness/app/screens/workout/timer/timer.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:get/get.dart';
@@ -15,8 +14,8 @@ class ActiveHIITBindings extends Bindings {
     final panelController = SlidingPanelController(tag: RoutePaths.HIIT_ACTIVE);
     final timerController = TimerController();
     final fullscreenController = FullScreenPanelController(
-      panelHeader: CurrentRoutinePanelHeader(),
-      panel: CurrentRoutinePanel(),
+      panelHeader: CurrentIntervalPanelHeader(),
+      panel: CurrentIntervalPanel(),
     );
 
     Get.lazyPut(() => ActiveHIITController(

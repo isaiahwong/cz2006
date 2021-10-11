@@ -32,9 +32,11 @@ class RegisterController extends GetxController {
       maxHeight: 400,
       maxWidth: 400,
     );
-    print(pickedFiled!.path);
-    imageFile = File(pickedFiled.path);
-    update();
+    // print(pickedFiled!.path);
+    if (pickedFiled != null) {
+      imageFile = File(pickedFiled.path);
+      update();
+    }
   }
 
   //validation for Register
@@ -70,6 +72,7 @@ class RegisterController extends GetxController {
         lastDate: DateTime.now());
     if (picked != null) {
       selectedDate = picked;
+      _dateOfBirth = selectedDate.millisecondsSinceEpoch;
     }
     print(getAge(selectedDate.millisecondsSinceEpoch));
     update();

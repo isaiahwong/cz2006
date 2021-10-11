@@ -29,38 +29,88 @@ exports.sendRequest = functions
       const initiatorId: string = data.initiatorId;
       const responderId: string = data.responderId;
 
-      const initiator = await helper.getUser(initiatorId);
-      const responder = await helper.getUser(responderId);
+      const initiator: m.user.UserSnippet =
+      helper.getSnippet(await helper.getUser(initiatorId));
+
+
+      const responder: m.user.UserSnippet =
+      helper.getSnippet(await helper.getUser(responderId));
 
       // Construct a friend requests
-      const request: m.user.FriendRequest = {
+      const request: m.user.Friend = {
         createdAt: admin.firestore.Timestamp.now().toMillis(),
-        initiator: helper.getSnippet(initiator),
-        responder: helper.getSnippet(responder),
+        initiator: initiator,
+        responder: responder,
         status: m.user.SocialStatus.PENDING,
       };
 
       // Add to both user
-      const collectionRef = admin.firestore().collection(p.Collection.users);
-      // Initiator
-      await collectionRef
+      const usersRef = admin.firestore().collection(p.Collection.users);
+
+      // Check if requests already exists
+      const initiatorfriendsRef = usersRef
           .doc(initiatorId)
-          .collection(p.UserSubCollections.requests)
-          .add(request);
+          .collection(p.UserSubCollections.friends);
+
+      let searchResult = await initiatorfriendsRef
+          .where("responder.id", "==", responderId)
+          .get();
+
+      // Requests has already been sent
+      if (!searchResult.empty) {
+        console.log("Friend request already sent");
+        return Promise.resolve();
+      }
+
+      // Check if relationship already exists
+      searchResult = await initiatorfriendsRef
+          .where("responder.id", "==", initiatorId)
+          .where("status", "==", m.user.SocialStatus.PENDING)
+          .get();
+
+      if (!searchResult.empty) {
+        console.log("User update status from pending to friend");
+        // Update status from pending to friend
+        for (let i=0; i< searchResult.docs.length; i++) {
+          await searchResult
+              .docs[i]
+              .ref
+              .update({"status": m.user.SocialStatus.FRIEND});
+          // Update other user
+          await usersRef
+              .doc(responderId)
+              .collection(p.UserSubCollections.friends)
+              .doc(searchResult.docs[i].id)
+              .update({"status": m.user.SocialStatus.FRIEND});
+        }
+        return Promise.resolve();
+      }
+
+      // Initiator
+
+      const result = await initiatorfriendsRef.add(request);
+
+      await result.update({"id": result.id});
+
+
       // Responder
-      await collectionRef
+      const friendRef = await usersRef
           .doc(responderId)
-          .collection(p.UserSubCollections.requests)
-          .add(request);
+          .collection(p.UserSubCollections.friends)
+          .doc(result.id);
+      await friendRef.set(request);
+      await friendRef.update({"id": result.id});
+
 
       console.log("sendRequest()");
-      return;
+      return Promise.resolve();
     });
 
 
 /**
  * Accept or decline friend requests
- * @param {string} requestId
+ * @param {string} initiatorId
+ * @param {string} friendId
  * @param {boolean} response
  * @return {Promise}
  */
@@ -68,58 +118,52 @@ exports.respondRequest = functions
     .region(helper.FUNCTION_REGION)
     .https
     .onCall(async (data, context)=> {
+      /**
+       * Access both user friend sub collection and update status
+       */
       if (!context.auth) {
         throw new functions
             .https
             .HttpsError("unauthenticated", "User not authenticated");
       }
-      if (data.requestId == null || data.response == null ) {
+      if (data.initiatorId == null || data.response == null || data.friendId) {
         throw new functions
             .https
             .HttpsError("invalid-argument", "arguments not found");
       }
-      const requestId: string = data.requestId;
+      // Friend document id
+      const friendId: string = data.friendId;
+      // Response of the friend request
       const requestResponse: boolean = data.response;
+      // user id
+      const initiatorId: string = data.initiatorId;
+
+      const currentUserId: string = context.auth.uid;
       const usersCol = admin
           .firestore()
           .collection(p.Collection.users);
-      // Friend Request path
-      const requestColRef = usersCol
-          .doc(context.auth.uid)
-          .collection(p.UserSubCollections.requests)
-          .doc(requestId);
-      const snapshot = await requestColRef.get();
-      if (!snapshot.exists) {
-        throw new functions
-            .https
-            .HttpsError("not-found", "friend request document not found");
-      }
-      const friendRequest: m.user.FriendRequest =
-        JSON.parse(JSON.stringify(snapshot.data()));
-      // Add users to friend sub collection
+      let friendStatus: m.user.SocialStatus = m.user.SocialStatus.PENDING;
       if (requestResponse) {
-        // For initiator add responder
-        await usersCol
-            .doc(friendRequest.initiator.id)
-            .collection(p.UserSubCollections.friends)
-            .add(await helper.getUser(friendRequest.responder.id));
-
-        // For responder add responder
-        await usersCol
-            .doc(friendRequest.responder.id)
-            .collection(p.UserSubCollections.friends)
-            .add(await helper.getUser(friendRequest.initiator.id));
+        friendStatus = m.user.SocialStatus.FRIEND;
+      } else {
+        friendStatus = m.user.SocialStatus.DECLINE;
       }
-
-      // Remove friend request from collection for both user
-      await requestColRef.delete();
+      // Update on current user
       await usersCol
-          .doc(friendRequest.initiator.id)
-          .collection(p.UserSubCollections.requests)
-          .doc(requestId)
-          .delete();
-
-      console.log("repondRequest()");
-      return;
+          .doc(currentUserId)
+          .collection(p.UserSubCollections.friends)
+          .doc(friendId)
+          .update({
+            "status": friendStatus,
+          });
+      // Update on other user as well
+      await usersCol
+          .doc(initiatorId)
+          .collection(p.UserSubCollections.friends)
+          .doc(friendId)
+          .update({
+            "status": friendStatus,
+          });
+      return Promise.resolve();
     });
 

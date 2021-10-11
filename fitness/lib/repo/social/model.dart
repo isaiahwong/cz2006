@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'model.g.dart';
 
 enum SocialStatus {
-  @JsonValue(1)
+  @JsonValue("FRIEND")
   FRIEND,
-  @JsonValue(2)
+  @JsonValue("UNFRIEND")
   UNFRIEND,
-  @JsonValue(3)
+  @JsonValue("PENDING")
   PENDING,
-  @JsonValue(4)
+  @JsonValue("DECLINE")
   DECLINE,
 }
 
@@ -25,38 +25,42 @@ class Friends {
   Map<String, dynamic> toJson() => _$FriendsToJson(this);
 }
 
+/// Representing in the user's subcollection friend
 @JsonSerializable()
-class FriendRequest {
+class Friend {
   int createdAt;
+  String id;
   UserSnippet initiator;
   UserSnippet responder;
-  SocialStatus socialStatus;
+  SocialStatus status;
 
-  FriendRequest(
+  Friend(
+    this.id,
     this.createdAt,
     this.initiator,
     this.responder,
-    this.socialStatus,
+    this.status,
   );
 
-  FriendRequest copyWith({
+  Friend copyWith({
     int? createdAt,
+    String? id,
     UserSnippet? initiator,
     UserSnippet? responder,
-    SocialStatus? socialStatus,
+    SocialStatus? status,
   }) {
-    return FriendRequest(
+    return Friend(
+      id ?? this.id,
       createdAt ?? this.createdAt,
       initiator ?? this.initiator,
       responder ?? this.responder,
-      socialStatus ?? this.socialStatus,
+      status ?? this.status,
     );
   }
 
-  factory FriendRequest.fromJson(Map<String, dynamic> json) =>
-      _$FriendRequestFromJson(json);
+  factory Friend.fromJson(Map<String, dynamic> json) => _$FriendFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FriendRequestToJson(this);
+  Map<String, dynamic> toJson() => _$FriendToJson(this);
 }
 
 @JsonSerializable()

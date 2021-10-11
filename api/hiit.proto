@@ -26,8 +26,39 @@ message Session {
   string exercise = 2;
 }
 
-service HIITService {
-  rpc Sub(stream RoutineChange) returns (stream Data);
-  rpc Pub(DataSession) returns (Empty);
+message HIITUser {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
 
+message CreateWaitingRoomRequest {
+  HIITUser host = 1;
+  string hiit = 2;
+}
+
+message WaitingRoomRequest {
+  HIITUser user = 1;
+  string hiit = 2;
+}
+
+message WaitingRoomResponse {
+  repeated HIITUser users = 1;
+  bool start = 2;
+}
+
+message InviteWaitingRoomRequest {
+  HIITUser from = 1;
+  HIITUser to = 2;
+  string hiit = 3;
+}
+
+service HIITService {
+  rpc Sub(RoutineChange) returns (stream Data);
+  rpc Pub(DataSession) returns (Empty);
+  rpc CreateWaitingRoom(CreateWaitingRoomRequest) returns (stream WaitingRoomResponse);
+  rpc JoinWaitingRoom(WaitingRoomRequest) returns (stream WaitingRoomResponse);
+
+  rpc NotifyInvites(InviteWaitingRoomRequest) returns (Empty);
+  rpc SubInvites(HIITUser) returns (stream InviteWaitingRoomRequest);
 }

@@ -119,6 +119,7 @@ class PoseController extends _.GetxController {
     required RoutineInterval interval,
   }) async {
     loading = true;
+    update();
     var configuration = <String, dynamic>{
       'sdpSemantics': 'unified-plan',
     };
@@ -169,6 +170,7 @@ class PoseController extends _.GetxController {
         "id": user.id,
         "exercise": exercise.id,
         "interval": interval.id,
+        "reps": interval.defaultReps,
       };
 
       await _negotiateRemoteConnection(body);

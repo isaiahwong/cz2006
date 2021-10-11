@@ -12,8 +12,8 @@ import 'package:get/get.dart';
 class ActiveHIITScreen extends GetView<ActiveHIITController> {
   // static Route route(Workout workout) {
   //   final appPanelBloc = AppPanelBloc(
-  //     // panel: CurrentRoutinePanel(),
-  //     panelHeader: CurrentRoutinePanelHeader(),
+  //     // panel: CurrentIntervalPanel(),
+  //     panelHeader: CurrentIntervalPanelHeader(),
   //   );
 
   //   final timerBloc = TimerBloc(ticker: Ticker());

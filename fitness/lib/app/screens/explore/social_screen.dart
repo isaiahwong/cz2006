@@ -2,18 +2,21 @@ import 'package:fitness/app/screens/explore/components/components.dart';
 import 'package:fitness/app/screens/explore/components/user_avatar.dart';
 import 'package:fitness/app/screens/explore/search_result_screen.dart';
 import 'package:fitness/app/screens/explore/controller/social_controller.dart';
-import 'package:fitness/repo/social/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'components/user_card.dart';
+/// Max requests shown in list view
+final int maxRequests = 10;
+
+/// Max friends shown in list view
+final int maxFriends = 10;
 
 /// Social Screen - Friends and Requets
-class SocialWidget extends StatelessWidget {
+class SocialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SocialController>(
-      init: SocialController(),
+      id: "SocialScreen",
       builder: (_) => Container(
         height: Get.height,
         margin: EdgeInsets.all(8.0),
@@ -36,7 +39,7 @@ class SocialWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 prefixIcon: searchIcon(),
-                suffix: clearMethod(),
+                suffixIcon: clearMethod(),
                 hintText: "Find Users",
                 labelStyle: Get.textTheme.bodyText2!.copyWith(
                   color: Get.theme.primaryColor,
@@ -51,7 +54,7 @@ class SocialWidget extends StatelessWidget {
             ),
             Expanded(
               child: Builder(builder: (context) {
-                if (_.foundUsers.length > 0) {
+                if (_.foundUsersLength > 0) {
                   /// Parse a list of widgets
                   /// Show potential users
                   List<UserCard> _userAvatars = [];
@@ -69,23 +72,13 @@ class SocialWidget extends StatelessWidget {
                   return SearchResultScreen(_userAvatars);
                 }
                 return ListView(
+                  physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(vertical: 10),
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Friends",
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
+                    listViewTitle("Friends"),
                     friendsWidget(_),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Requests",
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
+                    listViewTitle("Requests"),
+                    requestsWidget(_),
                   ],
                 );
               }),
@@ -96,14 +89,27 @@ class SocialWidget extends StatelessWidget {
     );
   }
 
+  Align listViewTitle(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Text(
+          title,
+          style: Get.textTheme.headline4,
+        ),
+      ),
+    );
+  }
+
   /// Clear text
   Widget clearMethod() {
-    return GestureDetector(
-      onTap: () {
-        SocialController.to.clearText();
+    return IconButton(
+      onPressed: () {
         FocusScope.of(Get.context!).requestFocus(FocusNode());
+        SocialController.to.clearText();
       },
-      child: Icon(Icons.clear),
+      icon: Icon(Icons.clear),
     );
   }
 
@@ -114,35 +120,77 @@ class SocialWidget extends StatelessWidget {
     );
   }
 
-  /// Display pending friend requests
-  Widget requestsWidget(SocialController _) {
-    if (_.requests.length == 0) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        height: 100,
-        child: Text("Current no friends "),
-      );
-    }
-    return Container();
-  }
-
   /// Display user with basic information
   Widget friendsWidget(SocialController _) {
     if (_.friends.length == 0) {
       return Container(
+        alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 10),
         height: 100,
-        child: Text("Current no friends "),
+        child: Text(
+          "Current no friends",
+          textAlign: TextAlign.center,
+        ),
       );
     }
     return Container(
-      height: 100,
+      constraints: BoxConstraints(maxHeight: Get.height * 0.2),
+      decoration: BoxDecoration(color: Colors.black26),
       width: double.infinity,
       child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(vertical: 8),
         scrollDirection: Axis.horizontal,
-        itemCount: _.friends.length,
+        itemCount: _.friends.length > maxFriends
+            ? _.friends.length + 1
+            : _.friends.length,
         itemBuilder: (context, index) {
+          if (_.friends.length > maxFriends) {
+            return ViewMore(() {
+              print("View more from friend listview");
+            });
+          }
           var user = _.friends[index];
+          return UserAvatar(name: user.name, profileImage: user.profilePicture);
+        },
+      ),
+    );
+  }
+
+  /// Display pending friend requests
+  Widget requestsWidget(SocialController _) {
+    print("Number of pending requests: ${_.requests.length}");
+    if (_.requests.length == 0) {
+      return Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        height: 100,
+        child: Text(
+          "Current no requests",
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+    return Container(
+      constraints: BoxConstraints(maxHeight: Get.height * 0.2),
+      padding: EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(color: Colors.black12),
+      width: double.infinity,
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: _.requests.length > maxRequests
+            ? _.requests.length + 1
+            : _.requests.length,
+        itemBuilder: (context, index) {
+          /// Return more button added
+          if (_.requests.length > maxRequests) {
+            return ViewMore(() {
+              print("View more from request");
+            });
+          }
+          var user = _.requests[index];
+
           return UserAvatar(name: user.name, profileImage: user.profilePicture);
         },
       ),

@@ -70,12 +70,6 @@ class IntervalItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Container(
-                //   width: 40,
-                //   child: active
-                //       ? interval.routinePlan!.equipment?.icon
-                //       : interval.routinePlan!.equipment?.iconAlt,
-                // ),
               ],
               margin: EdgeInsets.only(right: 5),
             ),

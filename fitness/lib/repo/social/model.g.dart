@@ -18,21 +18,22 @@ Map<String, dynamic> _$FriendsToJson(Friends instance) => <String, dynamic>{
       'users': instance.users,
     };
 
-FriendRequest _$FriendRequestFromJson(Map<String, dynamic> json) {
-  return FriendRequest(
+Friend _$FriendFromJson(Map<String, dynamic> json) {
+  return Friend(
+    json['id'] as String,
     json['createdAt'] as int,
     UserSnippet.fromJson(json['initiator'] as Map<String, dynamic>),
     UserSnippet.fromJson(json['responder'] as Map<String, dynamic>),
-    _$enumDecode(_$SocialStatusEnumMap, json['socialStatus']),
+    _$enumDecode(_$SocialStatusEnumMap, json['status']),
   );
 }
 
-Map<String, dynamic> _$FriendRequestToJson(FriendRequest instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FriendToJson(Friend instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
+      'id': instance.id,
       'initiator': instance.initiator,
       'responder': instance.responder,
-      'socialStatus': _$SocialStatusEnumMap[instance.socialStatus],
+      'status': _$SocialStatusEnumMap[instance.status],
     };
 
 K _$enumDecode<K, V>(
@@ -62,10 +63,10 @@ K _$enumDecode<K, V>(
 }
 
 const _$SocialStatusEnumMap = {
-  SocialStatus.FRIEND: 1,
-  SocialStatus.UNFRIEND: 2,
-  SocialStatus.PENDING: 3,
-  SocialStatus.DECLINE: 4,
+  SocialStatus.FRIEND: 'FRIEND',
+  SocialStatus.UNFRIEND: 'UNFRIEND',
+  SocialStatus.PENDING: 'PENDING',
+  SocialStatus.DECLINE: 'DECLINE',
 };
 
 UserSnippet _$UserSnippetFromJson(Map<String, dynamic> json) {

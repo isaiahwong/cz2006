@@ -1,25 +1,42 @@
+import 'package:fitness/app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Controls the social interaction of the app
 class ExploreController extends GetxController {
-  late PageController pageController;
+  PageController pageController = PageController();
 
+  static ExploreController to = Get.find();
+
+  List<Widget> screens = [
+    ExploreWorkoutScreen(),
+    SocialScreen(),
+  ];
   @override
   void onInit() {
-    pageController = PageController(initialPage: 0);
+    Get.put(SocialController());
+    Get.put(ExploreWorkoutController());
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    SocialController.to.onClose();
+    ExploreWorkoutController.to.onClose();
+    super.onClose();
   }
 
   Rx<int> _tabIndex = Rx<int>(0);
 
-  int get getTabIndex => _tabIndex.value;
+  int get getTabIndex {
+    update();
+    return _tabIndex.value;
+  }
 
   set tabIndex(int value) {
     print("value: $value");
     _tabIndex.value = value;
-    pageController.animateToPage(value,
-        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
     update();
   }
 }

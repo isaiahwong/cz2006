@@ -59,3 +59,60 @@ const Session$json = const {
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEg4KAmlkGAEgASgJUgJpZBIaCghleGVyY2lzZRgCIAEoCVIIZXhlcmNpc2U=');
+@$core.Deprecated('Use hIITUserDescriptor instead')
+const HIITUser$json = const {
+  '1': 'HIITUser',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
+  ],
+};
+
+/// Descriptor for `HIITUser`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hIITUserDescriptor = $convert.base64Decode('CghISUlUVXNlchIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVlbWFpbBgDIAEoCVIFZW1haWw=');
+@$core.Deprecated('Use createWaitingRoomRequestDescriptor instead')
+const CreateWaitingRoomRequest$json = const {
+  '1': 'CreateWaitingRoomRequest',
+  '2': const [
+    const {'1': 'host', '3': 1, '4': 1, '5': 11, '6': '.hiit.HIITUser', '10': 'host'},
+    const {'1': 'hiit', '3': 2, '4': 1, '5': 9, '10': 'hiit'},
+  ],
+};
+
+/// Descriptor for `CreateWaitingRoomRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List createWaitingRoomRequestDescriptor = $convert.base64Decode('ChhDcmVhdGVXYWl0aW5nUm9vbVJlcXVlc3QSIgoEaG9zdBgBIAEoCzIOLmhpaXQuSElJVFVzZXJSBGhvc3QSEgoEaGlpdBgCIAEoCVIEaGlpdA==');
+@$core.Deprecated('Use waitingRoomRequestDescriptor instead')
+const WaitingRoomRequest$json = const {
+  '1': 'WaitingRoomRequest',
+  '2': const [
+    const {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.hiit.HIITUser', '10': 'user'},
+    const {'1': 'hiit', '3': 2, '4': 1, '5': 9, '10': 'hiit'},
+  ],
+};
+
+/// Descriptor for `WaitingRoomRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List waitingRoomRequestDescriptor = $convert.base64Decode('ChJXYWl0aW5nUm9vbVJlcXVlc3QSIgoEdXNlchgBIAEoCzIOLmhpaXQuSElJVFVzZXJSBHVzZXISEgoEaGlpdBgCIAEoCVIEaGlpdA==');
+@$core.Deprecated('Use waitingRoomResponseDescriptor instead')
+const WaitingRoomResponse$json = const {
+  '1': 'WaitingRoomResponse',
+  '2': const [
+    const {'1': 'users', '3': 1, '4': 3, '5': 11, '6': '.hiit.HIITUser', '10': 'users'},
+    const {'1': 'start', '3': 2, '4': 1, '5': 8, '10': 'start'},
+  ],
+};
+
+/// Descriptor for `WaitingRoomResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List waitingRoomResponseDescriptor = $convert.base64Decode('ChNXYWl0aW5nUm9vbVJlc3BvbnNlEiQKBXVzZXJzGAEgAygLMg4uaGlpdC5ISUlUVXNlclIFdXNlcnMSFAoFc3RhcnQYAiABKAhSBXN0YXJ0');
+@$core.Deprecated('Use inviteWaitingRoomRequestDescriptor instead')
+const InviteWaitingRoomRequest$json = const {
+  '1': 'InviteWaitingRoomRequest',
+  '2': const [
+    const {'1': 'from', '3': 1, '4': 1, '5': 11, '6': '.hiit.HIITUser', '10': 'from'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 11, '6': '.hiit.HIITUser', '10': 'to'},
+    const {'1': 'hiit', '3': 3, '4': 1, '5': 9, '10': 'hiit'},
+  ],
+};
+
+/// Descriptor for `InviteWaitingRoomRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List inviteWaitingRoomRequestDescriptor = $convert.base64Decode('ChhJbnZpdGVXYWl0aW5nUm9vbVJlcXVlc3QSIgoEZnJvbRgBIAEoCzIOLmhpaXQuSElJVFVzZXJSBGZyb20SHgoCdG8YAiABKAsyDi5oaWl0LkhJSVRVc2VyUgJ0bxISCgRoaWl0GAMgASgJUgRoaWl0');

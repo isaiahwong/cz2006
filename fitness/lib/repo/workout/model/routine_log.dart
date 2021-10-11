@@ -20,4 +20,18 @@ class RoutineLog {
       _$RoutineLogFromJson(json);
 
   Map<String, dynamic> toJson() => _$RoutineLogToJson(this);
+
+  RoutineLog copyWith({
+    String? id,
+    int? reps,
+    String? interval,
+    bool? completed,
+  }) {
+    return RoutineLog(
+      id: id ?? this.id,
+      reps: reps ?? this.reps,
+      interval: interval ?? this.interval,
+      completed: completed ?? this.completed,
+    );
+  }
 }

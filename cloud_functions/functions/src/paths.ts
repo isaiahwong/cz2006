@@ -4,6 +4,7 @@
  */
 export class Collection {
     static users = "users";
+    static publicWorkout = "publicworkout";
 }
 
 /**
@@ -11,5 +12,5 @@ export class Collection {
  */
 export class UserSubCollections {
     static friends = "friends";
-    static requests = "requests";
+    static workout = "workouts";
 }

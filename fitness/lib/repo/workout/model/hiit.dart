@@ -58,6 +58,13 @@ class HIIT extends Workout {
     );
   }
 
+  HIIT updateRoutine(Routine routine) {
+    return copyWith(
+        routines: List<Routine>.from(routines)
+            .map((r) => r.id == routine.id ? routine.copyWith() : r)
+            .toList());
+  }
+
   HIIT removeRoutineExercise(Exercise exercise) {
     return copyWith(
       routines: routines..removeWhere((r) => r.exercise.id == exercise.id),
@@ -78,10 +85,24 @@ class HIIT extends Workout {
     );
   }
 
+  Routine? getRoutine(String id) {
+    try {
+      return routines.firstWhere((e) => e.id == id);
+    } catch (error) {
+      return null;
+    }
+  }
+
   Routine? nextRoutine(Routine? current) {
     if (current == null) return current;
     final i = routines.indexWhere((r) => r.id == current.id);
     if (i == -1 || i == routines.length - 1) return null;
     return routines[i + 1].copyWith();
+  }
+
+  bool isLastInterval(RoutineInterval interval) {
+    for (int i = 0; i < routines.length; i++)
+      if (!routines[i].isLastInterval(interval)) return false;
+    return true;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/hiit/active/pose/pose.dart';
+import 'package:fitness/app/screens/workout/hiit/room/waiting_room_screen.dart';
 import 'package:get/get.dart';
 
 class RoutePaths {
@@ -10,6 +11,7 @@ class RoutePaths {
   static const APP = '/app';
   static const HIIT_ACTIVE = '/workout/hiit/active';
   static const HIIT_DETAILS = '/workout/hiit/details';
+  static const HIIT_WAITING_ROOM = '/workout/hiit/room/waiting';
 }
 
 class Routes {
@@ -36,14 +38,19 @@ class Routes {
         transition: Transition.fadeIn,
         transitionDuration: Duration(milliseconds: 700)),
     GetPage(
+      name: RoutePaths.HIIT_DETAILS,
+      page: () => HIITDetailsScreen(),
+      binding: HIITDetailsBindings(),
+    ),
+    GetPage(
       name: RoutePaths.HIIT_ACTIVE,
       page: () => ActiveHIITScreen(),
       binding: ActiveHIITBindings(),
     ),
     GetPage(
-      name: RoutePaths.HIIT_DETAILS,
-      page: () => HIITDetailsScreen(),
-      binding: HIITDetailsBindings(),
+      name: RoutePaths.HIIT_WAITING_ROOM,
+      page: () => WaitingRoomScreen(),
+      binding: WaitingRoomBindings(),
     )
   ];
 }
