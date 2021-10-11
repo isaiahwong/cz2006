@@ -30,6 +30,7 @@ class AppScreen extends GetView<AppScreenController> {
         backgroundColor: lightGrey,
         resizeToAvoidBottomInset: false,
         body: PageView(
+          allowImplicitScrolling: true,
           controller: controller.getPageController,
           children: _screens,
         ),

@@ -9,6 +9,7 @@ class ExploreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Explore Screen Build");
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

@@ -126,7 +126,9 @@ exports.respondRequest = functions
             .https
             .HttpsError("unauthenticated", "User not authenticated");
       }
-      if (data.response == null || data.friendId) {
+      if (data.response == null ||
+         data.friendId == null ||
+        data.documentId == null ) {
         throw new functions
             .https
             .HttpsError("invalid-argument", "arguments not found");

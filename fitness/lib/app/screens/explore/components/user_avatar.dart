@@ -6,25 +6,31 @@ class UserAvatar extends StatelessWidget {
   UserAvatar({
     required this.name,
     required this.profileImage,
+    this.size = 60,
   });
+  final double size;
   final String name;
   final String profileImage;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProfileImage(imageProvider: NetworkImage(profileImage), size: 80),
-        // Container(
-        //   decoration: BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     border: Border.all(color: Get.theme.primaryColor, width: 2),
-        //   ),
-        //   child: Image(image: NetworkImage(profileImage)),
-        // ),
-        SizedBox(height: 4),
-        Text(name),
-      ],
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ProfileImage(
+            imageProvider: NetworkImage(
+              profileImage.isEmpty
+                  ? "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"
+                  : profileImage,
+            ),
+            size: size,
+          ),
+          SizedBox(height: 4),
+          Text(name),
+        ],
+      ),
     );
   }
 }

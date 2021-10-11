@@ -47,7 +47,7 @@ class SocialRepo {
   Stream<List<Friend>> streamFriends() {
     return docRef
         .collection("friends")
-        .where("status", isEqualTo: SocialStatus.FRIEND.name)
+        .where("status", isEqualTo: "FRIEND")
         .limit(10)
         .snapshots(includeMetadataChanges: false)
         .map((event) {
@@ -80,13 +80,11 @@ class SocialRepo {
 
   /// Stream version of friend requests
   Stream<List<Friend>> streamRequest() {
-    print(userId);
-    print(SocialStatus.PENDING.name);
     return docRef
         .collection("friends")
         .limit(10)
         .where("responder.id", isEqualTo: userId)
-        .where("status", isEqualTo: SocialStatus.PENDING.name)
+        .where("status", isEqualTo: "PENDING")
         .snapshots(includeMetadataChanges: true)
         .map((event) {
       print("Friend requests: ${event.docs.length}");

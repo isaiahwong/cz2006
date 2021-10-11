@@ -32,6 +32,6 @@ class DashboardScreenController extends GetxController {
     super.onClose();
     workouts.close();
 
-    ExploreController.to.onClose();
+    Get.find<ExploreController>().onClose();
   }
 }

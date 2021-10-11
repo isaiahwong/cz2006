@@ -20,9 +20,19 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print("Here");
-        action();
+      onTap: () async {
+        Get.dialog(
+          Container(
+            alignment: Alignment.center,
+            height: 20,
+            width: 20,
+            child: CircularProgressIndicator(color: primaryColor),
+          ),
+          useSafeArea: false,
+          barrierDismissible: false,
+        );
+        await action();
+        Get.back();
       },
       child: Icon(
         icon,
@@ -44,14 +54,12 @@ class ViewMore extends StatelessWidget {
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: Colors.white54,
       ),
       child: IconButton(
         onPressed: onPressed,
         color: Get.theme.primaryColor,
-        icon: Icon(
-          Icons.unfold_more_rounded,
-        ),
+        icon: Icon(Icons.keyboard_arrow_right_outlined),
       ),
     );
   }

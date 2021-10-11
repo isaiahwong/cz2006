@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Max requests shown in list view
-final int maxRequests = 10;
+final int maxRequests = 4;
 
 /// Max friends shown in list view
-final int maxFriends = 10;
+final int maxFriends = 4;
 
 /// Social Screen - Friends and Requets
 class SocialScreen extends StatelessWidget {
@@ -79,12 +79,10 @@ class SocialScreen extends StatelessWidget {
                   return SearchResultScreen(_userAvatars);
                 }
                 return ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(vertical: 10),
                   children: [
-                    listViewTitle("Friends"),
+                    listViewTitle("Friends (${_.friendsLength}): "),
                     friendsWidget(_),
-                    listViewTitle("Requests"),
+                    listViewTitle("Requests (${_.requestsLength}): "),
                     requestsWidget(_),
                   ],
                 );
@@ -112,9 +110,11 @@ class SocialScreen extends StatelessWidget {
   /// Clear text
   Widget clearMethod() {
     return IconButton(
-      onPressed: () {
+      onPressed: () async {
+        /// Show popup loading
+
         FocusScope.of(Get.context!).requestFocus(FocusNode());
-        SocialController.to.clearText();
+        Get.find<SocialController>().clearText();
       },
       icon: Icon(Icons.clear),
     );
@@ -141,24 +141,25 @@ class SocialScreen extends StatelessWidget {
       );
     }
     return Container(
-      constraints: BoxConstraints(maxHeight: Get.height * 0.2),
       decoration: BoxDecoration(color: Colors.black26),
+      height: 80,
       width: double.infinity,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(vertical: 8),
         scrollDirection: Axis.horizontal,
         itemCount: _.friends.length > maxFriends
-            ? _.friends.length + 1
-            : _.friends.length,
+            ? _.friendsLength + 1
+            : _.friendsLength,
         itemBuilder: (context, index) {
-          if (_.friends.length > maxFriends) {
+          if (index > maxFriends - 1) {
             return ViewMore(() {
               print("View more from friend listview");
             });
           }
           var user = _.friends[index];
-          return UserAvatar(name: user.name, profileImage: user.profilePicture);
+          return UserAvatar(
+              name: user.name, profileImage: user.profilePicture, size: 40);
         },
       ),
     );
@@ -179,19 +180,21 @@ class SocialScreen extends StatelessWidget {
       );
     }
     return Container(
-      constraints: BoxConstraints(maxHeight: Get.height * 0.2),
       padding: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(color: Colors.black12),
       width: double.infinity,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemCount: _.requests.length > maxRequests
-            ? _.requests.length + 1
+            ? maxRequests + 1
             : _.requests.length,
         itemBuilder: (context, index) {
+          print("index: ${index}");
+
           /// Return more button added
-          if (_.requests.length > maxRequests) {
+          if (index == maxRequests) {
             return ViewMore(() {
               print("View more from request");
             });
@@ -206,7 +209,7 @@ class SocialScreen extends StatelessWidget {
               user.profilePicture,
               [
                 ActionButton(
-                  () => _.handleResponse(
+                  () async => await _.handleResponse(
                     user.id,
                     requestDocument.id,
                     true,
@@ -214,7 +217,7 @@ class SocialScreen extends StatelessWidget {
                   Icons.person_add_alt,
                 ),
                 ActionButton(
-                  () => _.handleResponse(
+                  () async => await _.handleResponse(
                     user.id,
                     requestDocument.id,
                     false,

@@ -1,12 +1,13 @@
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/screens/explore/components/popup_dialog.dart';
+import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:io/ansi.dart';
 
 class SocialController extends GetxController {
-  static SocialController to = Get.find();
   late SocialRepo socialRepo;
 
   Rx<List<Friend>> _friends = Rx([]);
@@ -75,7 +76,6 @@ class SocialController extends GetxController {
         requests.add(f[i]);
       }
     }
-
     update(["SocialScreen"]);
   }
 
@@ -89,10 +89,10 @@ class SocialController extends GetxController {
     } else {
       Fluttertoast.showToast(
         msg: "No users found",
-        backgroundColor: Colors.white,
+        backgroundColor: darkGrey,
         timeInSecForIosWeb: 2,
         gravity: ToastGravity.TOP,
-        textColor: Colors.black,
+        textColor: lightGrey,
       );
     }
   }
@@ -100,7 +100,7 @@ class SocialController extends GetxController {
   /// Send request to user
   Future<void> sendRequest(String id) async {
     await socialRepo.sendRequest(id);
-    customPopUp("Request Sent!", successIcon(Get.theme.primaryColor));
+    await customPopUp("Request Sent!", successIcon(Get.theme.primaryColor));
   }
 
   /// Handle request match
@@ -109,11 +109,13 @@ class SocialController extends GetxController {
     String documentId,
     bool respond,
   ) async {
+    print("Userid: ${userId}, DocumentId:${documentId}");
     await socialRepo.respondRequest(
       userId,
       documentId,
       respond,
     );
+    update(["SocialScreen"]);
   }
 
   /// Clear search results and search text
@@ -127,4 +129,6 @@ class SocialController extends GetxController {
 
   // * Getters
   int get foundUsersLength => foundUsers.length;
+  int get friendsLength => friends.length;
+  int get requestsLength => requests.length;
 }

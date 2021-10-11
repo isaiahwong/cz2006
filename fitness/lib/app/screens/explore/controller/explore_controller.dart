@@ -14,15 +14,19 @@ class ExploreController extends GetxController {
   ];
   @override
   void onInit() {
-    Get.put(SocialController());
-    Get.put(ExploreWorkoutController());
+    Get.put(SocialController(), permanent: true);
+    Get.put(ExploreWorkoutController(), permanent: true);
     super.onInit();
   }
 
   @override
   void onClose() {
-    SocialController.to.onClose();
-    ExploreWorkoutController.to.onClose();
+    if (!Get.find<SocialController>().isClosed) {
+      Get.find<SocialController>().onClose();
+    }
+    if (!Get.find<ExploreWorkoutController>().isClosed) {
+      Get.find<ExploreWorkoutController>().onClose();
+    }
     super.onClose();
   }
 

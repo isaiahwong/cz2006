@@ -1,7 +1,6 @@
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/common/common.dart';
 
-import 'package:fitness/repo/user/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -21,6 +20,7 @@ class UserCard extends StatelessWidget {
       ageString = ", " + getAge(age!).toString();
     }
     print("Username: ${username}");
+    print("Is profileimage blank: ${profilePic.isEmpty}");
     return Card(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -30,7 +30,7 @@ class UserCard extends StatelessWidget {
             CircleAvatar(
               minRadius: 20,
               maxRadius: 40,
-              backgroundImage: NetworkImage(profilePic.isNotEmpty
+              backgroundImage: NetworkImage(profilePic != ""
                   ? profilePic
                   : "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"),
             ),

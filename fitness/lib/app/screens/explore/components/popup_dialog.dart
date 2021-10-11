@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 /// Custom pop up
 
-void customPopUp(String title, Widget icon) async {
+Future<void> customPopUp(String title, Widget icon) async {
   Future.delayed(Duration(seconds: 1)).then((value) => Get.back());
   await Get.dialog(
     CustomDialog(title, icon),

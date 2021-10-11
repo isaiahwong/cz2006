@@ -14,94 +14,97 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       body: GetBuilder<RegisterController>(
         builder: (registerController) => Container(
+          alignment: Alignment.center,
           color: Colors.white,
           padding: EdgeInsets.all(8.0),
-          margin: const EdgeInsets.only(top: 5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: margin(
-              margin: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
-              children: [
-                // Container(
-                //   padding: EdgeInsets.all(8),
-                //   child: GestureDetector(
-                //     onTap: registerController.pickImage,
-                //     child: ProfileImage(
-                //       imageProvider: registerController.imageFile == null
-                //           ? null
-                //           : FileImage(registerController.imageFile!),
-                //     ),
-                //   ),
-                // ),
-                SizedBox(
-                  child: logoIcon,
-                  width: 40,
-                ),
-                Text(
-                  "Register",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: black, letterSpacing: -1),
-                ),
-                // dateOfBirth(registerController),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Name",
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor, width: 2),
-                    ),
+          // margin: const EdgeInsets.only(top: 5.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: margin(
+                margin: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
+                children: [
+                  // Container(
+                  //   padding: EdgeInsets.all(8),
+                  //   child: GestureDetector(
+                  //     onTap: registerController.pickImage,
+                  //     child: ProfileImage(
+                  //       imageProvider: registerController.imageFile == null
+                  //           ? null
+                  //           : FileImage(registerController.imageFile!),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    child: logoIcon,
+                    width: 40,
                   ),
-                  controller: registerController.nameController,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor, width: 2),
-                    ),
+                  Text(
+                    "Register",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(color: black, letterSpacing: -1),
                   ),
-                  controller: registerController.emailController,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor, width: 2),
-                    ),
-                  ),
-                  obscureText: true,
-                  enableSuggestions: false,
-                  controller: registerController.passwordController,
-                ),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      child: Text(
-                        "Date of birth:",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                  // dateOfBirth(registerController),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor, width: 2),
                       ),
-                    )),
-                dateOfBirth(registerController),
-                CustomButton(
-                  "Register",
-                  backgroundColor: primaryColor,
-                  textColor: Colors.white,
-                  width: double.infinity,
-                  height: 55,
-                  fontWeight: FontWeight.normal,
-                  onPressed: () => registerController.register(),
-                ),
-                Divider(color: black),
-                GestureDetector(
-                  onTap: () => Get.toNamed(RoutePaths.LOGIN),
-                  child: Text(
-                    "If you are already a member, Login now",
+                    ),
+                    controller: registerController.nameController,
                   ),
-                ),
-              ],
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor, width: 2),
+                      ),
+                    ),
+                    controller: registerController.emailController,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor, width: 2),
+                      ),
+                    ),
+                    obscureText: true,
+                    enableSuggestions: false,
+                    controller: registerController.passwordController,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        child: Text(
+                          "Date of birth:",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                  dateOfBirth(registerController),
+                  CustomButton(
+                    "Register",
+                    backgroundColor: primaryColor,
+                    textColor: Colors.white,
+                    width: double.infinity,
+                    height: 55,
+                    fontWeight: FontWeight.normal,
+                    onPressed: () => registerController.register(),
+                  ),
+                  Divider(color: black),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Text(
+                      "If you are already a member, Login now",
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
