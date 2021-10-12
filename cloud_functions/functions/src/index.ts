@@ -11,6 +11,7 @@ admin.initializeApp();
  * Exports from sub directories
  */
 exports.social = require("./social/social");
+exports.workout = require("./social/workout");
 
 /**
  * Get current time called from server

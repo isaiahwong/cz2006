@@ -1,4 +1,3 @@
-import * as w from "./workout";
 
 export interface User {
     id: string;
@@ -6,10 +5,6 @@ export interface User {
     name: string;
     height: number;
     profilePicture: string;
-    workouts: w.Workout[];
-    weights: Weight[];
-    workoutEvents: w.Workout[];
-    friends: User[];
 }
 
 export interface FriendWithId extends Friend{

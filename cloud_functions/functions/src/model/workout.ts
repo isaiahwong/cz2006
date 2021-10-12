@@ -1,12 +1,28 @@
 import * as u from "./user";
 
-export interface Workout{
+export interface WorkoutGroupWithId extends WorkoutGroup{
     id: string;
-    user: u.User;
-    name: string;
-    workoutType: WorkoutType;
+}
+/**
+ * Collection for workout groups
+ */
+export interface WorkoutGroup{
+    workoutId: string;
+    creator: string;
     public: boolean;
+    isActive: boolean;
     participants: u.User[];
+    maxParticipants: number;
+}
+
+/**
+ * Sub collection for group workout
+ * * Share the same id with workoutGroup document
+ */
+export interface GroupWorkout{
+    creator: string;
+    workoutGroupId: string;
+    isActive: boolean;
 }
 
 export enum WorkoutType{
@@ -36,7 +52,7 @@ export interface HIIT {
 
 export interface Routine{
     id: string;
-    workout: Workout[];
+    workout: WorkoutGroup[];
     exercises: Exercise[];
 }
 
