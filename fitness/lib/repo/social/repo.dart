@@ -35,7 +35,7 @@ class SocialRepo {
   Future<List<Friend>> getFriends() async {
     var snapshots = await docRef
         .collection("friends")
-        .where("status", isEqualTo: SocialStatus.FRIEND.toString())
+        .where("status", isEqualTo: "FRIEND")
         .get();
     List<Friend> _friends = [];
     for (var i = 0; i < snapshots.docs.length; i++) {

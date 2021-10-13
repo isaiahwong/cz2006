@@ -1,3 +1,6 @@
+import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/components/panel/sliding_panel.dart';
+import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/repo.dart';
@@ -18,7 +21,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
       flexibleSpace: FlexibleSpaceBar(
         title: Container(
           width: double.infinity,
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,12 +49,31 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
     );
   }
 
-  Widget _people(User user) {
+  Widget _title(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: screenPadding,
+        child: Text(
+          "Waiting\nRoom",
+          style: Theme.of(context).textTheme.headline1!.copyWith(
+                color: black,
+                fontWeight: FontWeight.w900,
+                fontSize: 50,
+              ),
+        ),
+      ),
+    );
+  }
+
+  Widget _people(UserSnippet user) {
     return Container(
-      width: 100,
-      height: 100,
+      width: 20,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
+      ),
+      child: CircleAvatar(
+        maxRadius: 10,
+        backgroundImage: NetworkImage(user.profilePicture),
       ),
     );
   }
@@ -62,7 +84,38 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         crossAxisCount: 5,
-        children: controller.users.map<Widget>((u) => _people(u)).toList(),
+        children: controller.friends
+            .map<String, Widget>((s, u) => MapEntry(s, _people(u.friend)))
+            .values
+            .toList(),
+      ),
+    );
+  }
+
+  Widget _pendingRow(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: screenPadding.copyWith(top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Pending Request",
+              style:
+                  Theme.of(context).textTheme.headline3!.copyWith(color: black),
+            ),
+            SizedBox(height: 10),
+            GridView.count(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              crossAxisCount: 5,
+              children: controller.friends
+                  .map<String, Widget>((s, u) => MapEntry(s, _people(u.friend)))
+                  .values
+                  .toList(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -73,14 +126,34 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
       onWillPop: () async => Navigator.of(context).userGestureInProgress,
       child: GetBuilder<WaitingRoomController>(
         builder: (controller) {
-          return Scaffold(
-            body: SafeArea(
-              child: CustomScrollView(
-                controller: ScrollController(),
-                slivers: [
-                  _appBar(context),
-                  _peopleRow(),
-                ],
+          return SlidingPanel(
+            tag: RoutePaths.HIIT_WAITING_ROOM,
+            child: Scaffold(
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    CustomScrollView(
+                      controller: ScrollController(),
+                      slivers: [
+                        _appBar(context),
+                        _title(context),
+                        SliverToBoxAdapter(child: SizedBox(height: 30)),
+                        // _peopleRow(),
+                        _pendingRow(context),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: GestureDetector(
+                        onTap: controller.onViewFriends,
+                        child: Icon(
+                          CupertinoIcons.add,
+                          size: 50,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

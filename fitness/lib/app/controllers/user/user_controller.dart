@@ -35,11 +35,13 @@ class UserController extends GetxController {
   }
 
   void connect() {
-    hiitClient.subInvites(HIITUser(
-      id: user.value!.id,
-      name: user.value!.name,
-      email: user.value!.email,
-    ));
+    hiitClient.subInvites(
+      HIITUser(
+        id: user.value!.id,
+        name: user.value!.name,
+        email: user.value!.email,
+      ),
+    );
   }
 
   @override

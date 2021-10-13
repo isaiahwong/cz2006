@@ -1,22 +1,17 @@
 import 'dart:async';
 
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
-import 'package:fitness/app/screens/cycling/coordinates.dart';
-import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/exercise/exercise.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
-import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
 import 'package:fitness/repo/exercise/model.dart';
-import 'package:fitness/repo/workout/model/model.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:get/get.dart';
 
-class HIITDetailsController extends GetxController
-    with ExerciseDelegate, CoordinatesDelegate {
+class HIITDetailsController extends GetxController with ExerciseDelegate {
   late HIIT hiit;
   final WorkoutRepo workoutRepo = WorkoutRepo.get();
   late final StreamSubscription keyboardSub;
@@ -118,40 +113,6 @@ class HIITDetailsController extends GetxController
   void onExerciseSelectionDone() async {
     hiit = hiit.setExercises(exercises.values.toList());
     await workoutRepo.updateHIIT(hiit);
-    panelController.close();
-    update();
-  }
-
-  @override
-  bool coordsExists(Coordinates c) {
-    // TODO: implement coordsExists
-    throw UnimplementedError();
-  }
-
-  @override
-  bool coordsNotExists(Coordinates c) {
-    // TODO: implement coordsNotExists
-    throw UnimplementedError();
-  }
-
-  @override
-  void onCoordinatesChanged(Coordinates c) {
-    // TODO: implement onCoordinatesChanged
-  }
-
-  @override
-  void onCoordinatesRemoved(Coordinates c) {
-    // TODO: implement onCoordinatesRemoved
-  }
-
-  @override
-  void onCoordinatesSelected(Coordinates c) {
-    // TODO: implement onCoordinatesSelected
-  }
-
-  @override
-  void onCoordinatesSelectionDone() {
-    // TODO: implement onCoordinatesSelectionDone
     panelController.close();
     update();
   }

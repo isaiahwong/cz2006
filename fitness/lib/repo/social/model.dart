@@ -1,3 +1,4 @@
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -30,9 +31,16 @@ class Friends {
 class Friend {
   int createdAt;
   String id;
+  @JsonKey(ignore: true)
   UserSnippet initiator;
   UserSnippet responder;
   SocialStatus status;
+
+  UserSnippet get friend {
+    return UserController.get().user.value!.id == initiator.id
+        ? responder
+        : initiator;
+  }
 
   Friend(
     this.id,

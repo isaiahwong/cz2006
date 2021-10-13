@@ -57,6 +57,17 @@ class WorkoutRepo {
     return workout.copyWith(id: result.id);
   }
 
+  Future<void> notifyInvite(UserSnippet friend, HIIT hiit) async {
+    final user = UserController.get().user.value!;
+    await hiitClient.notifyInvites(
+      InviteWaitingRoomRequest(
+        from: HIITUser(id: user.id, name: user.name),
+        to: HIITUser(id: friend.id, name: friend.name),
+        hiit: hiit.id,
+      ),
+    );
+  }
+
   Future<void> updateWorkout(Workout workout) {
     return collection.doc(workout.id).set(workout.toJson());
   }

@@ -57,6 +57,19 @@ func (svc *Service) SubInvites(user *hiit.HIITUser, stream hiit.HIITService_SubI
 	return nil
 }
 
+func (svc *Service) NotifyInvites(ctx context.Context, req *hiit.InviteWaitingRoomRequest) (*hiit.Empty, error) {
+	// retreive listen channel
+	listen := svc.users[req.GetTo().GetId()]
+	if listen == nil {
+		fmt.Println("User does not exists")
+		return &hiit.Empty{}, nil
+	}
+
+	listen <- req
+
+	return &hiit.Empty{}, nil
+}
+
 func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream hiit.HIITService_CreateWaitingRoomServer) error {
 	ctx, cancel := context.WithCancel(stream.Context())
 	defer cancel()
