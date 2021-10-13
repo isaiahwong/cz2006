@@ -80,9 +80,10 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
               ),
         children: [
           Container(
-            height: 150,
+            constraints: BoxConstraints(maxHeight: double.infinity),
             color: Colors.white,
             child: CustomScrollView(
+              shrinkWrap: true,
               controller: ScrollController(),
               slivers: <Widget>[
                 ..._coordinatesItems(context, start),
@@ -121,6 +122,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(),
       color: Colors.white,
       child: Column(
         children: [
