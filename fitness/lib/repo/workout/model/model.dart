@@ -1,4 +1,5 @@
 export 'workout.dart';
+export 'workout_group.dart';
 export 'routine.dart';
 export 'routine_interval.dart';
 export 'routine_log.dart';

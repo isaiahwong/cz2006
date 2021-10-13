@@ -2,6 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fitness/repo/repo.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitness/repo/workout/workout.dart';
 
 /// Sub collection of user
 class SocialRepo {
@@ -138,8 +139,35 @@ class SocialRepo {
     return user;
   }
 
-  /// Invite friend to workout
-  Future<void> inviteWorkout(
-    String workoutId,
-  ) async {}
+  /// Show available public workout (Fetch once)
+  Future<List<WorkoutGroupWithId>> getPublicWorkout() async {
+    var result = await _store
+        .collection("workoutGroups")
+        .where("public", isEqualTo: true)
+        .get();
+    List<WorkoutGroupWithId> _groups = [];
+    for (var i = 0; i < result.size; i++) {
+      _groups.add(WorkoutGroupWithId.fromJson(result.docs[i].data()));
+    }
+    return _groups;
+  }
+
+  /// Show a list of workout invitation
+  Future<List<GroupWorkout>> getWorkoutInvites() async {
+    var result = await _store
+        .collection("users")
+        .doc(userId)
+        .collection("invites")
+        .where(
+          "isActive",
+          isEqualTo: true,
+        )
+        .get();
+    List<GroupWorkout> _invites = [];
+
+    for (var i = 0; i < result.size; i++) {
+      _invites.add(GroupWorkout.fromJson(result.docs[i].data()));
+    }
+    return _invites;
+  }
 }

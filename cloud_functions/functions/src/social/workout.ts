@@ -215,7 +215,7 @@ exports.inviteWorkout = functions
 /**
  * Update workout status to all users
  * @param {string} workoutGroupId
- * @param {boolean} status : for isActive field
+ * @param {boolean} isActive : for isActive field
  * @returns {Promise<void>}
  */
 exports.setWorkoutStatus = functions
