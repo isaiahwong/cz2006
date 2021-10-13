@@ -124,7 +124,21 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
             .flow<CreateWorkoutRoute>()
             .update((_) => CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS);
       },
-      // child: SizedBox.shrink(),
+      child:
+          controller.coordinates.isNotEmpty ? _coordinatesGrid(context) : null,
+    );
+  }
+
+  Widget _coordinatesGrid(BuildContext context) {
+    return ReorderableWrap(
+      onReorder: (oldIndex, newIndex) {},
+      spacing: 10.0,
+      runSpacing: 10.0,
+      maxMainAxisCount: 2,
+      children: controller.coordinates
+          .map((k, e) => MapEntry(k, Tag(title: e.name)))
+          .values
+          .toList(),
     );
   }
 

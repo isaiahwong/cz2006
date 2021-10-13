@@ -5,16 +5,14 @@ typedef CoordinateCallBack = void Function(Coordinates);
 class CoordinatesTile extends StatefulWidget {
   final Coordinates coordinates;
   final bool start;
-  final ValueNotifier<List<WayPoint>> wayPoints;
   final CoordinateCallBack onPressed;
 
-  CoordinatesTile(
-      {Key? key,
-      required this.coordinates,
-      required this.start,
-      required this.onPressed,
-      required this.wayPoints})
-      : super(key: key);
+  CoordinatesTile({
+    Key? key,
+    required this.coordinates,
+    required this.start,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   _CoordinatesTileState createState() => _CoordinatesTileState();
@@ -35,7 +33,6 @@ class _CoordinatesTileState extends State<CoordinatesTile>
   late var wayPoint;
 
   final _kExpand = Duration(milliseconds: 200);
-  final GlobalKey<CustomExpansionTileState> _expansionKey = new GlobalKey();
   static final Animatable<double> _easeInTween =
       CurveTween(curve: Curves.easeIn);
   static final Animatable<double> _halfTween =
@@ -54,21 +51,7 @@ class _CoordinatesTileState extends State<CoordinatesTile>
   void onSelected() {
     // It will pass back
     widget.onPressed(widget.coordinates);
-
-    // final coordinates = coordinatesController.onSelected(_coordinates);
-    setState(() {
-      if (_selectedOption == SelectedOption.START) {
-        //TODO Update Start
-        this.wayPoint.add(
-              WayPoint(
-                  name: _coordinates.name,
-                  latitude: _coordinates.x,
-                  longitude: _coordinates.y),
-            );
-      } else {
-        //TODO Update End
-      }
-    });
+    setState(() {});
   }
 
   Widget _title() {
@@ -85,13 +68,15 @@ class _CoordinatesTileState extends State<CoordinatesTile>
   }
 
   Widget _trailing() {
-    return RotationTransition(
-      turns: _iconTurns,
-      child: const Icon(
-        CupertinoIcons.add_circled,
-        color: primaryColor,
-      ),
-    );
+    return coordinatesController.isSelected(_coordinates)
+        ? const Icon(null)
+        : RotationTransition(
+            turns: _iconTurns,
+            child: const Icon(
+              CupertinoIcons.add_circled,
+              color: primaryColor,
+            ),
+          );
   }
 
   @override

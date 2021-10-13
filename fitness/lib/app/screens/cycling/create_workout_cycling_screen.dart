@@ -105,7 +105,6 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
                   : controller.onDestinationSelected,
               coordinates: c,
               start: start,
-              wayPoints: this.wayPoints,
             ),
           ),
         )
@@ -121,30 +120,19 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ValueListenableBuilder<List<WayPoint>>(
-        valueListenable: wayPoints,
-        builder: (context, value, child) {
-          return Center(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  _appBar(context),
-                  Flexible(
-                    child: Column(
-                      children: [
-                        _mapboxUI(context, wayPoints),
-                        _selectLocation(context, true),
-                        _selectLocation(context, false),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          _appBar(context),
+          Column(
+            children: [
+              _mapboxUI(context, wayPoints),
+              _selectLocation(context, true),
+              _selectLocation(context, false),
+            ],
+          ),
+        ],
       ),
     );
   }

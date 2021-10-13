@@ -39,8 +39,8 @@ class Cycling extends Workout {
           .map(
             (coords) => Course(
               id: genRandStr(5),
-              start: coords, //To be fixed
-              end: coords, //To be fixed
+              start: coordinates[0],
+              end: coordinates[1],
               coordinates: coords.copyWith(),
             ),
           )
