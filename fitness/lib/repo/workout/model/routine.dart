@@ -115,4 +115,12 @@ class Routine {
       return null;
     }
   }
+
+  RoutineInterval? getInterval(String id) {
+    try {
+      return intervals.firstWhere((r) => r.id == id);
+    } catch (error) {
+      return null;
+    }
+  }
 }

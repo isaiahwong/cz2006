@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grpc/grpc.dart';
 import 'package:hiit_api/hiit.dart';
+import 'package:hiit_api/hiit.pbenum.dart';
 import 'active_hiit_state.dart';
 
 enum ActiveHIITType {
@@ -27,6 +28,7 @@ class ActiveHIITController extends GetxController {
   final PageController pageController = PageController(initialPage: 0);
 
   late final ActiveHIITType activeHIITType;
+  late final bool isHost;
 
   ResponseStream<HIITActivity>? hostHIITStream;
   ResponseStream<HIITActivity>? joinHIITStream;
@@ -77,6 +79,7 @@ class ActiveHIITController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    poseController.stopCall();
     hostHIITStream?.cancel();
     joinHIITStream?.cancel();
     hostSub?.cancel();
@@ -89,18 +92,39 @@ class ActiveHIITController extends GetxController {
     // Create hiit room if host
     final user = UserController.get().user.value!;
     if (user.id == hiit.host) {
+      isHost = true;
       hostHIITStream = workoutRepo.createDuoHIIT(hiit);
       hostSub = hostHIITStream!.listen(onHIITHostActivity);
     } else {
       // join room if not
+      isHost = false;
       joinHIITStream = workoutRepo.joinDuoHIIT(hiit);
-      joinRoomSub = joinHIITStream!.listen(onHIITHostActivity);
+      joinRoomSub = joinHIITStream!.listen(onHIITJoinActivity);
     }
   }
 
   void onHIITHostActivity(HIITActivity activity) {}
 
-  void onHIITJoinActivity(HIITActivity activity) {}
+  void onHIITJoinActivity(HIITActivity activity) {
+    switch (activity.type) {
+      case HIITActivity_Type.ROUTINE_CHANGE:
+        onRoutineChange(activity);
+        break;
+    }
+  }
+
+  // auto routine change for duo mode
+  void onRoutineChange(HIITActivity activity) {
+    final routine = hiit.getRoutine(activity.routine.id);
+    if (routine == null) return;
+    final interval = routine.getInterval(activity.routine.interval.id);
+    if (interval == null) return;
+    currentInterval = interval;
+    currentRoutine = routine;
+    startPose();
+    fullscreenController.open();
+    update();
+  }
 
   void onHIITStream(Data data) {
     if (data.count == currentReps) return;
@@ -149,7 +173,13 @@ class ActiveHIITController extends GetxController {
     panelController.close();
   }
 
-  void onIntervalSelected(Routine routine, RoutineInterval interval) {
+  void onIntervalSelected(Routine routine, RoutineInterval interval) async {
+    if (activeHIITType == ActiveHIITType.DUO) {
+      if (!isHost) return;
+      await workoutRepo.duoHIITSelectRoutine(routine, interval);
+      // for duo
+      startPose();
+    }
     currentInterval = interval;
     currentRoutine = routine;
     fullscreenController.open();

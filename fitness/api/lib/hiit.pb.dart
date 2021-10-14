@@ -718,67 +718,6 @@ class StartWaitingRoomRequest extends $pb.GeneratedMessage {
   void clearWorkout() => clearField(3);
 }
 
-class HIITRoutine extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITRoutine', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'exercise')
-    ..hasRequiredFields = false
-  ;
-
-  HIITRoutine._() : super();
-  factory HIITRoutine({
-    $core.String? id,
-    $core.String? exercise,
-  }) {
-    final _result = create();
-    if (id != null) {
-      _result.id = id;
-    }
-    if (exercise != null) {
-      _result.exercise = exercise;
-    }
-    return _result;
-  }
-  factory HIITRoutine.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HIITRoutine.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  HIITRoutine clone() => HIITRoutine()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  HIITRoutine copyWith(void Function(HIITRoutine) updates) => super.copyWith((message) => updates(message as HIITRoutine)) as HIITRoutine; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static HIITRoutine create() => HIITRoutine._();
-  HIITRoutine createEmptyInstance() => create();
-  static $pb.PbList<HIITRoutine> createRepeated() => $pb.PbList<HIITRoutine>();
-  @$core.pragma('dart2js:noInline')
-  static HIITRoutine getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITRoutine>(create);
-  static HIITRoutine? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get exercise => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set exercise($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasExercise() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearExercise() => clearField(2);
-}
-
 class CreateDuoHIITRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateDuoHIITRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: WorkoutUser.create)
@@ -909,7 +848,7 @@ class HIITActivity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITActivity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
     ..aOM<WorkoutUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: WorkoutUser.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'routine')
+    ..aOM<HIITRoutine>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'routine', subBuilder: HIITRoutine.create)
     ..e<HIITActivity_Type>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: HIITActivity_Type.UNKNOWN, valueOf: HIITActivity_Type.valueOf, enumValues: HIITActivity_Type.values)
     ..aOM<WorkoutUser>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winner', subBuilder: WorkoutUser.create)
     ..hasRequiredFields = false
@@ -919,7 +858,7 @@ class HIITActivity extends $pb.GeneratedMessage {
   factory HIITActivity({
     $core.String? hiit,
     WorkoutUser? user,
-    $core.String? routine,
+    HIITRoutine? routine,
     HIITActivity_Type? type,
     WorkoutUser? winner,
   }) {
@@ -983,13 +922,15 @@ class HIITActivity extends $pb.GeneratedMessage {
   WorkoutUser ensureUser() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.String get routine => $_getSZ(2);
+  HIITRoutine get routine => $_getN(2);
   @$pb.TagNumber(3)
-  set routine($core.String v) { $_setString(2, v); }
+  set routine(HIITRoutine v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasRoutine() => $_has(2);
   @$pb.TagNumber(3)
   void clearRoutine() => clearField(3);
+  @$pb.TagNumber(3)
+  HIITRoutine ensureRoutine() => $_ensure(2);
 
   @$pb.TagNumber(4)
   HIITActivity_Type get type => $_getN(3);
@@ -1041,13 +982,156 @@ class HIITRoutineComplete extends $pb.GeneratedMessage {
   static HIITRoutineComplete? _defaultInstance;
 }
 
+class HIITRoutineInterval extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITRoutineInterval', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  HIITRoutineInterval._() : super();
+  factory HIITRoutineInterval({
+    $core.String? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory HIITRoutineInterval.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HIITRoutineInterval.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HIITRoutineInterval clone() => HIITRoutineInterval()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HIITRoutineInterval copyWith(void Function(HIITRoutineInterval) updates) => super.copyWith((message) => updates(message as HIITRoutineInterval)) as HIITRoutineInterval; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutineInterval create() => HIITRoutineInterval._();
+  HIITRoutineInterval createEmptyInstance() => create();
+  static $pb.PbList<HIITRoutineInterval> createRepeated() => $pb.PbList<HIITRoutineInterval>();
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutineInterval getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITRoutineInterval>(create);
+  static HIITRoutineInterval? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class HIITRoutine extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITRoutine', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'exercise')
+    ..aOM<HIITRoutineInterval>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'interval', subBuilder: HIITRoutineInterval.create)
+    ..hasRequiredFields = false
+  ;
+
+  HIITRoutine._() : super();
+  factory HIITRoutine({
+    $core.String? id,
+    $core.String? exercise,
+    HIITRoutineInterval? interval,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (exercise != null) {
+      _result.exercise = exercise;
+    }
+    if (interval != null) {
+      _result.interval = interval;
+    }
+    return _result;
+  }
+  factory HIITRoutine.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HIITRoutine.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HIITRoutine clone() => HIITRoutine()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HIITRoutine copyWith(void Function(HIITRoutine) updates) => super.copyWith((message) => updates(message as HIITRoutine)) as HIITRoutine; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutine create() => HIITRoutine._();
+  HIITRoutine createEmptyInstance() => create();
+  static $pb.PbList<HIITRoutine> createRepeated() => $pb.PbList<HIITRoutine>();
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutine getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITRoutine>(create);
+  static HIITRoutine? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get exercise => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set exercise($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasExercise() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExercise() => clearField(2);
+
+  @$pb.TagNumber(3)
+  HIITRoutineInterval get interval => $_getN(2);
+  @$pb.TagNumber(3)
+  set interval(HIITRoutineInterval v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasInterval() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInterval() => clearField(3);
+  @$pb.TagNumber(3)
+  HIITRoutineInterval ensureInterval() => $_ensure(2);
+}
+
 class HIITSelectRoutineRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITSelectRoutineRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..aOM<WorkoutUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: WorkoutUser.create)
+    ..aOM<HIITRoutine>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'routine', subBuilder: HIITRoutine.create)
     ..hasRequiredFields = false
   ;
 
   HIITSelectRoutineRequest._() : super();
-  factory HIITSelectRoutineRequest() => create();
+  factory HIITSelectRoutineRequest({
+    $core.String? hiit,
+    WorkoutUser? user,
+    HIITRoutine? routine,
+  }) {
+    final _result = create();
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    if (user != null) {
+      _result.user = user;
+    }
+    if (routine != null) {
+      _result.routine = routine;
+    }
+    return _result;
+  }
   factory HIITSelectRoutineRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory HIITSelectRoutineRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -1068,5 +1152,36 @@ class HIITSelectRoutineRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static HIITSelectRoutineRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITSelectRoutineRequest>(create);
   static HIITSelectRoutineRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get hiit => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set hiit($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHiit() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHiit() => clearField(1);
+
+  @$pb.TagNumber(2)
+  WorkoutUser get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user(WorkoutUser v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => clearField(2);
+  @$pb.TagNumber(2)
+  WorkoutUser ensureUser() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  HIITRoutine get routine => $_getN(2);
+  @$pb.TagNumber(3)
+  set routine(HIITRoutine v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoutine() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoutine() => clearField(3);
+  @$pb.TagNumber(3)
+  HIITRoutine ensureRoutine() => $_ensure(2);
 }
 

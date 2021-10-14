@@ -125,6 +125,27 @@ class WorkoutRepo {
     );
   }
 
+  Future<void> duoHIITSelectRoutine(Routine routine, RoutineInterval interval) {
+    final user = UserController.get().user.value!;
+    return hiitClient.duoHIITSelectRoutine(
+      HIITSelectRoutineRequest(
+        user: WorkoutUser(
+          email: user.email,
+          id: user.id,
+          name: user.name,
+        ),
+        hiit: routine.workout,
+        routine: HIITRoutine(
+          exercise: routine.exercise.id,
+          id: routine.id,
+          interval: HIITRoutineInterval(
+            id: interval.id,
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<Workout> createWorkout(Workout workout) async {
     // FirebaseFirestore.instance.collection('/users/${_userRepo.id}/workouts');
     final result = await collection.add(workout.toJson());

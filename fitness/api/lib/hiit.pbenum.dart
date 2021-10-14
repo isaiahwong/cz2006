@@ -11,12 +11,12 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class HIITActivity_Type extends $pb.ProtobufEnum {
   static const HIITActivity_Type UNKNOWN = HIITActivity_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
-  static const HIITActivity_Type CHANGE_ROUTINE = HIITActivity_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CHANGE_ROUTINE');
+  static const HIITActivity_Type ROUTINE_CHANGE = HIITActivity_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROUTINE_CHANGE');
   static const HIITActivity_Type WINNER = HIITActivity_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WINNER');
 
   static const $core.List<HIITActivity_Type> values = <HIITActivity_Type> [
     UNKNOWN,
-    CHANGE_ROUTINE,
+    ROUTINE_CHANGE,
     WINNER,
   ];
 

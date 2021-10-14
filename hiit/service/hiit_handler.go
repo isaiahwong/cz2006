@@ -72,7 +72,7 @@ func (svc *Service) CreateDuoHIIT(req *hiit.CreateDuoHIITRequest, stream hiit.HI
 				if !ok {
 					return
 				}
-
+				fmt.Println("received activity")
 				// notify host
 				if err := stream.Send(activity); err != nil {
 					errCh.C <- err
@@ -101,6 +101,43 @@ func (svc *Service) CreateDuoHIIT(req *hiit.CreateDuoHIITRequest, stream hiit.HI
 		fmt.Println("hiit ended")
 	}
 	return nil
+}
+
+func (svc *Service) DuoHIITSelectRoutine(ctx context.Context, req *hiit.HIITSelectRoutineRequest) (*hiit.Empty, error) {
+	routine := req.GetRoutine()
+	user := req.GetUser()
+	hiitWorkout := req.GetHiit()
+
+	if user == nil {
+		return nil, errors.New("user is nil")
+	}
+
+	// get hiit
+	hiitSession := svc.hiitSessions[hiitWorkout]
+	if hiitSession == nil {
+		return nil, errors.New("hiit session does not exist")
+	}
+
+	var hiitUser *model.HIITUserSession
+	if user.Id == hiitSession.Host.User.Id {
+		hiitUser = hiitSession.Host
+	} else {
+		// check if user in sesssion
+		hiitUser = hiitSession.Users[user.GetId()]
+	}
+	if hiitUser == nil {
+		return nil, errors.New("hiit user is not in session")
+	}
+
+	// TODO winner or host select
+	hiitSession.HIITActivitySub <- &hiit.HIITActivity{
+		Hiit:    hiitWorkout,
+		User:    hiitUser.User,
+		Routine: routine,
+		Type:    hiit.HIITActivity_ROUTINE_CHANGE,
+	}
+
+	return &hiit.Empty{}, nil
 }
 
 func (svc *Service) JoinDuoHIIT(req *hiit.JoinDuoHIITRequest, stream hiit.HIITService_JoinDuoHIITServer) error {
@@ -137,6 +174,7 @@ func (svc *Service) JoinDuoHIIT(req *hiit.JoinDuoHIITRequest, stream hiit.HIITSe
 				if !ok {
 					return
 				}
+				fmt.Println("notify")
 				if err := stream.Send(activity); err != nil {
 					errCh.C <- err
 					return

@@ -61,11 +61,6 @@ message StartWaitingRoomRequest {
   string workout = 3;
 }
 
-message HIITRoutine {
-  string id = 1;
-  string exercise = 2;
-}
-
 message CreateDuoHIITRequest {
   WorkoutUser host  = 1;
   string hiit = 2;
@@ -79,12 +74,12 @@ message JoinDuoHIITRequest {
 message HIITActivity {
   enum Type {
     UNKNOWN = 0;
-    CHANGE_ROUTINE = 1;
+    ROUTINE_CHANGE = 1;
     WINNER = 2;
   }
   string hiit = 1;
   WorkoutUser user = 2;
-  string routine = 3;
+  HIITRoutine routine = 3;
   Type type = 4;
   WorkoutUser winner = 5;
 }
@@ -93,8 +88,20 @@ message HIITRoutineComplete {
 
 }
 
-message HIITSelectRoutineRequest {
+message HIITRoutineInterval {
+  string id = 1;
+}
 
+message HIITRoutine {
+  string id = 1;
+  string exercise = 2;
+  HIITRoutineInterval interval = 3;
+}
+
+message HIITSelectRoutineRequest {
+  string hiit = 1;
+  WorkoutUser user = 2;
+  HIITRoutine routine = 3;
 }
 
 service HIITService {
