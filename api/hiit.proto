@@ -26,32 +26,61 @@ message Session {
   string exercise = 2;
 }
 
-message HIITUser {
+message WorkoutUser {
   string id = 1;
   string name = 2;
   string email = 3;
 }
 
 message CreateWaitingRoomRequest {
-  HIITUser host = 1;
-  string hiit = 2;
+  WorkoutUser host = 1;
+  string workout = 2;
 }
 
 message WaitingRoomRequest {
-  HIITUser user = 1;
-  string hiit = 2;
+  WorkoutUser user = 1;
+  string workout = 2;
 }
 
 message WaitingRoomResponse {
-  HIITUser host = 1;
-  repeated HIITUser users = 2;
+  WorkoutUser host = 1;
+  repeated WorkoutUser users = 2;
   bool start = 3;
 }
 
 message InviteWaitingRoomRequest {
-  HIITUser from = 1;
-  HIITUser to = 2;
-  string hiit = 3;
+  WorkoutUser from = 1;
+  WorkoutUser to = 2;
+  string workout = 3;
+}
+
+message StartWaitingRoomRequest {
+  WorkoutUser host = 1;
+  string workout = 3;
+}
+
+message HIITRoutine {
+  string id = 1;
+  string exercise = 2;
+}
+
+message CreateDuoHIITRequest {
+  WorkoutUser host  = 1;
+  string hiit = 2;
+}
+
+message JoinDuoHIITRequest {
+  WorkoutUser user = 1;
+  string hiit = 2;
+}
+
+message ActiveRoutine {
+  string hiit = 1;
+}
+
+message DuoHIITResult {
+  string winner = 1;
+  int32 score = 2;
 }
 
 service HIITService {
@@ -59,7 +88,13 @@ service HIITService {
   rpc Pub(DataSession) returns (Empty);
   rpc CreateWaitingRoom(CreateWaitingRoomRequest) returns (stream WaitingRoomResponse);
   rpc JoinWaitingRoom(WaitingRoomRequest) returns (stream WaitingRoomResponse);
+  rpc StartWaitingRoom(StartWaitingRoomRequest) returns (Empty);
 
   rpc NotifyInvites(InviteWaitingRoomRequest) returns (Empty);
-  rpc SubInvites(HIITUser) returns (stream InviteWaitingRoomRequest);
+  rpc SubInvites(WorkoutUser) returns (stream InviteWaitingRoomRequest);
+
+  rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream DuoHIITResult);
+  rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream DuoHIITResult);
+
+  rpc DuoHIITComplete(ActiveRoutine) returns (Empty);
 }

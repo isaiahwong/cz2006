@@ -38,7 +38,7 @@ class UserController extends GetxController {
 
   void connect() {
     invitationRequest = hiitClient.subInvites(
-      HIITUser(
+      WorkoutUser(
         id: user.value!.id,
         name: user.value!.name,
         email: user.value!.email,

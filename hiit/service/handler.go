@@ -11,7 +11,7 @@ import (
 	"github.com/isaiahwong/hiit/model"
 )
 
-func (svc *Service) SubInvites(user *hiit.HIITUser, stream hiit.HIITService_SubInvitesServer) error {
+func (svc *Service) SubInvites(user *hiit.WorkoutUser, stream hiit.HIITService_SubInvitesServer) error {
 	ctx, cancel := context.WithCancel(stream.Context())
 	defer cancel()
 
@@ -70,16 +70,33 @@ func (svc *Service) NotifyInvites(ctx context.Context, req *hiit.InviteWaitingRo
 	return &hiit.Empty{}, nil
 }
 
+func (svc *Service) StartWaitingRoom(ctx context.Context, req *hiit.StartWaitingRoomRequest) (*hiit.Empty, error) {
+	host := req.GetHost()
+	workout := req.GetWorkout()
+
+	waitingRoom := svc.waitingRooms[workout]
+	if waitingRoom == nil {
+		return nil, errors.New("Waiting Room does not exist")
+	}
+
+	if waitingRoom.Host.Id != host.Id {
+		return nil, errors.New("Invalid host")
+	}
+
+	waitingRoom.Start <- host.Id
+	return &hiit.Empty{}, nil
+}
+
 func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream hiit.HIITService_CreateWaitingRoomServer) error {
 	ctx, cancel := context.WithCancel(stream.Context())
 	defer cancel()
 
-	hiitWorkout := req.GetHiit()
+	workout := req.GetWorkout()
 	host := req.GetHost()
 
 	waitingRoom := &model.WaitingRoom{
 		Host:    host,
-		HIIT:    hiitWorkout,
+		HIIT:    workout,
 		JoinSub: make(chan *model.WaitingSub),
 		Start:   make(chan string),
 		Users:   make(map[string]*model.WaitingSub),
@@ -87,13 +104,13 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 
 	fmt.Println(host.GetName(), "created room")
 
-	svc.waitingRooms[hiitWorkout] = waitingRoom
+	svc.waitingRooms[workout] = waitingRoom
 
 	errCh := internal.NewErrorChannel()
 	defer func() {
 		errCh.Close()
 		close(waitingRoom.JoinSub)
-		delete(svc.waitingRooms, hiitWorkout)
+		delete(svc.waitingRooms, workout)
 	}()
 
 	go func() {
@@ -109,21 +126,28 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 				}
 				err = svc.notifyWaiting(userSub, waitingRoom, stream)
 			case start, ok := <-waitingRoom.Start:
-				fmt.Println("starting")
 				if !ok {
 					return
 				}
+				// if start is not initiated by host, we ignore
 				if start != waitingRoom.Host.Id {
-					return
+					continue
 				}
 				// start logic
+				for _, user := range waitingRoom.Users {
+					user.Listen <- &hiit.WaitingRoomResponse{
+						Start: true,
+					}
+				}
+				// Delete room
+				// Client will transition and start
+				return
 			}
 
 			if err != nil {
 				errCh.C <- err
 				return
 			}
-			fmt.Println("done")
 		}
 	}()
 
@@ -142,7 +166,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 func (svc *Service) notifyWaiting(userSub *model.WaitingSub, waitingRoom *model.WaitingRoom, stream hiit.HIITService_CreateWaitingRoomServer) error {
 	waitingRoom.Users[userSub.User.Id] = userSub
 
-	users := []*hiit.HIITUser{}
+	users := []*hiit.WorkoutUser{}
 	for _, u := range waitingRoom.Users {
 		users = append(users, u.User)
 	}
@@ -168,15 +192,16 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 	defer cancel()
 
 	user := req.GetUser()
-	hiitWorkout := req.GetHiit()
+	workout := req.GetWorkout()
 
-	waitingRoom := svc.waitingRooms[hiitWorkout]
+	waitingRoom := svc.waitingRooms[workout]
 	if waitingRoom == nil {
 		return errors.New("Waiting Room does not exist")
 	}
 
 	listen := make(chan *hiit.WaitingRoomResponse)
 
+	// Notify waiting room subscription
 	waitingRoom.JoinSub <- &model.WaitingSub{
 		User:   user,
 		Listen: listen,
@@ -192,7 +217,7 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 	go func() {
 		var data *hiit.WaitingRoomResponse
 		// send initial
-		users := []*hiit.HIITUser{}
+		users := []*hiit.WorkoutUser{}
 
 		for _, u := range waitingRoom.Users {
 			users = append(users, u.User)
@@ -232,6 +257,9 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 	return nil
 }
 
+/**
+Defines Pub for single hiit
+*/
 func (svc *Service) Pub(ctx context.Context, msg *hiit.DataSession) (*hiit.Empty, error) {
 	id := msg.Session.Id
 	pub := svc.pubsub[fmt.Sprintf("%s", id)]

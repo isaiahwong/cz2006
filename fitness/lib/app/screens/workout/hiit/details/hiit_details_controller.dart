@@ -63,7 +63,10 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   }
 
   void onSoloStart() {
-    Get.toNamed(RoutePaths.HIIT_ACTIVE, arguments: hiit.copyWith());
+    Get.toNamed(RoutePaths.HIIT_ACTIVE, arguments: [
+      ActiveHIITType.SINGLE,
+      hiit.copyWith(),
+    ]);
   }
 
   void onDuoStart() {

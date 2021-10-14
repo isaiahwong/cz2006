@@ -286,16 +286,16 @@ class Session extends $pb.GeneratedMessage {
   void clearExercise() => clearField(2);
 }
 
-class HIITUser extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITUser', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+class WorkoutUser extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorkoutUser', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
     ..hasRequiredFields = false
   ;
 
-  HIITUser._() : super();
-  factory HIITUser({
+  WorkoutUser._() : super();
+  factory WorkoutUser({
     $core.String? id,
     $core.String? name,
     $core.String? email,
@@ -312,26 +312,26 @@ class HIITUser extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory HIITUser.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HIITUser.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory WorkoutUser.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WorkoutUser.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  HIITUser clone() => HIITUser()..mergeFromMessage(this);
+  WorkoutUser clone() => WorkoutUser()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HIITUser copyWith(void Function(HIITUser) updates) => super.copyWith((message) => updates(message as HIITUser)) as HIITUser; // ignore: deprecated_member_use
+  WorkoutUser copyWith(void Function(WorkoutUser) updates) => super.copyWith((message) => updates(message as WorkoutUser)) as WorkoutUser; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static HIITUser create() => HIITUser._();
-  HIITUser createEmptyInstance() => create();
-  static $pb.PbList<HIITUser> createRepeated() => $pb.PbList<HIITUser>();
+  static WorkoutUser create() => WorkoutUser._();
+  WorkoutUser createEmptyInstance() => create();
+  static $pb.PbList<WorkoutUser> createRepeated() => $pb.PbList<WorkoutUser>();
   @$core.pragma('dart2js:noInline')
-  static HIITUser getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITUser>(create);
-  static HIITUser? _defaultInstance;
+  static WorkoutUser getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorkoutUser>(create);
+  static WorkoutUser? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -363,22 +363,22 @@ class HIITUser extends $pb.GeneratedMessage {
 
 class CreateWaitingRoomRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateWaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: HIITUser.create)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: WorkoutUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'workout')
     ..hasRequiredFields = false
   ;
 
   CreateWaitingRoomRequest._() : super();
   factory CreateWaitingRoomRequest({
-    HIITUser? host,
-    $core.String? hiit,
+    WorkoutUser? host,
+    $core.String? workout,
   }) {
     final _result = create();
     if (host != null) {
       _result.host = host;
     }
-    if (hiit != null) {
-      _result.hiit = hiit;
+    if (workout != null) {
+      _result.workout = workout;
     }
     return _result;
   }
@@ -404,44 +404,44 @@ class CreateWaitingRoomRequest extends $pb.GeneratedMessage {
   static CreateWaitingRoomRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HIITUser get host => $_getN(0);
+  WorkoutUser get host => $_getN(0);
   @$pb.TagNumber(1)
-  set host(HIITUser v) { setField(1, v); }
+  set host(WorkoutUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasHost() => $_has(0);
   @$pb.TagNumber(1)
   void clearHost() => clearField(1);
   @$pb.TagNumber(1)
-  HIITUser ensureHost() => $_ensure(0);
+  WorkoutUser ensureHost() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get hiit => $_getSZ(1);
+  $core.String get workout => $_getSZ(1);
   @$pb.TagNumber(2)
-  set hiit($core.String v) { $_setString(1, v); }
+  set workout($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasHiit() => $_has(1);
+  $core.bool hasWorkout() => $_has(1);
   @$pb.TagNumber(2)
-  void clearHiit() => clearField(2);
+  void clearWorkout() => clearField(2);
 }
 
 class WaitingRoomRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: HIITUser.create)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: WorkoutUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'workout')
     ..hasRequiredFields = false
   ;
 
   WaitingRoomRequest._() : super();
   factory WaitingRoomRequest({
-    HIITUser? user,
-    $core.String? hiit,
+    WorkoutUser? user,
+    $core.String? workout,
   }) {
     final _result = create();
     if (user != null) {
       _result.user = user;
     }
-    if (hiit != null) {
-      _result.hiit = hiit;
+    if (workout != null) {
+      _result.workout = workout;
     }
     return _result;
   }
@@ -467,38 +467,38 @@ class WaitingRoomRequest extends $pb.GeneratedMessage {
   static WaitingRoomRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HIITUser get user => $_getN(0);
+  WorkoutUser get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user(HIITUser v) { setField(1, v); }
+  set user(WorkoutUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  HIITUser ensureUser() => $_ensure(0);
+  WorkoutUser ensureUser() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get hiit => $_getSZ(1);
+  $core.String get workout => $_getSZ(1);
   @$pb.TagNumber(2)
-  set hiit($core.String v) { $_setString(1, v); }
+  set workout($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasHiit() => $_has(1);
+  $core.bool hasWorkout() => $_has(1);
   @$pb.TagNumber(2)
-  void clearHiit() => clearField(2);
+  void clearWorkout() => clearField(2);
 }
 
 class WaitingRoomResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WaitingRoomResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: HIITUser.create)
-    ..pc<HIITUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'users', $pb.PbFieldType.PM, subBuilder: HIITUser.create)
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: WorkoutUser.create)
+    ..pc<WorkoutUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'users', $pb.PbFieldType.PM, subBuilder: WorkoutUser.create)
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start')
     ..hasRequiredFields = false
   ;
 
   WaitingRoomResponse._() : super();
   factory WaitingRoomResponse({
-    HIITUser? host,
-    $core.Iterable<HIITUser>? users,
+    WorkoutUser? host,
+    $core.Iterable<WorkoutUser>? users,
     $core.bool? start,
   }) {
     final _result = create();
@@ -535,18 +535,18 @@ class WaitingRoomResponse extends $pb.GeneratedMessage {
   static WaitingRoomResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HIITUser get host => $_getN(0);
+  WorkoutUser get host => $_getN(0);
   @$pb.TagNumber(1)
-  set host(HIITUser v) { setField(1, v); }
+  set host(WorkoutUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasHost() => $_has(0);
   @$pb.TagNumber(1)
   void clearHost() => clearField(1);
   @$pb.TagNumber(1)
-  HIITUser ensureHost() => $_ensure(0);
+  WorkoutUser ensureHost() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<HIITUser> get users => $_getList(1);
+  $core.List<WorkoutUser> get users => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.bool get start => $_getBF(2);
@@ -560,17 +560,17 @@ class WaitingRoomResponse extends $pb.GeneratedMessage {
 
 class InviteWaitingRoomRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InviteWaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: HIITUser.create)
-    ..aOM<HIITUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: HIITUser.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: WorkoutUser.create)
+    ..aOM<WorkoutUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: WorkoutUser.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'workout')
     ..hasRequiredFields = false
   ;
 
   InviteWaitingRoomRequest._() : super();
   factory InviteWaitingRoomRequest({
-    HIITUser? from,
-    HIITUser? to,
-    $core.String? hiit,
+    WorkoutUser? from,
+    WorkoutUser? to,
+    $core.String? workout,
   }) {
     final _result = create();
     if (from != null) {
@@ -579,8 +579,8 @@ class InviteWaitingRoomRequest extends $pb.GeneratedMessage {
     if (to != null) {
       _result.to = to;
     }
-    if (hiit != null) {
-      _result.hiit = hiit;
+    if (workout != null) {
+      _result.workout = workout;
     }
     return _result;
   }
@@ -606,34 +606,392 @@ class InviteWaitingRoomRequest extends $pb.GeneratedMessage {
   static InviteWaitingRoomRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HIITUser get from => $_getN(0);
+  WorkoutUser get from => $_getN(0);
   @$pb.TagNumber(1)
-  set from(HIITUser v) { setField(1, v); }
+  set from(WorkoutUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasFrom() => $_has(0);
   @$pb.TagNumber(1)
   void clearFrom() => clearField(1);
   @$pb.TagNumber(1)
-  HIITUser ensureFrom() => $_ensure(0);
+  WorkoutUser ensureFrom() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  HIITUser get to => $_getN(1);
+  WorkoutUser get to => $_getN(1);
   @$pb.TagNumber(2)
-  set to(HIITUser v) { setField(2, v); }
+  set to(WorkoutUser v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasTo() => $_has(1);
   @$pb.TagNumber(2)
   void clearTo() => clearField(2);
   @$pb.TagNumber(2)
-  HIITUser ensureTo() => $_ensure(1);
+  WorkoutUser ensureTo() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.String get hiit => $_getSZ(2);
+  $core.String get workout => $_getSZ(2);
   @$pb.TagNumber(3)
-  set hiit($core.String v) { $_setString(2, v); }
+  set workout($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasHiit() => $_has(2);
+  $core.bool hasWorkout() => $_has(2);
   @$pb.TagNumber(3)
-  void clearHiit() => clearField(3);
+  void clearWorkout() => clearField(3);
+}
+
+class StartWaitingRoomRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StartWaitingRoomRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: WorkoutUser.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'workout')
+    ..hasRequiredFields = false
+  ;
+
+  StartWaitingRoomRequest._() : super();
+  factory StartWaitingRoomRequest({
+    WorkoutUser? host,
+    $core.String? workout,
+  }) {
+    final _result = create();
+    if (host != null) {
+      _result.host = host;
+    }
+    if (workout != null) {
+      _result.workout = workout;
+    }
+    return _result;
+  }
+  factory StartWaitingRoomRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StartWaitingRoomRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StartWaitingRoomRequest clone() => StartWaitingRoomRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StartWaitingRoomRequest copyWith(void Function(StartWaitingRoomRequest) updates) => super.copyWith((message) => updates(message as StartWaitingRoomRequest)) as StartWaitingRoomRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StartWaitingRoomRequest create() => StartWaitingRoomRequest._();
+  StartWaitingRoomRequest createEmptyInstance() => create();
+  static $pb.PbList<StartWaitingRoomRequest> createRepeated() => $pb.PbList<StartWaitingRoomRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StartWaitingRoomRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StartWaitingRoomRequest>(create);
+  static StartWaitingRoomRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  WorkoutUser get host => $_getN(0);
+  @$pb.TagNumber(1)
+  set host(WorkoutUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHost() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHost() => clearField(1);
+  @$pb.TagNumber(1)
+  WorkoutUser ensureHost() => $_ensure(0);
+
+  @$pb.TagNumber(3)
+  $core.String get workout => $_getSZ(1);
+  @$pb.TagNumber(3)
+  set workout($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasWorkout() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearWorkout() => clearField(3);
+}
+
+class HIITRoutine extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITRoutine', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'exercise')
+    ..hasRequiredFields = false
+  ;
+
+  HIITRoutine._() : super();
+  factory HIITRoutine({
+    $core.String? id,
+    $core.String? exercise,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (exercise != null) {
+      _result.exercise = exercise;
+    }
+    return _result;
+  }
+  factory HIITRoutine.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HIITRoutine.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HIITRoutine clone() => HIITRoutine()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HIITRoutine copyWith(void Function(HIITRoutine) updates) => super.copyWith((message) => updates(message as HIITRoutine)) as HIITRoutine; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutine create() => HIITRoutine._();
+  HIITRoutine createEmptyInstance() => create();
+  static $pb.PbList<HIITRoutine> createRepeated() => $pb.PbList<HIITRoutine>();
+  @$core.pragma('dart2js:noInline')
+  static HIITRoutine getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITRoutine>(create);
+  static HIITRoutine? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get exercise => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set exercise($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasExercise() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExercise() => clearField(2);
+}
+
+class CreateDuoHIITRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateDuoHIITRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: WorkoutUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  CreateDuoHIITRequest._() : super();
+  factory CreateDuoHIITRequest({
+    WorkoutUser? host,
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (host != null) {
+      _result.host = host;
+    }
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory CreateDuoHIITRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CreateDuoHIITRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CreateDuoHIITRequest clone() => CreateDuoHIITRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CreateDuoHIITRequest copyWith(void Function(CreateDuoHIITRequest) updates) => super.copyWith((message) => updates(message as CreateDuoHIITRequest)) as CreateDuoHIITRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CreateDuoHIITRequest create() => CreateDuoHIITRequest._();
+  CreateDuoHIITRequest createEmptyInstance() => create();
+  static $pb.PbList<CreateDuoHIITRequest> createRepeated() => $pb.PbList<CreateDuoHIITRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CreateDuoHIITRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CreateDuoHIITRequest>(create);
+  static CreateDuoHIITRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  WorkoutUser get host => $_getN(0);
+  @$pb.TagNumber(1)
+  set host(WorkoutUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHost() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHost() => clearField(1);
+  @$pb.TagNumber(1)
+  WorkoutUser ensureHost() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get hiit => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set hiit($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHiit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHiit() => clearField(2);
+}
+
+class JoinDuoHIITRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinDuoHIITRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: WorkoutUser.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  JoinDuoHIITRequest._() : super();
+  factory JoinDuoHIITRequest({
+    WorkoutUser? user,
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (user != null) {
+      _result.user = user;
+    }
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory JoinDuoHIITRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory JoinDuoHIITRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  JoinDuoHIITRequest clone() => JoinDuoHIITRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  JoinDuoHIITRequest copyWith(void Function(JoinDuoHIITRequest) updates) => super.copyWith((message) => updates(message as JoinDuoHIITRequest)) as JoinDuoHIITRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static JoinDuoHIITRequest create() => JoinDuoHIITRequest._();
+  JoinDuoHIITRequest createEmptyInstance() => create();
+  static $pb.PbList<JoinDuoHIITRequest> createRepeated() => $pb.PbList<JoinDuoHIITRequest>();
+  @$core.pragma('dart2js:noInline')
+  static JoinDuoHIITRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinDuoHIITRequest>(create);
+  static JoinDuoHIITRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  WorkoutUser get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user(WorkoutUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  WorkoutUser ensureUser() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get hiit => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set hiit($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHiit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHiit() => clearField(2);
+}
+
+class ActiveRoutine extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ActiveRoutine', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..hasRequiredFields = false
+  ;
+
+  ActiveRoutine._() : super();
+  factory ActiveRoutine({
+    $core.String? hiit,
+  }) {
+    final _result = create();
+    if (hiit != null) {
+      _result.hiit = hiit;
+    }
+    return _result;
+  }
+  factory ActiveRoutine.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ActiveRoutine.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ActiveRoutine clone() => ActiveRoutine()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ActiveRoutine copyWith(void Function(ActiveRoutine) updates) => super.copyWith((message) => updates(message as ActiveRoutine)) as ActiveRoutine; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ActiveRoutine create() => ActiveRoutine._();
+  ActiveRoutine createEmptyInstance() => create();
+  static $pb.PbList<ActiveRoutine> createRepeated() => $pb.PbList<ActiveRoutine>();
+  @$core.pragma('dart2js:noInline')
+  static ActiveRoutine getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ActiveRoutine>(create);
+  static ActiveRoutine? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get hiit => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set hiit($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHiit() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHiit() => clearField(1);
+}
+
+class DuoHIITResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DuoHIITResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winner')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'score', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  DuoHIITResult._() : super();
+  factory DuoHIITResult({
+    $core.String? winner,
+    $core.int? score,
+  }) {
+    final _result = create();
+    if (winner != null) {
+      _result.winner = winner;
+    }
+    if (score != null) {
+      _result.score = score;
+    }
+    return _result;
+  }
+  factory DuoHIITResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DuoHIITResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DuoHIITResult clone() => DuoHIITResult()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DuoHIITResult copyWith(void Function(DuoHIITResult) updates) => super.copyWith((message) => updates(message as DuoHIITResult)) as DuoHIITResult; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DuoHIITResult create() => DuoHIITResult._();
+  DuoHIITResult createEmptyInstance() => create();
+  static $pb.PbList<DuoHIITResult> createRepeated() => $pb.PbList<DuoHIITResult>();
+  @$core.pragma('dart2js:noInline')
+  static DuoHIITResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DuoHIITResult>(create);
+  static DuoHIITResult? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get winner => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set winner($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasWinner() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWinner() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get score => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set score($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasScore() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearScore() => clearField(2);
 }
 

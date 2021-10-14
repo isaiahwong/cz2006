@@ -3,7 +3,7 @@ package model
 import hiit "github.com/isaiahwong/hiit/api"
 
 type WaitingRoom struct {
-	Host    *hiit.HIITUser
+	Host    *hiit.WorkoutUser
 	HIIT    string
 	Users   map[string]*WaitingSub
 	JoinSub chan (*WaitingSub)
@@ -11,6 +11,6 @@ type WaitingRoom struct {
 }
 
 type WaitingSub struct {
-	User   *hiit.HIITUser
+	User   *hiit.WorkoutUser
 	Listen chan *hiit.WaitingRoomResponse
 }

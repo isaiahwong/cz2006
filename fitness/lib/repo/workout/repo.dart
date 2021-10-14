@@ -36,8 +36,8 @@ class WorkoutRepo {
     final user = UserController.get().user.value!;
     return hiitClient.createWaitingRoom(
       CreateWaitingRoomRequest(
-        hiit: hiit.id,
-        host: HIITUser(
+        workout: hiit.id,
+        host: WorkoutUser(
           id: user.id,
           name: user.name,
         ),
@@ -54,12 +54,50 @@ class WorkoutRepo {
     final user = UserController.get().user.value!;
     return hiitClient.joinWaitingRoom(
       WaitingRoomRequest(
-          hiit: hiit.id,
-          user: HIITUser(
+          workout: hiit.id,
+          user: WorkoutUser(
             email: user.email,
             id: user.id,
             name: user.name,
           )),
+      options: CallOptions(
+        metadata: {
+          "id": user.id,
+        },
+      ),
+    );
+  }
+
+  Future<void> startWaitingRoom(HIIT hiit) {
+    final user = UserController.get().user.value!;
+    return hiitClient.startWaitingRoom(
+      StartWaitingRoomRequest(
+        workout: hiit.id,
+        host: WorkoutUser(
+          email: user.email,
+          id: user.id,
+          name: user.name,
+        ),
+      ),
+      options: CallOptions(
+        metadata: {
+          "id": user.id,
+        },
+      ),
+    );
+  }
+
+  ResponseStream<DuoHIITResult> createDuoHIIT(HIIT hiit) {
+    final user = UserController.get().user.value!;
+    return hiitClient.createDuoHIIT(
+      CreateDuoHIITRequest(
+        hiit: hiit.id,
+        host: WorkoutUser(
+          email: user.email,
+          id: user.id,
+          name: user.name,
+        ),
+      ),
       options: CallOptions(
         metadata: {
           "id": user.id,
@@ -80,9 +118,9 @@ class WorkoutRepo {
     final user = UserController.get().user.value!;
     await hiitClient.notifyInvites(
       InviteWaitingRoomRequest(
-        from: HIITUser(id: user.id, name: user.name),
-        to: HIITUser(id: friend.id, name: friend.name),
-        hiit: hiit.id,
+        from: WorkoutUser(id: user.id, name: user.name),
+        to: WorkoutUser(id: friend.id, name: friend.name),
+        workout: hiit.id,
       ),
     );
   }

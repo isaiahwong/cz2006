@@ -11,6 +11,11 @@ import 'package:grpc/grpc.dart';
 import 'package:hiit_api/hiit.dart';
 import 'active_hiit_state.dart';
 
+enum ActiveHIITType {
+  DUO,
+  SINGLE,
+}
+
 class ActiveHIITController extends GetxController {
   final SlidingPanelController panelController;
   final FullScreenPanelController fullscreenController;
@@ -18,6 +23,11 @@ class ActiveHIITController extends GetxController {
   final PoseController poseController;
   final WorkoutRepo workoutRepo;
   final PageController pageController = PageController(initialPage: 0);
+
+  late final ActiveHIITType activeHIITType;
+
+  ResponseStream<DuoHIITResult>? hostHIITStream;
+  ResponseStream<DuoHIITResult>? joinHIITStream;
 
   int currentReps = 0;
   int page = 0;
@@ -53,14 +63,22 @@ class ActiveHIITController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    hiit = hiit = Get.arguments;
+    activeHIITType = Get.arguments[0];
+    hiit = Get.arguments[1];
     fullscreenController.addFullScreenListener(onFullScreenPanelChange);
+    _onDUO();
   }
 
   @override
   void onClose() {
     super.onClose();
+    hostHIITStream?.cancel();
+    joinHIITStream?.cancel();
     res.cancel();
+  }
+
+  void _onDUO() {
+    if (activeHIITType != ActiveHIITType.DUO) return;
   }
 
   void onHIITStream(Data data) {

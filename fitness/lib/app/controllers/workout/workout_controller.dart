@@ -27,7 +27,7 @@ class WorkoutController extends GetxController {
   void connect() {
     final user = UserController.get().user.value!;
     invitationRequest = hiitClient.subInvites(
-      HIITUser(
+      WorkoutUser(
         id: user.id,
         name: user.name,
         email: user.email,
@@ -38,7 +38,7 @@ class WorkoutController extends GetxController {
 
   void onInvitationRequest(InviteWaitingRoomRequest request) async {
     final workout =
-        await _workoutRepo.findWorkoutByUser(request.from.id, request.hiit);
+        await _workoutRepo.findWorkoutByUser(request.from.id, request.workout);
 
     // TODO open dialog
 

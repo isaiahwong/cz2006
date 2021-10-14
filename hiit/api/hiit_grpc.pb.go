@@ -21,8 +21,12 @@ type HIITServiceClient interface {
 	Pub(ctx context.Context, in *DataSession, opts ...grpc.CallOption) (*Empty, error)
 	CreateWaitingRoom(ctx context.Context, in *CreateWaitingRoomRequest, opts ...grpc.CallOption) (HIITService_CreateWaitingRoomClient, error)
 	JoinWaitingRoom(ctx context.Context, in *WaitingRoomRequest, opts ...grpc.CallOption) (HIITService_JoinWaitingRoomClient, error)
+	StartWaitingRoom(ctx context.Context, in *StartWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error)
 	NotifyInvites(ctx context.Context, in *InviteWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error)
-	SubInvites(ctx context.Context, in *HIITUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error)
+	SubInvites(ctx context.Context, in *WorkoutUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error)
+	CreateDuoHIIT(ctx context.Context, in *CreateDuoHIITRequest, opts ...grpc.CallOption) (HIITService_CreateDuoHIITClient, error)
+	JoinDuoHIIT(ctx context.Context, in *JoinDuoHIITRequest, opts ...grpc.CallOption) (HIITService_JoinDuoHIITClient, error)
+	DuoHIITComplete(ctx context.Context, in *ActiveRoutine, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type hIITServiceClient struct {
@@ -138,6 +142,15 @@ func (x *hIITServiceJoinWaitingRoomClient) Recv() (*WaitingRoomResponse, error) 
 	return m, nil
 }
 
+func (c *hIITServiceClient) StartWaitingRoom(ctx context.Context, in *StartWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/StartWaitingRoom", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hIITServiceClient) NotifyInvites(ctx context.Context, in *InviteWaitingRoomRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/hiit.HIITService/NotifyInvites", in, out, opts...)
@@ -147,7 +160,7 @@ func (c *hIITServiceClient) NotifyInvites(ctx context.Context, in *InviteWaiting
 	return out, nil
 }
 
-func (c *hIITServiceClient) SubInvites(ctx context.Context, in *HIITUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error) {
+func (c *hIITServiceClient) SubInvites(ctx context.Context, in *WorkoutUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[3], "/hiit.HIITService/SubInvites", opts...)
 	if err != nil {
 		return nil, err
@@ -179,6 +192,79 @@ func (x *hIITServiceSubInvitesClient) Recv() (*InviteWaitingRoomRequest, error) 
 	return m, nil
 }
 
+func (c *hIITServiceClient) CreateDuoHIIT(ctx context.Context, in *CreateDuoHIITRequest, opts ...grpc.CallOption) (HIITService_CreateDuoHIITClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[4], "/hiit.HIITService/CreateDuoHIIT", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hIITServiceCreateDuoHIITClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HIITService_CreateDuoHIITClient interface {
+	Recv() (*DuoHIITResult, error)
+	grpc.ClientStream
+}
+
+type hIITServiceCreateDuoHIITClient struct {
+	grpc.ClientStream
+}
+
+func (x *hIITServiceCreateDuoHIITClient) Recv() (*DuoHIITResult, error) {
+	m := new(DuoHIITResult)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *hIITServiceClient) JoinDuoHIIT(ctx context.Context, in *JoinDuoHIITRequest, opts ...grpc.CallOption) (HIITService_JoinDuoHIITClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HIITService_serviceDesc.Streams[5], "/hiit.HIITService/JoinDuoHIIT", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hIITServiceJoinDuoHIITClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HIITService_JoinDuoHIITClient interface {
+	Recv() (*DuoHIITResult, error)
+	grpc.ClientStream
+}
+
+type hIITServiceJoinDuoHIITClient struct {
+	grpc.ClientStream
+}
+
+func (x *hIITServiceJoinDuoHIITClient) Recv() (*DuoHIITResult, error) {
+	m := new(DuoHIITResult)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *hIITServiceClient) DuoHIITComplete(ctx context.Context, in *ActiveRoutine, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/DuoHIITComplete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HIITServiceServer is the server API for HIITService service.
 // All implementations must embed UnimplementedHIITServiceServer
 // for forward compatibility
@@ -187,8 +273,12 @@ type HIITServiceServer interface {
 	Pub(context.Context, *DataSession) (*Empty, error)
 	CreateWaitingRoom(*CreateWaitingRoomRequest, HIITService_CreateWaitingRoomServer) error
 	JoinWaitingRoom(*WaitingRoomRequest, HIITService_JoinWaitingRoomServer) error
+	StartWaitingRoom(context.Context, *StartWaitingRoomRequest) (*Empty, error)
 	NotifyInvites(context.Context, *InviteWaitingRoomRequest) (*Empty, error)
-	SubInvites(*HIITUser, HIITService_SubInvitesServer) error
+	SubInvites(*WorkoutUser, HIITService_SubInvitesServer) error
+	CreateDuoHIIT(*CreateDuoHIITRequest, HIITService_CreateDuoHIITServer) error
+	JoinDuoHIIT(*JoinDuoHIITRequest, HIITService_JoinDuoHIITServer) error
+	DuoHIITComplete(context.Context, *ActiveRoutine) (*Empty, error)
 	mustEmbedUnimplementedHIITServiceServer()
 }
 
@@ -208,11 +298,23 @@ func (UnimplementedHIITServiceServer) CreateWaitingRoom(*CreateWaitingRoomReques
 func (UnimplementedHIITServiceServer) JoinWaitingRoom(*WaitingRoomRequest, HIITService_JoinWaitingRoomServer) error {
 	return status.Errorf(codes.Unimplemented, "method JoinWaitingRoom not implemented")
 }
+func (UnimplementedHIITServiceServer) StartWaitingRoom(context.Context, *StartWaitingRoomRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartWaitingRoom not implemented")
+}
 func (UnimplementedHIITServiceServer) NotifyInvites(context.Context, *InviteWaitingRoomRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyInvites not implemented")
 }
-func (UnimplementedHIITServiceServer) SubInvites(*HIITUser, HIITService_SubInvitesServer) error {
+func (UnimplementedHIITServiceServer) SubInvites(*WorkoutUser, HIITService_SubInvitesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubInvites not implemented")
+}
+func (UnimplementedHIITServiceServer) CreateDuoHIIT(*CreateDuoHIITRequest, HIITService_CreateDuoHIITServer) error {
+	return status.Errorf(codes.Unimplemented, "method CreateDuoHIIT not implemented")
+}
+func (UnimplementedHIITServiceServer) JoinDuoHIIT(*JoinDuoHIITRequest, HIITService_JoinDuoHIITServer) error {
+	return status.Errorf(codes.Unimplemented, "method JoinDuoHIIT not implemented")
+}
+func (UnimplementedHIITServiceServer) DuoHIITComplete(context.Context, *ActiveRoutine) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DuoHIITComplete not implemented")
 }
 func (UnimplementedHIITServiceServer) mustEmbedUnimplementedHIITServiceServer() {}
 
@@ -308,6 +410,24 @@ func (x *hIITServiceJoinWaitingRoomServer) Send(m *WaitingRoomResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _HIITService_StartWaitingRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartWaitingRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HIITServiceServer).StartWaitingRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/hiit.HIITService/StartWaitingRoom",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HIITServiceServer).StartWaitingRoom(ctx, req.(*StartWaitingRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HIITService_NotifyInvites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InviteWaitingRoomRequest)
 	if err := dec(in); err != nil {
@@ -327,7 +447,7 @@ func _HIITService_NotifyInvites_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _HIITService_SubInvites_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(HIITUser)
+	m := new(WorkoutUser)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -347,6 +467,66 @@ func (x *hIITServiceSubInvitesServer) Send(m *InviteWaitingRoomRequest) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _HIITService_CreateDuoHIIT_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CreateDuoHIITRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).CreateDuoHIIT(m, &hIITServiceCreateDuoHIITServer{stream})
+}
+
+type HIITService_CreateDuoHIITServer interface {
+	Send(*DuoHIITResult) error
+	grpc.ServerStream
+}
+
+type hIITServiceCreateDuoHIITServer struct {
+	grpc.ServerStream
+}
+
+func (x *hIITServiceCreateDuoHIITServer) Send(m *DuoHIITResult) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HIITService_JoinDuoHIIT_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(JoinDuoHIITRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HIITServiceServer).JoinDuoHIIT(m, &hIITServiceJoinDuoHIITServer{stream})
+}
+
+type HIITService_JoinDuoHIITServer interface {
+	Send(*DuoHIITResult) error
+	grpc.ServerStream
+}
+
+type hIITServiceJoinDuoHIITServer struct {
+	grpc.ServerStream
+}
+
+func (x *hIITServiceJoinDuoHIITServer) Send(m *DuoHIITResult) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HIITService_DuoHIITComplete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActiveRoutine)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HIITServiceServer).DuoHIITComplete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/hiit.HIITService/DuoHIITComplete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HIITServiceServer).DuoHIITComplete(ctx, req.(*ActiveRoutine))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _HIITService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "hiit.HIITService",
 	HandlerType: (*HIITServiceServer)(nil),
@@ -356,8 +536,16 @@ var _HIITService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _HIITService_Pub_Handler,
 		},
 		{
+			MethodName: "StartWaitingRoom",
+			Handler:    _HIITService_StartWaitingRoom_Handler,
+		},
+		{
 			MethodName: "NotifyInvites",
 			Handler:    _HIITService_NotifyInvites_Handler,
+		},
+		{
+			MethodName: "DuoHIITComplete",
+			Handler:    _HIITService_DuoHIITComplete_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -379,6 +567,16 @@ var _HIITService_serviceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "SubInvites",
 			Handler:       _HIITService_SubInvites_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "CreateDuoHIIT",
+			Handler:       _HIITService_CreateDuoHIIT_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "JoinDuoHIIT",
+			Handler:       _HIITService_JoinDuoHIIT_Handler,
 			ServerStreams: true,
 		},
 	},

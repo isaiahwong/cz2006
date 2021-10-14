@@ -34,6 +34,11 @@ class HIITServiceStub(object):
                 request_serializer=hiit__pb2.WaitingRoomRequest.SerializeToString,
                 response_deserializer=hiit__pb2.WaitingRoomResponse.FromString,
                 )
+        self.StartWaitingRoom = channel.unary_unary(
+                '/hiit.HIITService/StartWaitingRoom',
+                request_serializer=hiit__pb2.StartWaitingRoomRequest.SerializeToString,
+                response_deserializer=hiit__pb2.Empty.FromString,
+                )
         self.NotifyInvites = channel.unary_unary(
                 '/hiit.HIITService/NotifyInvites',
                 request_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
@@ -41,8 +46,23 @@ class HIITServiceStub(object):
                 )
         self.SubInvites = channel.unary_stream(
                 '/hiit.HIITService/SubInvites',
-                request_serializer=hiit__pb2.HIITUser.SerializeToString,
+                request_serializer=hiit__pb2.WorkoutUser.SerializeToString,
                 response_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
+                )
+        self.CreateDuoHIIT = channel.unary_stream(
+                '/hiit.HIITService/CreateDuoHIIT',
+                request_serializer=hiit__pb2.CreateDuoHIITRequest.SerializeToString,
+                response_deserializer=hiit__pb2.DuoHIITResult.FromString,
+                )
+        self.JoinDuoHIIT = channel.unary_stream(
+                '/hiit.HIITService/JoinDuoHIIT',
+                request_serializer=hiit__pb2.JoinDuoHIITRequest.SerializeToString,
+                response_deserializer=hiit__pb2.DuoHIITResult.FromString,
+                )
+        self.DuoHIITComplete = channel.unary_unary(
+                '/hiit.HIITService/DuoHIITComplete',
+                request_serializer=hiit__pb2.ActiveRoutine.SerializeToString,
+                response_deserializer=hiit__pb2.Empty.FromString,
                 )
 
 
@@ -73,6 +93,12 @@ class HIITServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def StartWaitingRoom(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def NotifyInvites(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -80,6 +106,24 @@ class HIITServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def SubInvites(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateDuoHIIT(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def JoinDuoHIIT(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DuoHIITComplete(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -108,6 +152,11 @@ def add_HIITServiceServicer_to_server(servicer, server):
                     request_deserializer=hiit__pb2.WaitingRoomRequest.FromString,
                     response_serializer=hiit__pb2.WaitingRoomResponse.SerializeToString,
             ),
+            'StartWaitingRoom': grpc.unary_unary_rpc_method_handler(
+                    servicer.StartWaitingRoom,
+                    request_deserializer=hiit__pb2.StartWaitingRoomRequest.FromString,
+                    response_serializer=hiit__pb2.Empty.SerializeToString,
+            ),
             'NotifyInvites': grpc.unary_unary_rpc_method_handler(
                     servicer.NotifyInvites,
                     request_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
@@ -115,8 +164,23 @@ def add_HIITServiceServicer_to_server(servicer, server):
             ),
             'SubInvites': grpc.unary_stream_rpc_method_handler(
                     servicer.SubInvites,
-                    request_deserializer=hiit__pb2.HIITUser.FromString,
+                    request_deserializer=hiit__pb2.WorkoutUser.FromString,
                     response_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
+            ),
+            'CreateDuoHIIT': grpc.unary_stream_rpc_method_handler(
+                    servicer.CreateDuoHIIT,
+                    request_deserializer=hiit__pb2.CreateDuoHIITRequest.FromString,
+                    response_serializer=hiit__pb2.DuoHIITResult.SerializeToString,
+            ),
+            'JoinDuoHIIT': grpc.unary_stream_rpc_method_handler(
+                    servicer.JoinDuoHIIT,
+                    request_deserializer=hiit__pb2.JoinDuoHIITRequest.FromString,
+                    response_serializer=hiit__pb2.DuoHIITResult.SerializeToString,
+            ),
+            'DuoHIITComplete': grpc.unary_unary_rpc_method_handler(
+                    servicer.DuoHIITComplete,
+                    request_deserializer=hiit__pb2.ActiveRoutine.FromString,
+                    response_serializer=hiit__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -197,6 +261,23 @@ class HIITService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def StartWaitingRoom(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/StartWaitingRoom',
+            hiit__pb2.StartWaitingRoomRequest.SerializeToString,
+            hiit__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def NotifyInvites(request,
             target,
             options=(),
@@ -225,7 +306,58 @@ class HIITService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/SubInvites',
-            hiit__pb2.HIITUser.SerializeToString,
+            hiit__pb2.WorkoutUser.SerializeToString,
             hiit__pb2.InviteWaitingRoomRequest.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateDuoHIIT(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/CreateDuoHIIT',
+            hiit__pb2.CreateDuoHIITRequest.SerializeToString,
+            hiit__pb2.DuoHIITResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def JoinDuoHIIT(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/JoinDuoHIIT',
+            hiit__pb2.JoinDuoHIITRequest.SerializeToString,
+            hiit__pb2.DuoHIITResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DuoHIITComplete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITComplete',
+            hiit__pb2.ActiveRoutine.SerializeToString,
+            hiit__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

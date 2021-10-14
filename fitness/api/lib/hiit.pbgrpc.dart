@@ -34,17 +34,37 @@ class HIITServiceClient extends $grpc.Client {
           ($0.WaitingRoomRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.WaitingRoomResponse.fromBuffer(value));
+  static final _$startWaitingRoom =
+      $grpc.ClientMethod<$0.StartWaitingRoomRequest, $0.Empty>(
+          '/hiit.HIITService/StartWaitingRoom',
+          ($0.StartWaitingRoomRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$notifyInvites =
       $grpc.ClientMethod<$0.InviteWaitingRoomRequest, $0.Empty>(
           '/hiit.HIITService/NotifyInvites',
           ($0.InviteWaitingRoomRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$subInvites =
-      $grpc.ClientMethod<$0.HIITUser, $0.InviteWaitingRoomRequest>(
+      $grpc.ClientMethod<$0.WorkoutUser, $0.InviteWaitingRoomRequest>(
           '/hiit.HIITService/SubInvites',
-          ($0.HIITUser value) => value.writeToBuffer(),
+          ($0.WorkoutUser value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.InviteWaitingRoomRequest.fromBuffer(value));
+  static final _$createDuoHIIT =
+      $grpc.ClientMethod<$0.CreateDuoHIITRequest, $0.DuoHIITResult>(
+          '/hiit.HIITService/CreateDuoHIIT',
+          ($0.CreateDuoHIITRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DuoHIITResult.fromBuffer(value));
+  static final _$joinDuoHIIT =
+      $grpc.ClientMethod<$0.JoinDuoHIITRequest, $0.DuoHIITResult>(
+          '/hiit.HIITService/JoinDuoHIIT',
+          ($0.JoinDuoHIITRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DuoHIITResult.fromBuffer(value));
+  static final _$duoHIITComplete =
+      $grpc.ClientMethod<$0.ActiveRoutine, $0.Empty>(
+          '/hiit.HIITService/DuoHIITComplete',
+          ($0.ActiveRoutine value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   HIITServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -78,6 +98,12 @@ class HIITServiceClient extends $grpc.Client {
         options: options);
   }
 
+  $grpc.ResponseFuture<$0.Empty> startWaitingRoom(
+      $0.StartWaitingRoomRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$startWaitingRoom, request, options: options);
+  }
+
   $grpc.ResponseFuture<$0.Empty> notifyInvites(
       $0.InviteWaitingRoomRequest request,
       {$grpc.CallOptions? options}) {
@@ -85,11 +111,32 @@ class HIITServiceClient extends $grpc.Client {
   }
 
   $grpc.ResponseStream<$0.InviteWaitingRoomRequest> subInvites(
-      $0.HIITUser request,
+      $0.WorkoutUser request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$subInvites, $async.Stream.fromIterable([request]),
         options: options);
+  }
+
+  $grpc.ResponseStream<$0.DuoHIITResult> createDuoHIIT(
+      $0.CreateDuoHIITRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$createDuoHIIT, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
+  $grpc.ResponseStream<$0.DuoHIITResult> joinDuoHIIT(
+      $0.JoinDuoHIITRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$joinDuoHIIT, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> duoHIITComplete($0.ActiveRoutine request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$duoHIITComplete, request, options: options);
   }
 }
 
@@ -129,6 +176,14 @@ abstract class HIITServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.WaitingRoomRequest.fromBuffer(value),
             ($0.WaitingRoomResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.StartWaitingRoomRequest, $0.Empty>(
+        'StartWaitingRoom',
+        startWaitingRoom_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.StartWaitingRoomRequest.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.InviteWaitingRoomRequest, $0.Empty>(
         'NotifyInvites',
         notifyInvites_Pre,
@@ -137,13 +192,36 @@ abstract class HIITServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.InviteWaitingRoomRequest.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HIITUser, $0.InviteWaitingRoomRequest>(
+    $addMethod($grpc.ServiceMethod<$0.WorkoutUser, $0.InviteWaitingRoomRequest>(
         'SubInvites',
         subInvites_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.HIITUser.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.WorkoutUser.fromBuffer(value),
         ($0.InviteWaitingRoomRequest value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CreateDuoHIITRequest, $0.DuoHIITResult>(
+        'CreateDuoHIIT',
+        createDuoHIIT_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $0.CreateDuoHIITRequest.fromBuffer(value),
+        ($0.DuoHIITResult value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.JoinDuoHIITRequest, $0.DuoHIITResult>(
+        'JoinDuoHIIT',
+        joinDuoHIIT_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $0.JoinDuoHIITRequest.fromBuffer(value),
+        ($0.DuoHIITResult value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ActiveRoutine, $0.Empty>(
+        'DuoHIITComplete',
+        duoHIITComplete_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.ActiveRoutine.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.Data> sub_Pre(
@@ -168,14 +246,34 @@ abstract class HIITServiceBase extends $grpc.Service {
     yield* joinWaitingRoom(call, await request);
   }
 
+  $async.Future<$0.Empty> startWaitingRoom_Pre($grpc.ServiceCall call,
+      $async.Future<$0.StartWaitingRoomRequest> request) async {
+    return startWaitingRoom(call, await request);
+  }
+
   $async.Future<$0.Empty> notifyInvites_Pre($grpc.ServiceCall call,
       $async.Future<$0.InviteWaitingRoomRequest> request) async {
     return notifyInvites(call, await request);
   }
 
   $async.Stream<$0.InviteWaitingRoomRequest> subInvites_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.HIITUser> request) async* {
+      $grpc.ServiceCall call, $async.Future<$0.WorkoutUser> request) async* {
     yield* subInvites(call, await request);
+  }
+
+  $async.Stream<$0.DuoHIITResult> createDuoHIIT_Pre($grpc.ServiceCall call,
+      $async.Future<$0.CreateDuoHIITRequest> request) async* {
+    yield* createDuoHIIT(call, await request);
+  }
+
+  $async.Stream<$0.DuoHIITResult> joinDuoHIIT_Pre($grpc.ServiceCall call,
+      $async.Future<$0.JoinDuoHIITRequest> request) async* {
+    yield* joinDuoHIIT(call, await request);
+  }
+
+  $async.Future<$0.Empty> duoHIITComplete_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.ActiveRoutine> request) async {
+    return duoHIITComplete(call, await request);
   }
 
   $async.Stream<$0.Data> sub($grpc.ServiceCall call, $0.RoutineChange request);
@@ -184,8 +282,16 @@ abstract class HIITServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.CreateWaitingRoomRequest request);
   $async.Stream<$0.WaitingRoomResponse> joinWaitingRoom(
       $grpc.ServiceCall call, $0.WaitingRoomRequest request);
+  $async.Future<$0.Empty> startWaitingRoom(
+      $grpc.ServiceCall call, $0.StartWaitingRoomRequest request);
   $async.Future<$0.Empty> notifyInvites(
       $grpc.ServiceCall call, $0.InviteWaitingRoomRequest request);
   $async.Stream<$0.InviteWaitingRoomRequest> subInvites(
-      $grpc.ServiceCall call, $0.HIITUser request);
+      $grpc.ServiceCall call, $0.WorkoutUser request);
+  $async.Stream<$0.DuoHIITResult> createDuoHIIT(
+      $grpc.ServiceCall call, $0.CreateDuoHIITRequest request);
+  $async.Stream<$0.DuoHIITResult> joinDuoHIIT(
+      $grpc.ServiceCall call, $0.JoinDuoHIITRequest request);
+  $async.Future<$0.Empty> duoHIITComplete(
+      $grpc.ServiceCall call, $0.ActiveRoutine request);
 }
