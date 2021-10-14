@@ -489,17 +489,22 @@ class WaitingRoomRequest extends $pb.GeneratedMessage {
 
 class WaitingRoomResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WaitingRoomResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..pc<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'users', $pb.PbFieldType.PM, subBuilder: HIITUser.create)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start')
+    ..aOM<HIITUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host', subBuilder: HIITUser.create)
+    ..pc<HIITUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'users', $pb.PbFieldType.PM, subBuilder: HIITUser.create)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start')
     ..hasRequiredFields = false
   ;
 
   WaitingRoomResponse._() : super();
   factory WaitingRoomResponse({
+    HIITUser? host,
     $core.Iterable<HIITUser>? users,
     $core.bool? start,
   }) {
     final _result = create();
+    if (host != null) {
+      _result.host = host;
+    }
     if (users != null) {
       _result.users.addAll(users);
     }
@@ -530,16 +535,27 @@ class WaitingRoomResponse extends $pb.GeneratedMessage {
   static WaitingRoomResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<HIITUser> get users => $_getList(0);
+  HIITUser get host => $_getN(0);
+  @$pb.TagNumber(1)
+  set host(HIITUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHost() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHost() => clearField(1);
+  @$pb.TagNumber(1)
+  HIITUser ensureHost() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.bool get start => $_getBF(1);
-  @$pb.TagNumber(2)
-  set start($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasStart() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearStart() => clearField(2);
+  $core.List<HIITUser> get users => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get start => $_getBF(2);
+  @$pb.TagNumber(3)
+  set start($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStart() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStart() => clearField(3);
 }
 
 class InviteWaitingRoomRequest extends $pb.GeneratedMessage {

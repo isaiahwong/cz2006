@@ -2,6 +2,7 @@
 
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/controllers/workout/workout_controller.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
@@ -30,25 +31,33 @@ void main() async {
   ));
 
   UserRepo userRepo = UserRepo();
-  AuthRepo authRepo = AuthRepo(
-    userRepo: userRepo,
-    initWhenAuth: () {
-      WorkoutRepo workoutRepo =
-          WorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
-      ExerciseRepo exerciseRepo = ExerciseRepo();
-      SocialRepo socialRepo = SocialRepo(userRepo.id);
-      CoordinatesRepo coordinateRepo = CoordinatesRepo();
-
-      Get.put<ExerciseRepo>(exerciseRepo, permanent: true);
-      Get.put<CoordinatesRepo>(coordinateRepo, permanent: true);
-      Get.put<WorkoutRepo>(workoutRepo, permanent: true);
-      Get.put<SocialRepo>(socialRepo, permanent: true);
-    },
-  );
+  AuthRepo authRepo = AuthRepo(userRepo: userRepo);
 
   Get.put<AuthController>(AuthController(authRepo: authRepo));
   Get.put<UserController>(
-      UserController(userRepo: userRepo, hiitClient: hiitClient));
+    UserController(
+      userRepo: userRepo,
+      hiitClient: hiitClient,
+      initWhenAuth: (User user) {
+        WorkoutRepo workoutRepo =
+            WorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
+        ExerciseRepo exerciseRepo = ExerciseRepo();
+        SocialRepo socialRepo = SocialRepo(userRepo.id);
+        CoordinatesRepo coordinateRepo = CoordinatesRepo();
+
+        Get.put<ExerciseRepo>(exerciseRepo, permanent: true);
+        Get.put<CoordinatesRepo>(coordinateRepo, permanent: true);
+        Get.put<WorkoutRepo>(workoutRepo, permanent: true);
+        Get.put<SocialRepo>(socialRepo, permanent: true);
+        Get.put<WorkoutController>(
+            WorkoutController(
+              workoutRepo: workoutRepo,
+              hiitClient: hiitClient,
+            ),
+            permanent: true);
+      },
+    ),
+  );
 
   Get.put<UserRepo>(userRepo);
   Get.put<AuthRepo>(authRepo);

@@ -33,24 +33,43 @@ class WorkoutRepo {
   }
 
   ResponseStream<WaitingRoomResponse> createWaitingRoom(HIIT hiit) {
+    final user = UserController.get().user.value!;
     return hiitClient.createWaitingRoom(
       CreateWaitingRoomRequest(
         hiit: hiit.id,
         host: HIITUser(
-          id: UserController.get().user.value!.id,
-          name: UserController.get().user.value!.name,
+          id: user.id,
+          name: user.name,
         ),
       ),
       options: CallOptions(
         metadata: {
-          "id": UserController.get().user.value!.id,
+          "id": user.id,
+        },
+      ),
+    );
+  }
+
+  ResponseStream<WaitingRoomResponse> joinWaitingRoom(HIIT hiit) {
+    final user = UserController.get().user.value!;
+    return hiitClient.joinWaitingRoom(
+      WaitingRoomRequest(
+          hiit: hiit.id,
+          user: HIITUser(
+            email: user.email,
+            id: user.id,
+            name: user.name,
+          )),
+      options: CallOptions(
+        metadata: {
+          "id": user.id,
         },
       ),
     );
   }
 
   Future<Workout> createWorkout(Workout workout) async {
-    FirebaseFirestore.instance.collection('/users/${_userRepo.id}/workouts');
+    // FirebaseFirestore.instance.collection('/users/${_userRepo.id}/workouts');
     final result = await collection.add(workout.toJson());
     // updates async
     collection.doc(result.id).update({"id": result.id});
@@ -65,6 +84,26 @@ class WorkoutRepo {
         to: HIITUser(id: friend.id, name: friend.name),
         hiit: hiit.id,
       ),
+    );
+  }
+
+  Future<Workout> findWorkoutByUser(String user, String id) async {
+    final result = await FirebaseFirestore.instance
+        .collection('/users/$user/workouts')
+        .doc(id)
+        .get();
+    final data = result.data() as Map<String, dynamic>;
+
+    switch (Workout.intToType(data["type"])) {
+      case WorkoutType.UNKNOWN:
+        break;
+      case WorkoutType.CYCLING:
+        return Cycling.fromJson(data);
+      case WorkoutType.HIIT:
+        return HIIT.fromJson(data);
+    }
+    return Workout.fromJson(
+      data,
     );
   }
 

@@ -97,13 +97,14 @@ final $typed_data.Uint8List waitingRoomRequestDescriptor = $convert.base64Decode
 const WaitingRoomResponse$json = const {
   '1': 'WaitingRoomResponse',
   '2': const [
-    const {'1': 'users', '3': 1, '4': 3, '5': 11, '6': '.hiit.HIITUser', '10': 'users'},
-    const {'1': 'start', '3': 2, '4': 1, '5': 8, '10': 'start'},
+    const {'1': 'host', '3': 1, '4': 1, '5': 11, '6': '.hiit.HIITUser', '10': 'host'},
+    const {'1': 'users', '3': 2, '4': 3, '5': 11, '6': '.hiit.HIITUser', '10': 'users'},
+    const {'1': 'start', '3': 3, '4': 1, '5': 8, '10': 'start'},
   ],
 };
 
 /// Descriptor for `WaitingRoomResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List waitingRoomResponseDescriptor = $convert.base64Decode('ChNXYWl0aW5nUm9vbVJlc3BvbnNlEiQKBXVzZXJzGAEgAygLMg4uaGlpdC5ISUlUVXNlclIFdXNlcnMSFAoFc3RhcnQYAiABKAhSBXN0YXJ0');
+final $typed_data.Uint8List waitingRoomResponseDescriptor = $convert.base64Decode('ChNXYWl0aW5nUm9vbVJlc3BvbnNlEiIKBGhvc3QYASABKAsyDi5oaWl0LkhJSVRVc2VyUgRob3N0EiQKBXVzZXJzGAIgAygLMg4uaGlpdC5ISUlUVXNlclIFdXNlcnMSFAoFc3RhcnQYAyABKAhSBXN0YXJ0');
 @$core.Deprecated('Use inviteWaitingRoomRequestDescriptor instead')
 const InviteWaitingRoomRequest$json = const {
   '1': 'InviteWaitingRoomRequest',

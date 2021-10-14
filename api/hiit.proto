@@ -43,8 +43,9 @@ message WaitingRoomRequest {
 }
 
 message WaitingRoomResponse {
-  repeated HIITUser users = 1;
-  bool start = 2;
+  HIITUser host = 1;
+  repeated HIITUser users = 2;
+  bool start = 3;
 }
 
 message InviteWaitingRoomRequest {

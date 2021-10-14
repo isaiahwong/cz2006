@@ -1,4 +1,3 @@
-import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
@@ -7,7 +6,6 @@ import 'package:fitness/repo/repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 class WaitingRoomScreen extends GetView<WaitingRoomController> {
   const WaitingRoomScreen({Key? key}) : super(key: key);
@@ -73,21 +71,36 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
       ),
       child: CircleAvatar(
         maxRadius: 10,
-        backgroundImage: NetworkImage(user.profilePicture),
+        backgroundImage: NetworkImage(user.profilePicture.isNotEmpty
+            ? user.profilePicture
+            : "https://firebasestorage.googleapis.com:443/v0/b/cz2006-project-de265.appspot.com/o/hiQuLzkpmQh0wy6MggLkw9IUAD92%2Fprofileimage?alt=media&token=c4dc6c5a-e7c5-4ae9-9c86-718ee46c62fc"),
       ),
     );
   }
 
-  Widget _peopleRow() {
+  Widget _peopleRow(BuildContext context) {
     return SliverToBoxAdapter(
-      child: GridView.count(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        crossAxisCount: 5,
-        children: controller.friends
-            .map<String, Widget>((s, u) => MapEntry(s, _people(u.friend)))
-            .values
-            .toList(),
+      child: Padding(
+        padding: screenPadding.copyWith(top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Joined",
+              style:
+                  Theme.of(context).textTheme.headline3!.copyWith(color: black),
+            ),
+            SizedBox(height: 10),
+            GridView.count(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              crossAxisCount: 5,
+              children: controller.users
+                  .map<Widget>((e) => _people(UserSnippet(e.id, e.name, "")))
+                  .toList(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -109,7 +122,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               crossAxisCount: 5,
-              children: controller.friends
+              children: controller.pendingFriends
                   .map<String, Widget>((s, u) => MapEntry(s, _people(u.friend)))
                   .values
                   .toList(),
@@ -138,7 +151,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
                         _appBar(context),
                         _title(context),
                         SliverToBoxAdapter(child: SizedBox(height: 30)),
-                        // _peopleRow(),
+                        _peopleRow(context),
                         _pendingRow(context),
                       ],
                     ),

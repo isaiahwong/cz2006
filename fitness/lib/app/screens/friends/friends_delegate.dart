@@ -1,7 +1,7 @@
 import 'package:fitness/repo/repo.dart';
 
 abstract class FriendsDelegate {
-  Map<String, Friend> friends = {};
+  Map<String, Friend> pendingFriends = {};
   void onFriendsSelected(Friend ex);
   void onFriendsRemoved(Friend ex);
   void onFriendsChanged(Friend ex);

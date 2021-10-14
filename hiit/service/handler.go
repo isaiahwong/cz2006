@@ -28,7 +28,7 @@ func (svc *Service) SubInvites(user *hiit.HIITUser, stream hiit.HIITService_SubI
 	}()
 
 	go func() {
-		var data *hiit.InviteWaitingRoomRequest
+		var req *hiit.InviteWaitingRoomRequest
 		for {
 			select {
 			case <-ctx.Done():
@@ -37,9 +37,9 @@ func (svc *Service) SubInvites(user *hiit.HIITUser, stream hiit.HIITService_SubI
 				if !ok {
 					return
 				}
-				data = m
+				req = m
 			}
-			if err := stream.Send(data); err != nil {
+			if err := stream.Send(req); err != nil {
 				errCh.C <- err
 				return
 			}
@@ -82,6 +82,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 		HIIT:    hiitWorkout,
 		JoinSub: make(chan *model.WaitingSub),
 		Start:   make(chan string),
+		Users:   make(map[string]*model.WaitingSub),
 	}
 
 	fmt.Println(host.GetName(), "created room")
@@ -102,11 +103,13 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 			case <-ctx.Done():
 				return
 			case userSub, ok := <-waitingRoom.JoinSub:
+				fmt.Println("user joined")
 				if !ok {
 					return
 				}
 				err = svc.notifyWaiting(userSub, waitingRoom, stream)
 			case start, ok := <-waitingRoom.Start:
+				fmt.Println("starting")
 				if !ok {
 					return
 				}
@@ -120,9 +123,18 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 				errCh.C <- err
 				return
 			}
-
+			fmt.Println("done")
 		}
 	}()
+
+	select {
+	case err := <-errCh.C:
+		if err != nil && err != io.EOF {
+			svc.logger.Errorf("%v %v", err)
+		}
+	case <-ctx.Done():
+		fmt.Println("waiting room closed")
+	}
 
 	return nil
 }
@@ -186,6 +198,7 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 			users = append(users, u.User)
 		}
 		stream.Send(&hiit.WaitingRoomResponse{
+			Host:  waitingRoom.Host,
 			Users: users,
 			Start: false,
 		})
@@ -206,6 +219,15 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 			}
 		}
 	}()
+
+	select {
+	case err := <-errCh.C:
+		if err != nil && err != io.EOF {
+			svc.logger.Errorf("%v %v", err)
+		}
+	case <-ctx.Done():
+		fmt.Println("exit waiting room")
+	}
 
 	return nil
 }

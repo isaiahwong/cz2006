@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\005hiit/',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"6\n\x04\x44\x61ta\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x10\n\x08interval\x18\x03 \x01(\t\"G\n\x0b\x44\x61taSession\x12\x18\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\n.hiit.Data\x12\x1e\n\x07session\x18\x02 \x01(\x0b\x32\r.hiit.Session\" \n\rRoutineChange\x12\x0f\n\x07routine\x18\x01 \x01(\t\"\'\n\x07Session\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\"3\n\x08HIITUser\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\"F\n\x18\x43reateWaitingRoomRequest\x12\x1c\n\x04host\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"@\n\x12WaitingRoomRequest\x12\x1c\n\x04user\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"C\n\x13WaitingRoomResponse\x12\x1d\n\x05users\x18\x01 \x03(\x0b\x32\x0e.hiit.HIITUser\x12\r\n\x05start\x18\x02 \x01(\x08\"b\n\x18InviteWaitingRoomRequest\x12\x1c\n\x04\x66rom\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x1a\n\x02to\x18\x02 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x03 \x01(\t2\xf8\x02\n\x0bHIITService\x12(\n\x03Sub\x12\x13.hiit.RoutineChange\x1a\n.hiit.Data0\x01\x12%\n\x03Pub\x12\x11.hiit.DataSession\x1a\x0b.hiit.Empty\x12P\n\x11\x43reateWaitingRoom\x12\x1e.hiit.CreateWaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12H\n\x0fJoinWaitingRoom\x12\x18.hiit.WaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12<\n\rNotifyInvites\x12\x1e.hiit.InviteWaitingRoomRequest\x1a\x0b.hiit.Empty\x12>\n\nSubInvites\x12\x0e.hiit.HIITUser\x1a\x1e.hiit.InviteWaitingRoomRequest0\x01\x42\x07Z\x05hiit/b\x06proto3'
+  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"6\n\x04\x44\x61ta\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x10\n\x08interval\x18\x03 \x01(\t\"G\n\x0b\x44\x61taSession\x12\x18\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\n.hiit.Data\x12\x1e\n\x07session\x18\x02 \x01(\x0b\x32\r.hiit.Session\" \n\rRoutineChange\x12\x0f\n\x07routine\x18\x01 \x01(\t\"\'\n\x07Session\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\"3\n\x08HIITUser\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\"F\n\x18\x43reateWaitingRoomRequest\x12\x1c\n\x04host\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"@\n\x12WaitingRoomRequest\x12\x1c\n\x04user\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"a\n\x13WaitingRoomResponse\x12\x1c\n\x04host\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x1d\n\x05users\x18\x02 \x03(\x0b\x32\x0e.hiit.HIITUser\x12\r\n\x05start\x18\x03 \x01(\x08\"b\n\x18InviteWaitingRoomRequest\x12\x1c\n\x04\x66rom\x18\x01 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x1a\n\x02to\x18\x02 \x01(\x0b\x32\x0e.hiit.HIITUser\x12\x0c\n\x04hiit\x18\x03 \x01(\t2\xf8\x02\n\x0bHIITService\x12(\n\x03Sub\x12\x13.hiit.RoutineChange\x1a\n.hiit.Data0\x01\x12%\n\x03Pub\x12\x11.hiit.DataSession\x1a\x0b.hiit.Empty\x12P\n\x11\x43reateWaitingRoom\x12\x1e.hiit.CreateWaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12H\n\x0fJoinWaitingRoom\x12\x18.hiit.WaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12<\n\rNotifyInvites\x12\x1e.hiit.InviteWaitingRoomRequest\x1a\x0b.hiit.Empty\x12>\n\nSubInvites\x12\x0e.hiit.HIITUser\x1a\x1e.hiit.InviteWaitingRoomRequest0\x01\x42\x07Z\x05hiit/b\x06proto3'
 )
 
 
@@ -339,15 +339,22 @@ _WAITINGROOMRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='users', full_name='hiit.WaitingRoomResponse.users', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      name='host', full_name='hiit.WaitingRoomResponse.host', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='users', full_name='hiit.WaitingRoomResponse.users', index=1,
+      number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='start', full_name='hiit.WaitingRoomResponse.start', index=1,
-      number=2, type=8, cpp_type=7, label=1,
+      name='start', full_name='hiit.WaitingRoomResponse.start', index=2,
+      number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -365,7 +372,7 @@ _WAITINGROOMRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=424,
-  serialized_end=491,
+  serialized_end=521,
 )
 
 
@@ -410,14 +417,15 @@ _INVITEWAITINGROOMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=493,
-  serialized_end=591,
+  serialized_start=523,
+  serialized_end=621,
 )
 
 _DATASESSION.fields_by_name['data'].message_type = _DATA
 _DATASESSION.fields_by_name['session'].message_type = _SESSION
 _CREATEWAITINGROOMREQUEST.fields_by_name['host'].message_type = _HIITUSER
 _WAITINGROOMREQUEST.fields_by_name['user'].message_type = _HIITUSER
+_WAITINGROOMRESPONSE.fields_by_name['host'].message_type = _HIITUSER
 _WAITINGROOMRESPONSE.fields_by_name['users'].message_type = _HIITUSER
 _INVITEWAITINGROOMREQUEST.fields_by_name['from'].message_type = _HIITUSER
 _INVITEWAITINGROOMREQUEST.fields_by_name['to'].message_type = _HIITUSER
@@ -513,8 +521,8 @@ _HIITSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=594,
-  serialized_end=970,
+  serialized_start=624,
+  serialized_end=1000,
   methods=[
   _descriptor.MethodDescriptor(
     name='Sub',

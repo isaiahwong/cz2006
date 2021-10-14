@@ -27,8 +27,9 @@ class FriendsController extends GetxController {
     super.onInit();
     friends = await socialRepo.getFriends();
     friends = List.from(friends)
-      ..map((e) =>
-          delegateController.exists(e) ? delegateController.friends[e.id] : e);
+      ..map((e) => delegateController.exists(e)
+          ? delegateController.pendingFriends[e.id]
+          : e);
     filteredFriends = List.from(friends);
     update();
   }
@@ -53,7 +54,7 @@ class FriendsController extends GetxController {
   }
 
   Friend? onSelected(Friend ex) {
-    if (isSelected(ex)) return delegateController.friends[ex.id];
+    if (isSelected(ex)) return delegateController.pendingFriends[ex.id];
     delegateController.onFriendsSelected(ex);
     update();
     return ex;
