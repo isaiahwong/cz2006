@@ -96,7 +96,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 
 	waitingRoom := &model.WaitingRoom{
 		Host:    host,
-		HIIT:    workout,
+		Workout: workout,
 		JoinSub: make(chan *model.WaitingSub),
 		Start:   make(chan string),
 		Users:   make(map[string]*model.WaitingSub),
@@ -110,7 +110,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 	defer func() {
 		errCh.Close()
 		close(waitingRoom.JoinSub)
-		delete(svc.waitingRooms, workout)
+		close(waitingRoom.Start)
 	}()
 
 	go func() {
@@ -136,11 +136,14 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 				// start logic
 				for _, user := range waitingRoom.Users {
 					user.Listen <- &hiit.WaitingRoomResponse{
+						Host:  waitingRoom.Host,
+						Users: waitingRoom.GetUsers(),
 						Start: true,
 					}
 				}
 				// Delete room
-				// Client will transition and start
+				// Client will transition and start and delete pending waiting room
+				waitingRoom.Started = true
 				return
 			}
 
@@ -211,20 +214,13 @@ func (svc *Service) JoinWaitingRoom(req *hiit.WaitingRoomRequest, stream hiit.HI
 	defer func() {
 		errCh.Close()
 		close(listen)
-		delete(waitingRoom.Users, user.Id)
 	}()
 
 	go func() {
 		var data *hiit.WaitingRoomResponse
-		// send initial
-		users := []*hiit.WorkoutUser{}
-
-		for _, u := range waitingRoom.Users {
-			users = append(users, u.User)
-		}
 		stream.Send(&hiit.WaitingRoomResponse{
 			Host:  waitingRoom.Host,
-			Users: users,
+			Users: waitingRoom.GetUsers(),
 			Start: false,
 		})
 

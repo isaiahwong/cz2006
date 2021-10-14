@@ -61,7 +61,7 @@ class HIITServiceStub(object):
                 )
         self.DuoHIITComplete = channel.unary_unary(
                 '/hiit.HIITService/DuoHIITComplete',
-                request_serializer=hiit__pb2.ActiveRoutine.SerializeToString,
+                request_serializer=hiit__pb2.HIITActivity.SerializeToString,
                 response_deserializer=hiit__pb2.Empty.FromString,
                 )
 
@@ -179,7 +179,7 @@ def add_HIITServiceServicer_to_server(servicer, server):
             ),
             'DuoHIITComplete': grpc.unary_unary_rpc_method_handler(
                     servicer.DuoHIITComplete,
-                    request_deserializer=hiit__pb2.ActiveRoutine.FromString,
+                    request_deserializer=hiit__pb2.HIITActivity.FromString,
                     response_serializer=hiit__pb2.Empty.SerializeToString,
             ),
     }
@@ -357,7 +357,7 @@ class HIITService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITComplete',
-            hiit__pb2.ActiveRoutine.SerializeToString,
+            hiit__pb2.HIITActivity.SerializeToString,
             hiit__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

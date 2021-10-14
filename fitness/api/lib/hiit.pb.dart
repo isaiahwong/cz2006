@@ -887,42 +887,52 @@ class JoinDuoHIITRequest extends $pb.GeneratedMessage {
   void clearHiit() => clearField(2);
 }
 
-class ActiveRoutine extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ActiveRoutine', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
+class HIITActivity extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HIITActivity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hiit')
+    ..aOM<WorkoutUser>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: WorkoutUser.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'routine')
     ..hasRequiredFields = false
   ;
 
-  ActiveRoutine._() : super();
-  factory ActiveRoutine({
+  HIITActivity._() : super();
+  factory HIITActivity({
     $core.String? hiit,
+    WorkoutUser? user,
+    $core.String? routine,
   }) {
     final _result = create();
     if (hiit != null) {
       _result.hiit = hiit;
     }
+    if (user != null) {
+      _result.user = user;
+    }
+    if (routine != null) {
+      _result.routine = routine;
+    }
     return _result;
   }
-  factory ActiveRoutine.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ActiveRoutine.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory HIITActivity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HIITActivity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ActiveRoutine clone() => ActiveRoutine()..mergeFromMessage(this);
+  HIITActivity clone() => HIITActivity()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ActiveRoutine copyWith(void Function(ActiveRoutine) updates) => super.copyWith((message) => updates(message as ActiveRoutine)) as ActiveRoutine; // ignore: deprecated_member_use
+  HIITActivity copyWith(void Function(HIITActivity) updates) => super.copyWith((message) => updates(message as HIITActivity)) as HIITActivity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ActiveRoutine create() => ActiveRoutine._();
-  ActiveRoutine createEmptyInstance() => create();
-  static $pb.PbList<ActiveRoutine> createRepeated() => $pb.PbList<ActiveRoutine>();
+  static HIITActivity create() => HIITActivity._();
+  HIITActivity createEmptyInstance() => create();
+  static $pb.PbList<HIITActivity> createRepeated() => $pb.PbList<HIITActivity>();
   @$core.pragma('dart2js:noInline')
-  static ActiveRoutine getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ActiveRoutine>(create);
-  static ActiveRoutine? _defaultInstance;
+  static HIITActivity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HIITActivity>(create);
+  static HIITActivity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get hiit => $_getSZ(0);
@@ -932,19 +942,41 @@ class ActiveRoutine extends $pb.GeneratedMessage {
   $core.bool hasHiit() => $_has(0);
   @$pb.TagNumber(1)
   void clearHiit() => clearField(1);
+
+  @$pb.TagNumber(2)
+  WorkoutUser get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user(WorkoutUser v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => clearField(2);
+  @$pb.TagNumber(2)
+  WorkoutUser ensureUser() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get routine => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set routine($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoutine() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoutine() => clearField(3);
 }
 
 class DuoHIITResult extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DuoHIITResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'hiit'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winner')
+    ..aOM<WorkoutUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'winner', subBuilder: WorkoutUser.create)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'score', $pb.PbFieldType.O3)
+    ..aOM<HIITActivity>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activity', subBuilder: HIITActivity.create)
     ..hasRequiredFields = false
   ;
 
   DuoHIITResult._() : super();
   factory DuoHIITResult({
-    $core.String? winner,
+    WorkoutUser? winner,
     $core.int? score,
+    HIITActivity? activity,
   }) {
     final _result = create();
     if (winner != null) {
@@ -952,6 +984,9 @@ class DuoHIITResult extends $pb.GeneratedMessage {
     }
     if (score != null) {
       _result.score = score;
+    }
+    if (activity != null) {
+      _result.activity = activity;
     }
     return _result;
   }
@@ -977,13 +1012,15 @@ class DuoHIITResult extends $pb.GeneratedMessage {
   static DuoHIITResult? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get winner => $_getSZ(0);
+  WorkoutUser get winner => $_getN(0);
   @$pb.TagNumber(1)
-  set winner($core.String v) { $_setString(0, v); }
+  set winner(WorkoutUser v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasWinner() => $_has(0);
   @$pb.TagNumber(1)
   void clearWinner() => clearField(1);
+  @$pb.TagNumber(1)
+  WorkoutUser ensureWinner() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.int get score => $_getIZ(1);
@@ -993,5 +1030,16 @@ class DuoHIITResult extends $pb.GeneratedMessage {
   $core.bool hasScore() => $_has(1);
   @$pb.TagNumber(2)
   void clearScore() => clearField(2);
+
+  @$pb.TagNumber(3)
+  HIITActivity get activity => $_getN(2);
+  @$pb.TagNumber(3)
+  set activity(HIITActivity v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasActivity() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearActivity() => clearField(3);
+  @$pb.TagNumber(3)
+  HIITActivity ensureActivity() => $_ensure(2);
 }
 

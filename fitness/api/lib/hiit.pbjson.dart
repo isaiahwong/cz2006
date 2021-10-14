@@ -161,24 +161,27 @@ const JoinDuoHIITRequest$json = const {
 
 /// Descriptor for `JoinDuoHIITRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List joinDuoHIITRequestDescriptor = $convert.base64Decode('ChJKb2luRHVvSElJVFJlcXVlc3QSJQoEdXNlchgBIAEoCzIRLmhpaXQuV29ya291dFVzZXJSBHVzZXISEgoEaGlpdBgCIAEoCVIEaGlpdA==');
-@$core.Deprecated('Use activeRoutineDescriptor instead')
-const ActiveRoutine$json = const {
-  '1': 'ActiveRoutine',
+@$core.Deprecated('Use hIITActivityDescriptor instead')
+const HIITActivity$json = const {
+  '1': 'HIITActivity',
   '2': const [
     const {'1': 'hiit', '3': 1, '4': 1, '5': 9, '10': 'hiit'},
+    const {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.hiit.WorkoutUser', '10': 'user'},
+    const {'1': 'routine', '3': 3, '4': 1, '5': 9, '10': 'routine'},
   ],
 };
 
-/// Descriptor for `ActiveRoutine`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List activeRoutineDescriptor = $convert.base64Decode('Cg1BY3RpdmVSb3V0aW5lEhIKBGhpaXQYASABKAlSBGhpaXQ=');
+/// Descriptor for `HIITActivity`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hIITActivityDescriptor = $convert.base64Decode('CgxISUlUQWN0aXZpdHkSEgoEaGlpdBgBIAEoCVIEaGlpdBIlCgR1c2VyGAIgASgLMhEuaGlpdC5Xb3Jrb3V0VXNlclIEdXNlchIYCgdyb3V0aW5lGAMgASgJUgdyb3V0aW5l');
 @$core.Deprecated('Use duoHIITResultDescriptor instead')
 const DuoHIITResult$json = const {
   '1': 'DuoHIITResult',
   '2': const [
-    const {'1': 'winner', '3': 1, '4': 1, '5': 9, '10': 'winner'},
+    const {'1': 'winner', '3': 1, '4': 1, '5': 11, '6': '.hiit.WorkoutUser', '10': 'winner'},
     const {'1': 'score', '3': 2, '4': 1, '5': 5, '10': 'score'},
+    const {'1': 'activity', '3': 3, '4': 1, '5': 11, '6': '.hiit.HIITActivity', '10': 'activity'},
   ],
 };
 
 /// Descriptor for `DuoHIITResult`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List duoHIITResultDescriptor = $convert.base64Decode('Cg1EdW9ISUlUUmVzdWx0EhYKBndpbm5lchgBIAEoCVIGd2lubmVyEhQKBXNjb3JlGAIgASgFUgVzY29yZQ==');
+final $typed_data.Uint8List duoHIITResultDescriptor = $convert.base64Decode('Cg1EdW9ISUlUUmVzdWx0EikKBndpbm5lchgBIAEoCzIRLmhpaXQuV29ya291dFVzZXJSBndpbm5lchIUCgVzY29yZRgCIAEoBVIFc2NvcmUSLgoIYWN0aXZpdHkYAyABKAsyEi5oaWl0LkhJSVRBY3Rpdml0eVIIYWN0aXZpdHk=');

@@ -61,9 +61,9 @@ class HIITServiceClient extends $grpc.Client {
           ($0.JoinDuoHIITRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.DuoHIITResult.fromBuffer(value));
   static final _$duoHIITComplete =
-      $grpc.ClientMethod<$0.ActiveRoutine, $0.Empty>(
+      $grpc.ClientMethod<$0.HIITActivity, $0.Empty>(
           '/hiit.HIITService/DuoHIITComplete',
-          ($0.ActiveRoutine value) => value.writeToBuffer(),
+          ($0.HIITActivity value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   HIITServiceClient($grpc.ClientChannel channel,
@@ -134,7 +134,7 @@ class HIITServiceClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> duoHIITComplete($0.ActiveRoutine request,
+  $grpc.ResponseFuture<$0.Empty> duoHIITComplete($0.HIITActivity request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$duoHIITComplete, request, options: options);
   }
@@ -215,12 +215,12 @@ abstract class HIITServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.JoinDuoHIITRequest.fromBuffer(value),
         ($0.DuoHIITResult value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ActiveRoutine, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.HIITActivity, $0.Empty>(
         'DuoHIITComplete',
         duoHIITComplete_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.ActiveRoutine.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.HIITActivity.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
   }
 
@@ -272,7 +272,7 @@ abstract class HIITServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.Empty> duoHIITComplete_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.ActiveRoutine> request) async {
+      $grpc.ServiceCall call, $async.Future<$0.HIITActivity> request) async {
     return duoHIITComplete(call, await request);
   }
 
@@ -293,5 +293,5 @@ abstract class HIITServiceBase extends $grpc.Service {
   $async.Stream<$0.DuoHIITResult> joinDuoHIIT(
       $grpc.ServiceCall call, $0.JoinDuoHIITRequest request);
   $async.Future<$0.Empty> duoHIITComplete(
-      $grpc.ServiceCall call, $0.ActiveRoutine request);
+      $grpc.ServiceCall call, $0.HIITActivity request);
 }

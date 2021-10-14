@@ -6,6 +6,7 @@ option go_package = "hiit/";
 
 message Empty{}
 
+
 message Data {
   string state = 1;
   int32 count = 2;
@@ -74,13 +75,17 @@ message JoinDuoHIITRequest {
   string hiit = 2;
 }
 
-message ActiveRoutine {
+message HIITActivity {
   string hiit = 1;
+  WorkoutUser user = 2;
+  string routine = 3;
+
 }
 
 message DuoHIITResult {
-  string winner = 1;
+  WorkoutUser winner = 1;
   int32 score = 2;
+  HIITActivity activity = 3;
 }
 
 service HIITService {
@@ -96,5 +101,5 @@ service HIITService {
   rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream DuoHIITResult);
   rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream DuoHIITResult);
 
-  rpc DuoHIITComplete(ActiveRoutine) returns (Empty);
+  rpc DuoHIITComplete(HIITActivity) returns (Empty);
 }

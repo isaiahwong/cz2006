@@ -24,7 +24,7 @@ type Service struct {
 	pubsub         map[string]chan *hiit.Data
 	waitingRooms   map[string]*model.WaitingRoom
 	users          map[string]chan *hiit.InviteWaitingRoomRequest
-
+	hiitSessions   map[string]*model.HIITSession
 	hiit.UnimplementedHIITServiceServer
 }
 
@@ -37,6 +37,7 @@ func New(ctx context.Context, opt ...ServiceOption) error {
 		pubsub:       make(map[string]chan *hiit.Data),
 		waitingRooms: make(map[string]*model.WaitingRoom),
 		users:        make(map[string]chan *hiit.InviteWaitingRoomRequest),
+		hiitSessions: make(map[string]*model.HIITSession),
 	}
 	// Apply options
 	for _, o := range opt {
