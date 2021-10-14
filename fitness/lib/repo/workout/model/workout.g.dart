@@ -10,6 +10,7 @@ Workout _$WorkoutFromJson(Map<String, dynamic> json) {
   return Workout(
     id: json['id'] as String,
     name: json['name'] as String,
+    host: json['host'] as String? ?? '',
     type: _$enumDecode(_$WorkoutTypeEnumMap, json['type']),
   );
 }
@@ -17,6 +18,7 @@ Workout _$WorkoutFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$WorkoutToJson(Workout instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'host': instance.host,
       'type': _$WorkoutTypeEnumMap[instance.type],
     };
 

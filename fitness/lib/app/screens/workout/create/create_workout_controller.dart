@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
@@ -73,12 +74,14 @@ class CreateWorkoutController extends GetxController
     // Create initial workout
     if (this.type == WorkoutType.HIIT) {
       workout = await repo.createWorkout(HIIT(
+        host: UserController.get().user.value!.id,
         name: name.value.isNotEmpty
             ? name.value
             : WorkoutName.dirty("Workout $workoutIncrement").value,
       ));
     } else {
       workout = await repo.createWorkout(Cycling(
+        host: UserController.get().user.value!.id,
         name: name.value.isNotEmpty
             ? name.value
             : WorkoutName.dirty("Workout $workoutIncrement").value,

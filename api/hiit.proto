@@ -31,6 +31,7 @@ message WorkoutUser {
   string id = 1;
   string name = 2;
   string email = 3;
+  int32 score = 4;
 }
 
 message CreateWaitingRoomRequest {
@@ -76,16 +77,24 @@ message JoinDuoHIITRequest {
 }
 
 message HIITActivity {
+  enum Type {
+    UNKNOWN = 0;
+    CHANGE_ROUTINE = 1;
+    WINNER = 2;
+  }
   string hiit = 1;
   WorkoutUser user = 2;
   string routine = 3;
+  Type type = 4;
+  WorkoutUser winner = 5;
+}
+
+message HIITRoutineComplete {
 
 }
 
-message DuoHIITResult {
-  WorkoutUser winner = 1;
-  int32 score = 2;
-  HIITActivity activity = 3;
+message HIITSelectRoutineRequest {
+
 }
 
 service HIITService {
@@ -98,8 +107,10 @@ service HIITService {
   rpc NotifyInvites(InviteWaitingRoomRequest) returns (Empty);
   rpc SubInvites(WorkoutUser) returns (stream InviteWaitingRoomRequest);
 
-  rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream DuoHIITResult);
-  rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream DuoHIITResult);
+  rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream HIITActivity);
+  rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream HIITActivity);
 
-  rpc DuoHIITComplete(HIITActivity) returns (Empty);
+  rpc DuoHIITRoutineComplete(HIITRoutineComplete) returns (Empty);
+
+  rpc DuoHIITSelectRoutine(HIITSelectRoutineRequest) returns (Empty);
 }

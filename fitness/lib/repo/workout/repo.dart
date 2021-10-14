@@ -87,12 +87,31 @@ class WorkoutRepo {
     );
   }
 
-  ResponseStream<DuoHIITResult> createDuoHIIT(HIIT hiit) {
+  ResponseStream<HIITActivity> createDuoHIIT(HIIT hiit) {
     final user = UserController.get().user.value!;
     return hiitClient.createDuoHIIT(
       CreateDuoHIITRequest(
         hiit: hiit.id,
         host: WorkoutUser(
+          email: user.email,
+          id: user.id,
+          name: user.name,
+        ),
+      ),
+      options: CallOptions(
+        metadata: {
+          "id": user.id,
+        },
+      ),
+    );
+  }
+
+  ResponseStream<HIITActivity> joinDuoHIIT(HIIT hiit) {
+    final user = UserController.get().user.value!;
+    return hiitClient.joinDuoHIIT(
+      JoinDuoHIITRequest(
+        hiit: hiit.id,
+        user: WorkoutUser(
           email: user.email,
           id: user.id,
           name: user.name,

@@ -111,6 +111,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 		errCh.Close()
 		close(waitingRoom.JoinSub)
 		close(waitingRoom.Start)
+		delete(svc.waitingRooms, workout)
 	}()
 
 	go func() {
@@ -133,6 +134,7 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 				if start != waitingRoom.Host.Id {
 					continue
 				}
+
 				// start logic
 				for _, user := range waitingRoom.Users {
 					user.Listen <- &hiit.WaitingRoomResponse{
@@ -141,9 +143,8 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 						Start: true,
 					}
 				}
-				// Delete room
-				// Client will transition and start and delete pending waiting room
-				waitingRoom.Started = true
+				// kill channel
+				errCh.C <- io.EOF
 				return
 			}
 
@@ -160,9 +161,9 @@ func (svc *Service) CreateWaitingRoom(req *hiit.CreateWaitingRoomRequest, stream
 			svc.logger.Errorf("%v %v", err)
 		}
 	case <-ctx.Done():
-		fmt.Println("waiting room closed")
+		fmt.Println("end")
 	}
-
+	fmt.Println("waiting room closed")
 	return nil
 }
 

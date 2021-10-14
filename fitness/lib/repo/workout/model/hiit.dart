@@ -12,9 +12,10 @@ class HIIT extends Workout {
   HIIT({
     String id = "",
     required String name,
+    required String host,
     WorkoutType type = WorkoutType.HIIT, // used for json generator
     this.routines = const [],
-  }) : super(id: id, name: name, type: WorkoutType.HIIT);
+  }) : super(id: id, host: host, name: name, type: WorkoutType.HIIT);
 
   factory HIIT.fromJson(Map<String, dynamic> json) => _$HIITFromJson(json);
 
@@ -26,6 +27,7 @@ class HIIT extends Workout {
   }) {
     return HIIT(
       id: workout.id,
+      host: workout.host,
       name: workout.name,
       routines: routines != null ? List<Routine>.from(routines).toList() : [],
     );
@@ -75,11 +77,13 @@ class HIIT extends Workout {
   HIIT copyWith({
     String? id,
     String? name,
+    String? host,
     WorkoutType? type,
     List<Routine>? routines,
   }) {
     return HIIT(
       id: id ?? this.id,
+      host: host ?? this.host,
       name: name ?? this.name,
       routines: List<Routine>.from(routines ?? this.routines).toList(),
     );

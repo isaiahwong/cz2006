@@ -15,21 +15,26 @@ enum WorkoutType {
 class Workout {
   final String id;
   final String name;
+  @JsonKey(defaultValue: "")
+  final String host;
   final WorkoutType type;
 
   Workout({
     this.id = "",
     required this.name,
+    required this.host,
     this.type = WorkoutType.HIIT,
   });
 
   Workout copyWith({
     String? id,
     String? name,
+    String? host,
     WorkoutType? type,
   }) {
     return Workout(
       id: id ?? this.id,
+      host: host ?? this.host,
       name: name ?? this.name,
       type: type ?? this.type,
     );

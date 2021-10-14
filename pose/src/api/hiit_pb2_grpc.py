@@ -52,16 +52,21 @@ class HIITServiceStub(object):
         self.CreateDuoHIIT = channel.unary_stream(
                 '/hiit.HIITService/CreateDuoHIIT',
                 request_serializer=hiit__pb2.CreateDuoHIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.DuoHIITResult.FromString,
+                response_deserializer=hiit__pb2.HIITActivity.FromString,
                 )
         self.JoinDuoHIIT = channel.unary_stream(
                 '/hiit.HIITService/JoinDuoHIIT',
                 request_serializer=hiit__pb2.JoinDuoHIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.DuoHIITResult.FromString,
+                response_deserializer=hiit__pb2.HIITActivity.FromString,
                 )
-        self.DuoHIITComplete = channel.unary_unary(
-                '/hiit.HIITService/DuoHIITComplete',
-                request_serializer=hiit__pb2.HIITActivity.SerializeToString,
+        self.DuoHIITRoutineComplete = channel.unary_unary(
+                '/hiit.HIITService/DuoHIITRoutineComplete',
+                request_serializer=hiit__pb2.HIITRoutineComplete.SerializeToString,
+                response_deserializer=hiit__pb2.Empty.FromString,
+                )
+        self.DuoHIITSelectRoutine = channel.unary_unary(
+                '/hiit.HIITService/DuoHIITSelectRoutine',
+                request_serializer=hiit__pb2.HIITSelectRoutineRequest.SerializeToString,
                 response_deserializer=hiit__pb2.Empty.FromString,
                 )
 
@@ -123,7 +128,13 @@ class HIITServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def DuoHIITComplete(self, request, context):
+    def DuoHIITRoutineComplete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DuoHIITSelectRoutine(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -170,16 +181,21 @@ def add_HIITServiceServicer_to_server(servicer, server):
             'CreateDuoHIIT': grpc.unary_stream_rpc_method_handler(
                     servicer.CreateDuoHIIT,
                     request_deserializer=hiit__pb2.CreateDuoHIITRequest.FromString,
-                    response_serializer=hiit__pb2.DuoHIITResult.SerializeToString,
+                    response_serializer=hiit__pb2.HIITActivity.SerializeToString,
             ),
             'JoinDuoHIIT': grpc.unary_stream_rpc_method_handler(
                     servicer.JoinDuoHIIT,
                     request_deserializer=hiit__pb2.JoinDuoHIITRequest.FromString,
-                    response_serializer=hiit__pb2.DuoHIITResult.SerializeToString,
+                    response_serializer=hiit__pb2.HIITActivity.SerializeToString,
             ),
-            'DuoHIITComplete': grpc.unary_unary_rpc_method_handler(
-                    servicer.DuoHIITComplete,
-                    request_deserializer=hiit__pb2.HIITActivity.FromString,
+            'DuoHIITRoutineComplete': grpc.unary_unary_rpc_method_handler(
+                    servicer.DuoHIITRoutineComplete,
+                    request_deserializer=hiit__pb2.HIITRoutineComplete.FromString,
+                    response_serializer=hiit__pb2.Empty.SerializeToString,
+            ),
+            'DuoHIITSelectRoutine': grpc.unary_unary_rpc_method_handler(
+                    servicer.DuoHIITSelectRoutine,
+                    request_deserializer=hiit__pb2.HIITSelectRoutineRequest.FromString,
                     response_serializer=hiit__pb2.Empty.SerializeToString,
             ),
     }
@@ -324,7 +340,7 @@ class HIITService(object):
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/CreateDuoHIIT',
             hiit__pb2.CreateDuoHIITRequest.SerializeToString,
-            hiit__pb2.DuoHIITResult.FromString,
+            hiit__pb2.HIITActivity.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -341,12 +357,12 @@ class HIITService(object):
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/JoinDuoHIIT',
             hiit__pb2.JoinDuoHIITRequest.SerializeToString,
-            hiit__pb2.DuoHIITResult.FromString,
+            hiit__pb2.HIITActivity.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def DuoHIITComplete(request,
+    def DuoHIITRoutineComplete(request,
             target,
             options=(),
             channel_credentials=None,
@@ -356,8 +372,25 @@ class HIITService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITComplete',
-            hiit__pb2.HIITActivity.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITRoutineComplete',
+            hiit__pb2.HIITRoutineComplete.SerializeToString,
+            hiit__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DuoHIITSelectRoutine(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITSelectRoutine',
+            hiit__pb2.HIITSelectRoutineRequest.SerializeToString,
             hiit__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

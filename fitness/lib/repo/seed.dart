@@ -5,6 +5,7 @@ import 'package:fitness/repo/workout/workout.dart';
 final workouts = [
   Workout(
     id: genRandStr(5),
+    host: "",
     name: "Chest Workout",
   )
 ];

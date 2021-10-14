@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/friends/friends_controller.dart';
@@ -23,6 +25,9 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   List<User> users = [];
   ResponseStream<WaitingRoomResponse>? hostRoomStream;
   ResponseStream<WaitingRoomResponse>? joinRoomStream;
+
+  StreamSubscription? hostSub;
+  StreamSubscription? joinRoomSub;
   late final WaitingRoomType waitingRoomType;
 
   WaitingRoomController({required this.panelController})
@@ -41,11 +46,11 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     switch (waitingRoomType) {
       case WaitingRoomType.HOST:
         hostRoomStream = workoutRepo.createWaitingRoom(hiit);
-        hostRoomStream?.listen(onHostRoomStream);
+        hostSub = hostRoomStream?.listen(onHostRoomStream);
         break;
       case WaitingRoomType.INVITEE:
         joinRoomStream = workoutRepo.joinWaitingRoom(hiit);
-        joinRoomStream?.listen(onJoinRoomStream);
+        joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
         break;
     }
   }
@@ -53,7 +58,9 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   @override
   void onClose() {
     hostRoomStream?.cancel();
+    hostSub?.cancel();
     joinRoomStream?.cancel();
+    joinRoomSub?.cancel();
     super.onClose();
   }
 
@@ -105,9 +112,9 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   void onStartHIIT() async {
-    if (waitingRoomType == WaitingRoomType.HOST)
-      await workoutRepo.startWaitingRoom(hiit);
-    Get.toNamed(RoutePaths.HIIT_ACTIVE, arguments: [
+    // if (waitingRoomType == WaitingRoomType.HOST)
+    //   await workoutRepo.startWaitingRoom(hiit);
+    Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
       hiit.copyWith(),
     ]);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fitness/app/components/panel/panel.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
@@ -26,8 +28,11 @@ class ActiveHIITController extends GetxController {
 
   late final ActiveHIITType activeHIITType;
 
-  ResponseStream<DuoHIITResult>? hostHIITStream;
-  ResponseStream<DuoHIITResult>? joinHIITStream;
+  ResponseStream<HIITActivity>? hostHIITStream;
+  ResponseStream<HIITActivity>? joinHIITStream;
+
+  StreamSubscription? hostSub;
+  StreamSubscription? joinRoomSub;
 
   int currentReps = 0;
   int page = 0;
@@ -74,12 +79,28 @@ class ActiveHIITController extends GetxController {
     super.onClose();
     hostHIITStream?.cancel();
     joinHIITStream?.cancel();
+    hostSub?.cancel();
+    joinRoomSub?.cancel();
     res.cancel();
   }
 
-  void _onDUO() {
+  void _onDUO() async {
     if (activeHIITType != ActiveHIITType.DUO) return;
+    // Create hiit room if host
+    final user = UserController.get().user.value!;
+    if (user.id == hiit.host) {
+      hostHIITStream = workoutRepo.createDuoHIIT(hiit);
+      hostSub = hostHIITStream!.listen(onHIITHostActivity);
+    } else {
+      // join room if not
+      joinHIITStream = workoutRepo.joinDuoHIIT(hiit);
+      joinRoomSub = joinHIITStream!.listen(onHIITHostActivity);
+    }
   }
+
+  void onHIITHostActivity(HIITActivity activity) {}
+
+  void onHIITJoinActivity(HIITActivity activity) {}
 
   void onHIITStream(Data data) {
     if (data.count == currentReps) return;

@@ -10,6 +10,7 @@ HIIT _$HIITFromJson(Map<String, dynamic> json) {
   return HIIT(
     id: json['id'] as String,
     name: json['name'] as String,
+    host: json['host'] as String? ?? '',
     type: _$enumDecode(_$WorkoutTypeEnumMap, json['type']),
     routines: (json['routines'] as List<dynamic>)
         .map((e) => Routine.fromJson(e as Map<String, dynamic>))
@@ -20,6 +21,7 @@ HIIT _$HIITFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$HIITToJson(HIIT instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'host': instance.host,
       'type': _$WorkoutTypeEnumMap[instance.type],
       'routines': instance.routines.map((e) => e.toJson()).toList(),
     };

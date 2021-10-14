@@ -7,11 +7,12 @@ type HIITSession struct {
 	Users           map[string]*HIITUserSession
 	HIITActivitySub chan (*hiit.HIITActivity)
 	// UserJoinSub     chan (*hiit.WorkoutUser)
-	Joined int
+	Joined         int
+	PreviousWinner *HIITUserSession
 }
 
 type HIITUserSession struct {
 	User   *hiit.WorkoutUser
 	Score  int
-	Listen chan *hiit.DuoHIITResult
+	Listen chan *hiit.HIITActivity
 }

@@ -10,6 +10,7 @@ Cycling _$CyclingFromJson(Map<String, dynamic> json) {
   return Cycling(
     id: json['id'] as String,
     name: json['name'] as String,
+    host: json['host'] as String? ?? '',
     course: (json['course'] as List<dynamic>)
         .map((e) => Course.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -20,6 +21,7 @@ Cycling _$CyclingFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CyclingToJson(Cycling instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'host': instance.host,
       'type': _$WorkoutTypeEnumMap[instance.type],
       'course': instance.course.map((e) => e.toJson()).toList(),
     };

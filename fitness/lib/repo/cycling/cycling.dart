@@ -13,9 +13,10 @@ class Cycling extends Workout {
   Cycling({
     String id = "",
     required String name,
+    required String host,
     this.course = const [],
     WorkoutType type = WorkoutType.CYCLING, // used for json generator
-  }) : super(id: id, name: name, type: WorkoutType.CYCLING);
+  }) : super(id: id, host: host, name: name, type: WorkoutType.CYCLING);
 
   factory Cycling.fromJson(Map<String, dynamic> json) =>
       _$CyclingFromJson(json);
@@ -28,6 +29,7 @@ class Cycling extends Workout {
   }) {
     return Cycling(
       id: workout.id,
+      host: workout.host,
       name: workout.name,
       course: course != null ? List<Course>.from(course).toList() : [],
     );
@@ -52,11 +54,13 @@ class Cycling extends Workout {
   Cycling copyWith({
     String? id,
     String? name,
+    String? host,
     WorkoutType? type,
     List<Course>? course,
   }) {
     return Cycling(
       id: id ?? this.id,
+      host: host ?? this.host,
       name: name ?? this.name,
       course: List<Course>.from(course ?? this.course).toList(),
     );

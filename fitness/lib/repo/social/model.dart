@@ -31,7 +31,6 @@ class Friends {
 class Friend {
   int createdAt;
   String id;
-  @JsonKey(ignore: true)
   UserSnippet initiator;
   UserSnippet responder;
   SocialStatus status;

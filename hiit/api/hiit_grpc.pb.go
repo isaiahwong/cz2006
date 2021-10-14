@@ -26,7 +26,8 @@ type HIITServiceClient interface {
 	SubInvites(ctx context.Context, in *WorkoutUser, opts ...grpc.CallOption) (HIITService_SubInvitesClient, error)
 	CreateDuoHIIT(ctx context.Context, in *CreateDuoHIITRequest, opts ...grpc.CallOption) (HIITService_CreateDuoHIITClient, error)
 	JoinDuoHIIT(ctx context.Context, in *JoinDuoHIITRequest, opts ...grpc.CallOption) (HIITService_JoinDuoHIITClient, error)
-	DuoHIITComplete(ctx context.Context, in *HIITActivity, opts ...grpc.CallOption) (*Empty, error)
+	DuoHIITRoutineComplete(ctx context.Context, in *HIITRoutineComplete, opts ...grpc.CallOption) (*Empty, error)
+	DuoHIITSelectRoutine(ctx context.Context, in *HIITSelectRoutineRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type hIITServiceClient struct {
@@ -208,7 +209,7 @@ func (c *hIITServiceClient) CreateDuoHIIT(ctx context.Context, in *CreateDuoHIIT
 }
 
 type HIITService_CreateDuoHIITClient interface {
-	Recv() (*DuoHIITResult, error)
+	Recv() (*HIITActivity, error)
 	grpc.ClientStream
 }
 
@@ -216,8 +217,8 @@ type hIITServiceCreateDuoHIITClient struct {
 	grpc.ClientStream
 }
 
-func (x *hIITServiceCreateDuoHIITClient) Recv() (*DuoHIITResult, error) {
-	m := new(DuoHIITResult)
+func (x *hIITServiceCreateDuoHIITClient) Recv() (*HIITActivity, error) {
+	m := new(HIITActivity)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -240,7 +241,7 @@ func (c *hIITServiceClient) JoinDuoHIIT(ctx context.Context, in *JoinDuoHIITRequ
 }
 
 type HIITService_JoinDuoHIITClient interface {
-	Recv() (*DuoHIITResult, error)
+	Recv() (*HIITActivity, error)
 	grpc.ClientStream
 }
 
@@ -248,17 +249,26 @@ type hIITServiceJoinDuoHIITClient struct {
 	grpc.ClientStream
 }
 
-func (x *hIITServiceJoinDuoHIITClient) Recv() (*DuoHIITResult, error) {
-	m := new(DuoHIITResult)
+func (x *hIITServiceJoinDuoHIITClient) Recv() (*HIITActivity, error) {
+	m := new(HIITActivity)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *hIITServiceClient) DuoHIITComplete(ctx context.Context, in *HIITActivity, opts ...grpc.CallOption) (*Empty, error) {
+func (c *hIITServiceClient) DuoHIITRoutineComplete(ctx context.Context, in *HIITRoutineComplete, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/hiit.HIITService/DuoHIITComplete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/DuoHIITRoutineComplete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hIITServiceClient) DuoHIITSelectRoutine(ctx context.Context, in *HIITSelectRoutineRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/DuoHIITSelectRoutine", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +288,8 @@ type HIITServiceServer interface {
 	SubInvites(*WorkoutUser, HIITService_SubInvitesServer) error
 	CreateDuoHIIT(*CreateDuoHIITRequest, HIITService_CreateDuoHIITServer) error
 	JoinDuoHIIT(*JoinDuoHIITRequest, HIITService_JoinDuoHIITServer) error
-	DuoHIITComplete(context.Context, *HIITActivity) (*Empty, error)
+	DuoHIITRoutineComplete(context.Context, *HIITRoutineComplete) (*Empty, error)
+	DuoHIITSelectRoutine(context.Context, *HIITSelectRoutineRequest) (*Empty, error)
 	mustEmbedUnimplementedHIITServiceServer()
 }
 
@@ -313,8 +324,11 @@ func (UnimplementedHIITServiceServer) CreateDuoHIIT(*CreateDuoHIITRequest, HIITS
 func (UnimplementedHIITServiceServer) JoinDuoHIIT(*JoinDuoHIITRequest, HIITService_JoinDuoHIITServer) error {
 	return status.Errorf(codes.Unimplemented, "method JoinDuoHIIT not implemented")
 }
-func (UnimplementedHIITServiceServer) DuoHIITComplete(context.Context, *HIITActivity) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DuoHIITComplete not implemented")
+func (UnimplementedHIITServiceServer) DuoHIITRoutineComplete(context.Context, *HIITRoutineComplete) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DuoHIITRoutineComplete not implemented")
+}
+func (UnimplementedHIITServiceServer) DuoHIITSelectRoutine(context.Context, *HIITSelectRoutineRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DuoHIITSelectRoutine not implemented")
 }
 func (UnimplementedHIITServiceServer) mustEmbedUnimplementedHIITServiceServer() {}
 
@@ -476,7 +490,7 @@ func _HIITService_CreateDuoHIIT_Handler(srv interface{}, stream grpc.ServerStrea
 }
 
 type HIITService_CreateDuoHIITServer interface {
-	Send(*DuoHIITResult) error
+	Send(*HIITActivity) error
 	grpc.ServerStream
 }
 
@@ -484,7 +498,7 @@ type hIITServiceCreateDuoHIITServer struct {
 	grpc.ServerStream
 }
 
-func (x *hIITServiceCreateDuoHIITServer) Send(m *DuoHIITResult) error {
+func (x *hIITServiceCreateDuoHIITServer) Send(m *HIITActivity) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -497,7 +511,7 @@ func _HIITService_JoinDuoHIIT_Handler(srv interface{}, stream grpc.ServerStream)
 }
 
 type HIITService_JoinDuoHIITServer interface {
-	Send(*DuoHIITResult) error
+	Send(*HIITActivity) error
 	grpc.ServerStream
 }
 
@@ -505,24 +519,42 @@ type hIITServiceJoinDuoHIITServer struct {
 	grpc.ServerStream
 }
 
-func (x *hIITServiceJoinDuoHIITServer) Send(m *DuoHIITResult) error {
+func (x *hIITServiceJoinDuoHIITServer) Send(m *HIITActivity) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _HIITService_DuoHIITComplete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HIITActivity)
+func _HIITService_DuoHIITRoutineComplete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HIITRoutineComplete)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HIITServiceServer).DuoHIITComplete(ctx, in)
+		return srv.(HIITServiceServer).DuoHIITRoutineComplete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/hiit.HIITService/DuoHIITComplete",
+		FullMethod: "/hiit.HIITService/DuoHIITRoutineComplete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HIITServiceServer).DuoHIITComplete(ctx, req.(*HIITActivity))
+		return srv.(HIITServiceServer).DuoHIITRoutineComplete(ctx, req.(*HIITRoutineComplete))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HIITService_DuoHIITSelectRoutine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HIITSelectRoutineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HIITServiceServer).DuoHIITSelectRoutine(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/hiit.HIITService/DuoHIITSelectRoutine",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HIITServiceServer).DuoHIITSelectRoutine(ctx, req.(*HIITSelectRoutineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -544,8 +576,12 @@ var _HIITService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _HIITService_NotifyInvites_Handler,
 		},
 		{
-			MethodName: "DuoHIITComplete",
-			Handler:    _HIITService_DuoHIITComplete_Handler,
+			MethodName: "DuoHIITRoutineComplete",
+			Handler:    _HIITService_DuoHIITRoutineComplete_Handler,
+		},
+		{
+			MethodName: "DuoHIITSelectRoutine",
+			Handler:    _HIITService_DuoHIITSelectRoutine_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
