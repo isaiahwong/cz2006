@@ -32,18 +32,17 @@ func (svc *Service) CreateDuoHIIT(req *hiit.CreateDuoHIITRequest, stream hiit.HI
 	for _, u := range waitingRoom.GetUsers() {
 		users[u.GetId()] = &model.HIITUserSession{
 			User:   u,
-			Score:  0,
 			Listen: make(chan *hiit.HIITActivity),
 		}
 	}
 
 	hiitSession := &model.HIITSession{
 		Host: &model.HIITUserSession{
-			User:  host,
-			Score: 0,
+			User: host,
 		},
 		Users:           users,
 		HIITActivitySub: make(chan *hiit.HIITActivity),
+		AssignedScore:   make(map[string]string),
 		// UserJoinSub:     make(chan *model.HIITUserSession),
 		Joined: 1, // includes host
 	}
@@ -137,6 +136,48 @@ func (svc *Service) DuoHIITSelectRoutine(ctx context.Context, req *hiit.HIITSele
 		Type:    hiit.HIITActivity_ROUTINE_CHANGE,
 	}
 
+	return &hiit.Empty{}, nil
+}
+
+func (svc *Service) HIITIntervalComplete(ctx context.Context, req *hiit.HIITIntervalCompleteRequest) (*hiit.Empty, error) {
+	routine := req.GetRoutine()
+	user := req.GetUser()
+	hiitWorkout := req.GetHiit()
+
+	if user == nil {
+		return nil, errors.New("user is nil")
+	}
+
+	// get hiit
+	hiitSession := svc.hiitSessions[hiitWorkout]
+	if hiitSession == nil {
+		return nil, errors.New("hiit session does not exist")
+	}
+
+	var hiitUser *model.HIITUserSession
+	if user.Id == hiitSession.Host.User.Id {
+		hiitUser = hiitSession.Host
+	} else {
+		// check if user in sesssion
+		hiitUser = hiitSession.Users[user.GetId()]
+	}
+	if hiitUser == nil {
+		return nil, errors.New("hiit user is not in session")
+	}
+
+	// Verify score has not been assigned
+	if id := hiitSession.AssignedScore[routine.Interval.GetId()]; id == "" {
+		hiitSession.AssignedScore[routine.Interval.GetId()] = user.GetId()
+		// Increment Score
+		hiitUser.User.Score++
+	}
+
+	hiitSession.HIITActivitySub <- &hiit.HIITActivity{
+		Hiit:    hiitWorkout,
+		User:    hiitUser.User,
+		Routine: routine,
+		Type:    hiit.HIITActivity_INTERVAL_COMPLETE,
+	}
 	return &hiit.Empty{}, nil
 }
 

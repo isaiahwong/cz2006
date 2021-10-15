@@ -5,6 +5,7 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/workout/hiit/active/pose/pose_controller.dart';
 import 'package:fitness/app/screens/workout/timer/timer.dart';
+import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,8 @@ class ActiveHIITController extends GetxController {
 
   late HIIT hiit;
 
+  List<UserSnippet> usersCompleted = [];
+  UserSnippet? lastWinner;
   RoutineInterval? currentInterval;
   Routine? currentRoutine;
 
@@ -103,18 +106,29 @@ class ActiveHIITController extends GetxController {
     }
   }
 
-  void onHIITHostActivity(HIITActivity activity) {}
-
-  void onHIITJoinActivity(HIITActivity activity) {
+  /// Host handler
+  void onHIITHostActivity(HIITActivity activity) {
     switch (activity.type) {
-      case HIITActivity_Type.ROUTINE_CHANGE:
-        onRoutineChange(activity);
+      case HIITActivity_Type.INTERVAL_COMPLETE:
+        onParticipantIntervalCompleted(activity);
         break;
     }
   }
 
-  // auto routine change for duo mode
-  void onRoutineChange(HIITActivity activity) {
+  /// Users who join room handler
+  void onHIITJoinActivity(HIITActivity activity) {
+    switch (activity.type) {
+      case HIITActivity_Type.ROUTINE_CHANGE:
+        onDUORoutineChange(activity);
+        break;
+      case HIITActivity_Type.INTERVAL_COMPLETE:
+        onParticipantIntervalCompleted(activity);
+        break;
+    }
+  }
+
+  // The function changes routines automatically
+  void onDUORoutineChange(HIITActivity activity) {
     final routine = hiit.getRoutine(activity.routine.id);
     if (routine == null) return;
     final interval = routine.getInterval(activity.routine.interval.id);
@@ -127,14 +141,20 @@ class ActiveHIITController extends GetxController {
   }
 
   void onHIITStream(Data data) {
-    if (data.count == currentReps) return;
     currentReps = data.count;
     update();
 
-    // if workout complete, end call
-    if (currentReps == currentInterval!.defaultReps) {
-      poseController.stopCall();
-      onIntervalCompleted();
+    if (currentReps != currentInterval!.defaultReps) return;
+    // If workout completed
+    poseController.stopCall();
+
+    switch (activeHIITType) {
+      case ActiveHIITType.DUO:
+        onDuoIntervalCompleted();
+        break;
+      case ActiveHIITType.SINGLE:
+        onIntervalCompleted();
+        break;
     }
   }
 
@@ -186,6 +206,59 @@ class ActiveHIITController extends GetxController {
     update();
   }
 
+  /// defines the logic for duo interval completed
+  void onDuoIntervalCompleted() async {
+    if (currentInterval == null) return;
+    // Update interval
+    final interval = currentInterval!.copyWith(
+      currentLog: currentInterval!.currentLog.copyWith(completed: true),
+    );
+    currentInterval = interval.copyWith();
+
+    // Update server
+    await workoutRepo.duoHIITIntervalComplete(currentRoutine!, interval);
+
+    // Update current interval
+    _updateWorkout(interval: interval);
+    // return complete
+    if (hiit.isLastInterval(interval)) {
+      state = ActiveWorkoutComplete();
+      return;
+    }
+
+    state = ActiveWorkoutWait();
+    // Increment page
+    page += 1;
+
+    // Navigate to wait room
+    if (usersCompleted.length != hiit.participants.length) {
+      pageController.animateToPage(page,
+          duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+    }
+    update();
+  }
+
+  void onParticipantIntervalCompleted(HIITActivity activity) {
+    final user = activity.user;
+    print(user.score);
+    // Don't add current user
+    if (user.id != UserController.get().user.value!.id)
+      usersCompleted.add(UserSnippet(user.id, user.name, ""));
+
+    // Check if all participants completed
+    if (currentInterval!.currentLog.completed && usersAllCompleted()) {
+      usersCompleted = [];
+      onRest();
+      // Navigate to rest
+      pageController.animateToPage(++page,
+          duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+    }
+  }
+
+  bool usersAllCompleted() {
+    return usersCompleted.length == hiit.participants.length;
+  }
+
   void onIntervalCompleted() {
     if (currentInterval == null) return;
 
@@ -193,34 +266,72 @@ class ActiveHIITController extends GetxController {
       currentLog: currentInterval!.currentLog.copyWith(completed: true),
     );
 
+    // Update current interval
+    _updateWorkout(interval: interval);
+
     // return complete
     if (hiit.isLastInterval(interval)) {
-      _updateWorkout(interval: interval);
       state = ActiveWorkoutComplete();
       return;
     }
 
-    // Update current interval
-    _updateWorkout(interval: interval);
-    state = ActiveWorkoutRest();
-
-    // Start rest timer
-    timerController
-        .onTimerStart(Duration(seconds: interval.defaultRestDuration));
+    onRest();
 
     pageController.animateToPage(++page,
         duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     update();
   }
 
+  void onRest() {
+    // update state
+    state = ActiveWorkoutRest();
+    // Start rest timer
+    timerController
+        .onTimerStart(Duration(seconds: currentInterval!.defaultRestDuration));
+  }
+
   void onRestDone() {
-    _onNext();
+    switch (activeHIITType) {
+      case ActiveHIITType.SINGLE:
+        _onNext();
+        break;
+      case ActiveHIITType.DUO:
+        _onDuoNext();
+        break;
+    }
   }
 
   void onRoutineSkip() {
     // Cancel any pending timers
     timerController.onTimerCancel();
     _onNext();
+  }
+
+  void _onDuoNext() {
+    RoutineInterval? nextInterval =
+        currentRoutine!.nextInterval(currentInterval);
+
+    // Attempt to get next routine if next interval is null
+    if (nextInterval == null) {
+      final nextRoutine = hiit.nextRoutine(currentRoutine);
+      // end fn call if both next routine and interval is null
+      if (nextRoutine == null) return;
+
+      // TODO show case next routine to choose from
+      nextInterval = nextRoutine.getCurrentInterval();
+      if (nextInterval == null) return;
+
+      currentRoutine = nextRoutine.copyWith();
+    }
+    currentInterval = nextInterval.copyWith();
+
+    startPose();
+
+    fullscreenController.open();
+    pageController.animateToPage(++page,
+        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+    state = ActiveWorkoutWorking();
+    update();
   }
 
   ///  _mapNext would yield next routine from current exercise state

@@ -1,5 +1,6 @@
 import 'package:fitness/common/common.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
+import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/model/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,15 +8,20 @@ part 'hiit.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class HIIT extends Workout {
-  List<Routine> routines;
+  final List<Routine> routines;
+
+  @JsonKey(ignore: true)
+  final List<UserSnippet> participants;
 
   HIIT({
     String id = "",
     required String name,
     required String host,
     WorkoutType type = WorkoutType.HIIT, // used for json generator
+    List<UserSnippet>? participants,
     this.routines = const [],
-  }) : super(id: id, host: host, name: name, type: WorkoutType.HIIT);
+  })  : this.participants = participants == null ? [] : participants,
+        super(id: id, host: host, name: name, type: WorkoutType.HIIT);
 
   factory HIIT.fromJson(Map<String, dynamic> json) => _$HIITFromJson(json);
 
@@ -80,11 +86,13 @@ class HIIT extends Workout {
     String? host,
     WorkoutType? type,
     List<Routine>? routines,
+    List<UserSnippet>? participants,
   }) {
     return HIIT(
       id: id ?? this.id,
       host: host ?? this.host,
       name: name ?? this.name,
+      participants: participants ?? this.participants,
       routines: List<Routine>.from(routines ?? this.routines).toList(),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/friends/friends_controller.dart';
 import 'package:fitness/app/screens/friends/friends_delegate.dart';
@@ -22,7 +23,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   final WorkoutRepo workoutRepo;
   final SlidingPanelController panelController;
 
-  List<User> users = [];
+  List<UserSnippet> users = [];
   ResponseStream<WaitingRoomResponse>? hostRoomStream;
   ResponseStream<WaitingRoomResponse>? joinRoomStream;
 
@@ -112,21 +113,19 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   void onStartHIIT() async {
+    if (users.length < 1) return;
     // if (waitingRoomType == WaitingRoomType.HOST)
     //   await workoutRepo.startWaitingRoom(hiit);
     Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
-      hiit.copyWith(),
+      hiit.copyWith(participants: users),
     ]);
   }
 
   void onJoinRoomStream(WaitingRoomResponse response) {
-    List<User> users = [
-      User(
-        id: response.host.id,
-        email: response.host.email,
-        name: response.host.name,
-      )
+    // include host
+    List<UserSnippet> users = [
+      UserSnippet(response.host.id, response.host.name, "")
     ];
 
     // If workout start
@@ -135,18 +134,22 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
       return;
     }
 
-    for (WorkoutUser user in response.users)
-      users.add(User(id: user.id, email: user.email, name: user.name));
+    for (WorkoutUser user in response.users) {
+      // Exclude currentUser
+      if (user.id == UserController.get().user.value!.id) continue;
+      users.add(UserSnippet(user.id, user.name, ""));
+    }
     this.users = users;
     update();
   }
 
   void onHostRoomStream(WaitingRoomResponse response) {
-    List<User> users = [];
+    //  Include host
+    List<UserSnippet> users = [];
     for (WorkoutUser user in response.users) {
       // Remove pending requests
       if (pendingFriends.containsKey(user.id)) pendingFriends.remove(user.id);
-      users.add(User(id: user.id, email: user.email, name: user.name));
+      users.add(UserSnippet(user.id, user.name, ""));
     }
     this.users = users;
     update();

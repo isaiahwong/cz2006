@@ -4,7 +4,6 @@ import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/theme/theme.dart';
-import 'package:fitness/repo/repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -85,8 +84,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
                 shrinkWrap: true,
                 crossAxisCount: 6,
                 children: controller.users
-                    .map<Widget>(
-                        (e) => UserImage(user: UserSnippet(e.id, e.name, "")))
+                    .map<Widget>((e) => UserImage(user: e))
                     .toList(),
               ),
             )

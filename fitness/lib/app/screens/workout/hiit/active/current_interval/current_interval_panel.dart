@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/screens/workout/hiit/active/current_interval/current_interval_duo_waiting.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/workout/workout.dart';
@@ -126,6 +127,14 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
     ];
   }
 
+  List<Widget> _duoPages() {
+    return [
+      CurrentIntervalPanelWorking(),
+      CurrentIntervalDuoWaiting(),
+      CurrentIntervalPanelRest(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ActiveHIITController>(
@@ -146,7 +155,12 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
                     controller: controller.pageController,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return _pages()[index % 2];
+                      switch (controller.activeHIITType) {
+                        case ActiveHIITType.SINGLE:
+                          return _pages()[index % 2];
+                        case ActiveHIITType.DUO:
+                          return _duoPages()[index % 3];
+                      }
                     },
                   ),
                 ),

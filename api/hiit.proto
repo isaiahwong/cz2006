@@ -75,17 +75,14 @@ message HIITActivity {
   enum Type {
     UNKNOWN = 0;
     ROUTINE_CHANGE = 1;
-    WINNER = 2;
+    INTERVAL_COMPLETE = 2;
+    WINNER = 3;
   }
   string hiit = 1;
   WorkoutUser user = 2;
   HIITRoutine routine = 3;
   Type type = 4;
   WorkoutUser winner = 5;
-}
-
-message HIITRoutineComplete {
-
 }
 
 message HIITRoutineInterval {
@@ -97,6 +94,14 @@ message HIITRoutine {
   string exercise = 2;
   HIITRoutineInterval interval = 3;
 }
+
+
+message HIITIntervalCompleteRequest {
+  string hiit = 1;
+  WorkoutUser user = 2;
+  HIITRoutine routine = 3;
+}
+
 
 message HIITSelectRoutineRequest {
   string hiit = 1;
@@ -117,7 +122,7 @@ service HIITService {
   rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream HIITActivity);
   rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream HIITActivity);
 
-  rpc DuoHIITRoutineComplete(HIITRoutineComplete) returns (Empty);
+  rpc HIITIntervalComplete(HIITIntervalCompleteRequest) returns (Empty);
 
   rpc DuoHIITSelectRoutine(HIITSelectRoutineRequest) returns (Empty);
 }
