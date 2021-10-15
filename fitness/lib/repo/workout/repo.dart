@@ -129,7 +129,7 @@ class WorkoutRepo {
       Routine routine, RoutineInterval interval) {
     final user = UserController.get().user.value!;
     return hiitClient.hIITIntervalComplete(
-      HIITIntervalCompleteRequest(
+      HIITRequest(
         user: WorkoutUser(
           email: user.email,
           id: user.id,
@@ -150,7 +150,7 @@ class WorkoutRepo {
   Future<void> duoHIITSelectRoutine(Routine routine, RoutineInterval interval) {
     final user = UserController.get().user.value!;
     return hiitClient.duoHIITSelectRoutine(
-      HIITSelectRoutineRequest(
+      HIITRequest(
         user: WorkoutUser(
           email: user.email,
           id: user.id,

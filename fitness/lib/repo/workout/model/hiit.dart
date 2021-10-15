@@ -97,6 +97,10 @@ class HIIT extends Workout {
     );
   }
 
+  List<Routine> getIncompleteRoutines() {
+    return routines.where((r) => !r.completed).toList();
+  }
+
   Routine? getRoutine(String id) {
     try {
       return routines.firstWhere((e) => e.id == id);

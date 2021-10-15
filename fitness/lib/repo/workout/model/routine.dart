@@ -12,7 +12,12 @@ class Routine {
   final Exercise exercise;
   final int score;
   final List<RoutineInterval> intervals;
-  final bool completed;
+
+  bool get completed {
+    for (int i = 0; i < intervals.length; i++)
+      if (!intervals[i].currentLog.completed) return false;
+    return true;
+  }
 
   int get sets => intervals.fold(
       0, (p, element) => element.type == RoutineIntervalType.SET ? p + 1 : 0);
@@ -23,7 +28,6 @@ class Routine {
     required this.workout,
     this.intervals = const [],
     this.score = 0,
-    this.completed = false,
   });
 
   factory Routine.fromJson(Map<String, dynamic> json) =>
@@ -82,7 +86,6 @@ class Routine {
       intervals: intervals ?? this.intervals,
       exercise: exercise ?? this.exercise,
       score: score ?? this.score,
-      completed: completed ?? this.completed,
     );
   }
 

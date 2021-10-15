@@ -102,7 +102,7 @@ func (svc *Service) CreateDuoHIIT(req *hiit.CreateDuoHIITRequest, stream hiit.HI
 	return nil
 }
 
-func (svc *Service) DuoHIITSelectRoutine(ctx context.Context, req *hiit.HIITSelectRoutineRequest) (*hiit.Empty, error) {
+func (svc *Service) DuoHIITSelectRoutine(ctx context.Context, req *hiit.HIITRequest) (*hiit.Empty, error) {
 	routine := req.GetRoutine()
 	user := req.GetUser()
 	hiitWorkout := req.GetHiit()
@@ -139,7 +139,47 @@ func (svc *Service) DuoHIITSelectRoutine(ctx context.Context, req *hiit.HIITSele
 	return &hiit.Empty{}, nil
 }
 
-func (svc *Service) HIITIntervalComplete(ctx context.Context, req *hiit.HIITIntervalCompleteRequest) (*hiit.Empty, error) {
+func (svc *Service) HIITRoutineComplete(ctx context.Context, req *hiit.HIITRequest) (*hiit.Empty, error) {
+	routine := req.GetRoutine()
+	user := req.GetUser()
+	hiitWorkout := req.GetHiit()
+
+	// get hiit
+	hiitSession := svc.hiitSessions[hiitWorkout]
+	if hiitSession == nil {
+		return nil, errors.New("hiit session does not exist")
+	}
+
+	if user.Id != hiitSession.Host.User.Id {
+		return nil, errors.New("hiit session can only be completed by host")
+	}
+
+	highestUser := hiitSession.Host
+	// get highest score
+	for _, u := range hiitSession.Users {
+		if u.User.Score > highestUser.User.Score {
+			highestUser = u
+		} else {
+			// reset score
+			u.User.Score = 0
+		}
+	}
+
+	hiitSession.HIITActivitySub <- &hiit.HIITActivity{
+		Hiit:    hiitWorkout,
+		User:    user,
+		Routine: routine,
+		Winner:  highestUser.User,
+		Type:    hiit.HIITActivity_INTERVAL_COMPLETE,
+	}
+
+	// reset highestUser
+	highestUser.User.Score = 0
+	return &hiit.Empty{}, nil
+
+}
+
+func (svc *Service) HIITIntervalComplete(ctx context.Context, req *hiit.HIITRequest) (*hiit.Empty, error) {
 	routine := req.GetRoutine()
 	user := req.GetUser()
 	hiitWorkout := req.GetHiit()

@@ -61,14 +61,19 @@ class HIITServiceClient extends $grpc.Client {
           ($0.JoinDuoHIITRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.HIITActivity.fromBuffer(value));
   static final _$hIITIntervalComplete =
-      $grpc.ClientMethod<$0.HIITIntervalCompleteRequest, $0.Empty>(
+      $grpc.ClientMethod<$0.HIITRequest, $0.Empty>(
           '/hiit.HIITService/HIITIntervalComplete',
-          ($0.HIITIntervalCompleteRequest value) => value.writeToBuffer(),
+          ($0.HIITRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$hIITRoutineComplete =
+      $grpc.ClientMethod<$0.HIITRequest, $0.Empty>(
+          '/hiit.HIITService/HIITRoutineComplete',
+          ($0.HIITRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$duoHIITSelectRoutine =
-      $grpc.ClientMethod<$0.HIITSelectRoutineRequest, $0.Empty>(
+      $grpc.ClientMethod<$0.HIITRequest, $0.Empty>(
           '/hiit.HIITService/DuoHIITSelectRoutine',
-          ($0.HIITSelectRoutineRequest value) => value.writeToBuffer(),
+          ($0.HIITRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   HIITServiceClient($grpc.ClientChannel channel,
@@ -139,14 +144,17 @@ class HIITServiceClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> hIITIntervalComplete(
-      $0.HIITIntervalCompleteRequest request,
+  $grpc.ResponseFuture<$0.Empty> hIITIntervalComplete($0.HIITRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$hIITIntervalComplete, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> duoHIITSelectRoutine(
-      $0.HIITSelectRoutineRequest request,
+  $grpc.ResponseFuture<$0.Empty> hIITRoutineComplete($0.HIITRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$hIITRoutineComplete, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> duoHIITSelectRoutine($0.HIITRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$duoHIITSelectRoutine, request, options: options);
   }
@@ -227,21 +235,26 @@ abstract class HIITServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.JoinDuoHIITRequest.fromBuffer(value),
         ($0.HIITActivity value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HIITIntervalCompleteRequest, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.HIITRequest, $0.Empty>(
         'HIITIntervalComplete',
         hIITIntervalComplete_Pre,
         false,
         false,
-        ($core.List<$core.int> value) =>
-            $0.HIITIntervalCompleteRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.HIITRequest.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HIITSelectRoutineRequest, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.HIITRequest, $0.Empty>(
+        'HIITRoutineComplete',
+        hIITRoutineComplete_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.HIITRequest.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HIITRequest, $0.Empty>(
         'DuoHIITSelectRoutine',
         duoHIITSelectRoutine_Pre,
         false,
         false,
-        ($core.List<$core.int> value) =>
-            $0.HIITSelectRoutineRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.HIITRequest.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
   }
 
@@ -292,13 +305,18 @@ abstract class HIITServiceBase extends $grpc.Service {
     yield* joinDuoHIIT(call, await request);
   }
 
-  $async.Future<$0.Empty> hIITIntervalComplete_Pre($grpc.ServiceCall call,
-      $async.Future<$0.HIITIntervalCompleteRequest> request) async {
+  $async.Future<$0.Empty> hIITIntervalComplete_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HIITRequest> request) async {
     return hIITIntervalComplete(call, await request);
   }
 
-  $async.Future<$0.Empty> duoHIITSelectRoutine_Pre($grpc.ServiceCall call,
-      $async.Future<$0.HIITSelectRoutineRequest> request) async {
+  $async.Future<$0.Empty> hIITRoutineComplete_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HIITRequest> request) async {
+    return hIITRoutineComplete(call, await request);
+  }
+
+  $async.Future<$0.Empty> duoHIITSelectRoutine_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HIITRequest> request) async {
     return duoHIITSelectRoutine(call, await request);
   }
 
@@ -319,7 +337,9 @@ abstract class HIITServiceBase extends $grpc.Service {
   $async.Stream<$0.HIITActivity> joinDuoHIIT(
       $grpc.ServiceCall call, $0.JoinDuoHIITRequest request);
   $async.Future<$0.Empty> hIITIntervalComplete(
-      $grpc.ServiceCall call, $0.HIITIntervalCompleteRequest request);
+      $grpc.ServiceCall call, $0.HIITRequest request);
+  $async.Future<$0.Empty> hIITRoutineComplete(
+      $grpc.ServiceCall call, $0.HIITRequest request);
   $async.Future<$0.Empty> duoHIITSelectRoutine(
-      $grpc.ServiceCall call, $0.HIITSelectRoutineRequest request);
+      $grpc.ServiceCall call, $0.HIITRequest request);
 }

@@ -15,7 +15,6 @@ Routine _$RoutineFromJson(Map<String, dynamic> json) {
         .map((e) => RoutineInterval.fromJson(e as Map<String, dynamic>))
         .toList(),
     score: json['score'] as int,
-    completed: json['completed'] as bool,
   );
 }
 
@@ -25,5 +24,4 @@ Map<String, dynamic> _$RoutineToJson(Routine instance) => <String, dynamic>{
       'exercise': instance.exercise.toJson(),
       'score': instance.score,
       'intervals': instance.intervals.map((e) => e.toJson()).toList(),
-      'completed': instance.completed,
     };

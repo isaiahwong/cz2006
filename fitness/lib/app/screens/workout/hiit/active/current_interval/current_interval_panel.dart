@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/screens/workout/hiit/active/current_interval/current_interval_duo_routine_selection.dart';
 import 'package:fitness/app/screens/workout/hiit/active/current_interval/current_interval_duo_waiting.dart';
 import 'package:fitness/app/screens/workout/workout.dart';
 import 'package:fitness/app/theme/theme.dart';
@@ -129,6 +130,7 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
 
   List<Widget> _duoPages() {
     return [
+      CurrentIntervalDuoRoutineSelection(),
       CurrentIntervalPanelWorking(),
       CurrentIntervalDuoWaiting(),
       CurrentIntervalPanelRest(),

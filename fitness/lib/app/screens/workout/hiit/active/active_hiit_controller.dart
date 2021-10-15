@@ -43,7 +43,7 @@ class ActiveHIITController extends GetxController {
   late HIIT hiit;
 
   List<UserSnippet> usersCompleted = [];
-  UserSnippet? lastWinner;
+  UserSnippet? winner;
   RoutineInterval? currentInterval;
   Routine? currentRoutine;
 

@@ -96,18 +96,12 @@ message HIITRoutine {
 }
 
 
-message HIITIntervalCompleteRequest {
+message HIITRequest {
   string hiit = 1;
   WorkoutUser user = 2;
   HIITRoutine routine = 3;
 }
 
-
-message HIITSelectRoutineRequest {
-  string hiit = 1;
-  WorkoutUser user = 2;
-  HIITRoutine routine = 3;
-}
 
 service HIITService {
   rpc Sub(RoutineChange) returns (stream Data);
@@ -122,7 +116,9 @@ service HIITService {
   rpc CreateDuoHIIT(CreateDuoHIITRequest) returns (stream HIITActivity);
   rpc JoinDuoHIIT(JoinDuoHIITRequest) returns (stream HIITActivity);
 
-  rpc HIITIntervalComplete(HIITIntervalCompleteRequest) returns (Empty);
+  rpc HIITIntervalComplete(HIITRequest) returns (Empty);
 
-  rpc DuoHIITSelectRoutine(HIITSelectRoutineRequest) returns (Empty);
+  rpc HIITRoutineComplete(HIITRequest) returns (Empty);
+
+  rpc DuoHIITSelectRoutine(HIITRequest) returns (Empty);
 }

@@ -199,9 +199,9 @@ const HIITRoutine$json = const {
 
 /// Descriptor for `HIITRoutine`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List hIITRoutineDescriptor = $convert.base64Decode('CgtISUlUUm91dGluZRIOCgJpZBgBIAEoCVICaWQSGgoIZXhlcmNpc2UYAiABKAlSCGV4ZXJjaXNlEjUKCGludGVydmFsGAMgASgLMhkuaGlpdC5ISUlUUm91dGluZUludGVydmFsUghpbnRlcnZhbA==');
-@$core.Deprecated('Use hIITIntervalCompleteRequestDescriptor instead')
-const HIITIntervalCompleteRequest$json = const {
-  '1': 'HIITIntervalCompleteRequest',
+@$core.Deprecated('Use hIITRequestDescriptor instead')
+const HIITRequest$json = const {
+  '1': 'HIITRequest',
   '2': const [
     const {'1': 'hiit', '3': 1, '4': 1, '5': 9, '10': 'hiit'},
     const {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.hiit.WorkoutUser', '10': 'user'},
@@ -209,17 +209,5 @@ const HIITIntervalCompleteRequest$json = const {
   ],
 };
 
-/// Descriptor for `HIITIntervalCompleteRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hIITIntervalCompleteRequestDescriptor = $convert.base64Decode('ChtISUlUSW50ZXJ2YWxDb21wbGV0ZVJlcXVlc3QSEgoEaGlpdBgBIAEoCVIEaGlpdBIlCgR1c2VyGAIgASgLMhEuaGlpdC5Xb3Jrb3V0VXNlclIEdXNlchIrCgdyb3V0aW5lGAMgASgLMhEuaGlpdC5ISUlUUm91dGluZVIHcm91dGluZQ==');
-@$core.Deprecated('Use hIITSelectRoutineRequestDescriptor instead')
-const HIITSelectRoutineRequest$json = const {
-  '1': 'HIITSelectRoutineRequest',
-  '2': const [
-    const {'1': 'hiit', '3': 1, '4': 1, '5': 9, '10': 'hiit'},
-    const {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.hiit.WorkoutUser', '10': 'user'},
-    const {'1': 'routine', '3': 3, '4': 1, '5': 11, '6': '.hiit.HIITRoutine', '10': 'routine'},
-  ],
-};
-
-/// Descriptor for `HIITSelectRoutineRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hIITSelectRoutineRequestDescriptor = $convert.base64Decode('ChhISUlUU2VsZWN0Um91dGluZVJlcXVlc3QSEgoEaGlpdBgBIAEoCVIEaGlpdBIlCgR1c2VyGAIgASgLMhEuaGlpdC5Xb3Jrb3V0VXNlclIEdXNlchIrCgdyb3V0aW5lGAMgASgLMhEuaGlpdC5ISUlUUm91dGluZVIHcm91dGluZQ==');
+/// Descriptor for `HIITRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hIITRequestDescriptor = $convert.base64Decode('CgtISUlUUmVxdWVzdBISCgRoaWl0GAEgASgJUgRoaWl0EiUKBHVzZXIYAiABKAsyES5oaWl0LldvcmtvdXRVc2VyUgR1c2VyEisKB3JvdXRpbmUYAyABKAsyES5oaWl0LkhJSVRSb3V0aW5lUgdyb3V0aW5l');
