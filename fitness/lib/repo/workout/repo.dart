@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
+import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 import 'package:hiit_api/hiit.dart';
@@ -147,6 +149,16 @@ class WorkoutRepo {
     );
   }
 
+  ResponseStream<InviteWaitingRoomRequest> subscribeInvites(User user) {
+    return hiitClient.subInvites(
+      WorkoutUser(
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      ),
+    );
+  }
+
   Future<void> duoHIITSelectRoutine(Routine routine, RoutineInterval interval) {
     final user = UserController.get().user.value!;
     return hiitClient.duoHIITSelectRoutine(
@@ -173,6 +185,14 @@ class WorkoutRepo {
     final result = await collection.add(workout.toJson());
     // updates async
     collection.doc(result.id).update({"id": result.id});
+
+    final workoutGroup = WorkoutGroup(
+        workoutId: result.id,
+        creator: workout.host,
+        participants: [UserController.get().user.value!]);
+
+    ExerciseRepo.get().createGroupWorkout(workoutGroup);
+
     return workout.copyWith(id: result.id);
   }
 
@@ -224,6 +244,28 @@ class WorkoutRepo {
           (document) =>
               Workout.fromJson(document.data()! as Map<String, dynamic>),
         );
+  }
+
+  Future<List<Workout>> getWorkouts() async {
+    final user = UserController.get().user.value!.id;
+    final result = await FirebaseFirestore.instance
+        .collection('/users/$user/workouts')
+        .get();
+
+    return result.docs.map((d) {
+      final data = d.data();
+      switch (Workout.intToType(data["type"])) {
+        case WorkoutType.UNKNOWN:
+          break;
+        case WorkoutType.CYCLING:
+          return Cycling.fromJson(data);
+        case WorkoutType.HIIT:
+          return HIIT.fromJson(data);
+      }
+      return Workout.fromJson(
+        data,
+      );
+    }).toList();
   }
 
   Stream<List<Workout>> streamWorkouts() {

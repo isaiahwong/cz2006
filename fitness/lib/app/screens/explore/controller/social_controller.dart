@@ -2,10 +2,10 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/screens/explore/components/popup_dialog.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:fitness/repo/repo.dart';
+import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:io/ansi.dart';
 
 class SocialController extends GetxController {
   late SocialRepo socialRepo;
@@ -18,6 +18,7 @@ class SocialController extends GetxController {
   List<Friend> requests = [];
 
   List<User> foundUsers = [];
+  List<GroupWorkout> _workoutInvites = [];
 
   TextEditingController? searchTextController;
 
@@ -127,8 +128,17 @@ class SocialController extends GetxController {
     update(["SocialScreen"]);
   }
 
+  /// Fetch invitations
+  Future<void> fetchInvitations() async {
+    _workoutInvites = await socialRepo.getWorkoutInvites();
+    update(["InvitationScreen"]);
+  }
+
   // * Getters
   int get foundUsersLength => foundUsers.length;
   int get friendsLength => friends.length;
   int get requestsLength => requests.length;
+  int get workoutInviteLength => _workoutInvites.length;
+
+  List<GroupWorkout> get getWorkoutInvitation => _workoutInvites;
 }

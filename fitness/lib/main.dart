@@ -26,7 +26,7 @@ void main() async {
   ]);
   await Firebase.initializeApp();
   final hiitClient = HIITServiceClient(ClientChannel(
-    '192.168.31.109',
+    '172.21.146.189',
     port: 50051,
     options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   ));
@@ -52,11 +52,7 @@ void main() async {
         Get.put<WorkoutRepo>(workoutRepo, permanent: true);
         Get.put<CyclingRepo>(cyclingRepo, permanent: true);
         Get.put<SocialRepo>(socialRepo, permanent: true);
-        Get.put<WorkoutController>(
-            WorkoutController(
-              workoutRepo: workoutRepo,
-              hiitClient: hiitClient,
-            ),
+        Get.put<WorkoutController>(WorkoutController(workoutRepo: workoutRepo),
             permanent: true);
       },
     ),

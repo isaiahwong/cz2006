@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
+import 'package:get/get.dart';
 
 import 'exercise.dart';
 
@@ -23,6 +24,10 @@ class ExerciseRepo {
         .map<Exercise>(
             (doc) => Exercise.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
+  }
+
+  factory ExerciseRepo.get() {
+    return Get.find<ExerciseRepo>();
   }
 
   /// Add a workout to group (allowing > 1 users)
