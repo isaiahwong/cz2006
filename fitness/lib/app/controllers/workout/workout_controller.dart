@@ -11,11 +11,10 @@ import 'package:hiit_api/hiit.dart';
 class WorkoutController extends GetxController {
   final WorkoutRepo _workoutRepo;
 
-  HIITServiceClient hiitClient;
   ResponseStream<InviteWaitingRoomRequest>? invitationRequest;
+  List<Workout> publicWorkouts = [];
 
-  WorkoutController(
-      {required WorkoutRepo workoutRepo, required this.hiitClient})
+  WorkoutController({required WorkoutRepo workoutRepo})
       : _workoutRepo = workoutRepo {
     connect();
   }
@@ -26,14 +25,14 @@ class WorkoutController extends GetxController {
 
   void connect() {
     final user = UserController.get().user.value!;
-    invitationRequest = hiitClient.subInvites(
-      WorkoutUser(
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      ),
-    );
+    invitationRequest = _workoutRepo.subscribeInvites(user);
     invitationRequest!.listen(onInvitationRequest);
+  }
+
+  @override
+  void onInit() async {
+    publicWorkouts = await getWorkouts();
+    super.onInit();
   }
 
   void onInvitationRequest(InviteWaitingRoomRequest request) async {
@@ -49,6 +48,10 @@ class WorkoutController extends GetxController {
         hiit.copyWith(),
       ]);
     }
+  }
+
+  Future<List<Workout>> getWorkouts() {
+    return _workoutRepo.getWorkouts();
   }
 
   @override

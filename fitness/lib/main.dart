@@ -49,11 +49,7 @@ void main() async {
         Get.put<CoordinatesRepo>(coordinateRepo, permanent: true);
         Get.put<WorkoutRepo>(workoutRepo, permanent: true);
         Get.put<SocialRepo>(socialRepo, permanent: true);
-        Get.put<WorkoutController>(
-            WorkoutController(
-              workoutRepo: workoutRepo,
-              hiitClient: hiitClient,
-            ),
+        Get.put<WorkoutController>(WorkoutController(workoutRepo: workoutRepo),
             permanent: true);
       },
     ),

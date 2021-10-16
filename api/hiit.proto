@@ -106,6 +106,7 @@ message HIITRequest {
 service HIITService {
   rpc Sub(RoutineChange) returns (stream Data);
   rpc Pub(DataSession) returns (Empty);
+  
   rpc CreateWaitingRoom(CreateWaitingRoomRequest) returns (stream WaitingRoomResponse);
   rpc JoinWaitingRoom(WaitingRoomRequest) returns (stream WaitingRoomResponse);
   rpc StartWaitingRoom(StartWaitingRoomRequest) returns (Empty);

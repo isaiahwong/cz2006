@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import hiit_pb2 as hiit__pb2
+import api.hiit_pb2 as hiit__pb2
 
 
 class HIITServiceStub(object):
@@ -15,65 +15,65 @@ class HIITServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Sub = channel.unary_stream(
-                '/hiit.HIITService/Sub',
-                request_serializer=hiit__pb2.RoutineChange.SerializeToString,
-                response_deserializer=hiit__pb2.Data.FromString,
-                )
+            '/hiit.HIITService/Sub',
+            request_serializer=hiit__pb2.RoutineChange.SerializeToString,
+            response_deserializer=hiit__pb2.Data.FromString,
+        )
         self.Pub = channel.unary_unary(
-                '/hiit.HIITService/Pub',
-                request_serializer=hiit__pb2.DataSession.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/Pub',
+            request_serializer=hiit__pb2.DataSession.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
         self.CreateWaitingRoom = channel.unary_stream(
-                '/hiit.HIITService/CreateWaitingRoom',
-                request_serializer=hiit__pb2.CreateWaitingRoomRequest.SerializeToString,
-                response_deserializer=hiit__pb2.WaitingRoomResponse.FromString,
-                )
+            '/hiit.HIITService/CreateWaitingRoom',
+            request_serializer=hiit__pb2.CreateWaitingRoomRequest.SerializeToString,
+            response_deserializer=hiit__pb2.WaitingRoomResponse.FromString,
+        )
         self.JoinWaitingRoom = channel.unary_stream(
-                '/hiit.HIITService/JoinWaitingRoom',
-                request_serializer=hiit__pb2.WaitingRoomRequest.SerializeToString,
-                response_deserializer=hiit__pb2.WaitingRoomResponse.FromString,
-                )
+            '/hiit.HIITService/JoinWaitingRoom',
+            request_serializer=hiit__pb2.WaitingRoomRequest.SerializeToString,
+            response_deserializer=hiit__pb2.WaitingRoomResponse.FromString,
+        )
         self.StartWaitingRoom = channel.unary_unary(
-                '/hiit.HIITService/StartWaitingRoom',
-                request_serializer=hiit__pb2.StartWaitingRoomRequest.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/StartWaitingRoom',
+            request_serializer=hiit__pb2.StartWaitingRoomRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
         self.NotifyInvites = channel.unary_unary(
-                '/hiit.HIITService/NotifyInvites',
-                request_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/NotifyInvites',
+            request_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
         self.SubInvites = channel.unary_stream(
-                '/hiit.HIITService/SubInvites',
-                request_serializer=hiit__pb2.WorkoutUser.SerializeToString,
-                response_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
-                )
+            '/hiit.HIITService/SubInvites',
+            request_serializer=hiit__pb2.WorkoutUser.SerializeToString,
+            response_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
+        )
         self.CreateDuoHIIT = channel.unary_stream(
-                '/hiit.HIITService/CreateDuoHIIT',
-                request_serializer=hiit__pb2.CreateDuoHIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.HIITActivity.FromString,
-                )
+            '/hiit.HIITService/CreateDuoHIIT',
+            request_serializer=hiit__pb2.CreateDuoHIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.HIITActivity.FromString,
+        )
         self.JoinDuoHIIT = channel.unary_stream(
-                '/hiit.HIITService/JoinDuoHIIT',
-                request_serializer=hiit__pb2.JoinDuoHIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.HIITActivity.FromString,
-                )
+            '/hiit.HIITService/JoinDuoHIIT',
+            request_serializer=hiit__pb2.JoinDuoHIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.HIITActivity.FromString,
+        )
         self.HIITIntervalComplete = channel.unary_unary(
-                '/hiit.HIITService/HIITIntervalComplete',
-                request_serializer=hiit__pb2.HIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/HIITIntervalComplete',
+            request_serializer=hiit__pb2.HIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
         self.HIITRoutineComplete = channel.unary_unary(
-                '/hiit.HIITService/HIITRoutineComplete',
-                request_serializer=hiit__pb2.HIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/HIITRoutineComplete',
+            request_serializer=hiit__pb2.HIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
         self.DuoHIITSelectRoutine = channel.unary_unary(
-                '/hiit.HIITService/DuoHIITSelectRoutine',
-                request_serializer=hiit__pb2.HIITRequest.SerializeToString,
-                response_deserializer=hiit__pb2.Empty.FromString,
-                )
+            '/hiit.HIITService/DuoHIITSelectRoutine',
+            request_serializer=hiit__pb2.HIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
 
 
 class HIITServiceServicer(object):
@@ -154,73 +154,74 @@ class HIITServiceServicer(object):
 
 def add_HIITServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Sub': grpc.unary_stream_rpc_method_handler(
-                    servicer.Sub,
-                    request_deserializer=hiit__pb2.RoutineChange.FromString,
-                    response_serializer=hiit__pb2.Data.SerializeToString,
-            ),
-            'Pub': grpc.unary_unary_rpc_method_handler(
-                    servicer.Pub,
-                    request_deserializer=hiit__pb2.DataSession.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
-            'CreateWaitingRoom': grpc.unary_stream_rpc_method_handler(
-                    servicer.CreateWaitingRoom,
-                    request_deserializer=hiit__pb2.CreateWaitingRoomRequest.FromString,
-                    response_serializer=hiit__pb2.WaitingRoomResponse.SerializeToString,
-            ),
-            'JoinWaitingRoom': grpc.unary_stream_rpc_method_handler(
-                    servicer.JoinWaitingRoom,
-                    request_deserializer=hiit__pb2.WaitingRoomRequest.FromString,
-                    response_serializer=hiit__pb2.WaitingRoomResponse.SerializeToString,
-            ),
-            'StartWaitingRoom': grpc.unary_unary_rpc_method_handler(
-                    servicer.StartWaitingRoom,
-                    request_deserializer=hiit__pb2.StartWaitingRoomRequest.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
-            'NotifyInvites': grpc.unary_unary_rpc_method_handler(
-                    servicer.NotifyInvites,
-                    request_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
-            'SubInvites': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubInvites,
-                    request_deserializer=hiit__pb2.WorkoutUser.FromString,
-                    response_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
-            ),
-            'CreateDuoHIIT': grpc.unary_stream_rpc_method_handler(
-                    servicer.CreateDuoHIIT,
-                    request_deserializer=hiit__pb2.CreateDuoHIITRequest.FromString,
-                    response_serializer=hiit__pb2.HIITActivity.SerializeToString,
-            ),
-            'JoinDuoHIIT': grpc.unary_stream_rpc_method_handler(
-                    servicer.JoinDuoHIIT,
-                    request_deserializer=hiit__pb2.JoinDuoHIITRequest.FromString,
-                    response_serializer=hiit__pb2.HIITActivity.SerializeToString,
-            ),
-            'HIITIntervalComplete': grpc.unary_unary_rpc_method_handler(
-                    servicer.HIITIntervalComplete,
-                    request_deserializer=hiit__pb2.HIITRequest.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
-            'HIITRoutineComplete': grpc.unary_unary_rpc_method_handler(
-                    servicer.HIITRoutineComplete,
-                    request_deserializer=hiit__pb2.HIITRequest.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
-            'DuoHIITSelectRoutine': grpc.unary_unary_rpc_method_handler(
-                    servicer.DuoHIITSelectRoutine,
-                    request_deserializer=hiit__pb2.HIITRequest.FromString,
-                    response_serializer=hiit__pb2.Empty.SerializeToString,
-            ),
+        'Sub': grpc.unary_stream_rpc_method_handler(
+            servicer.Sub,
+            request_deserializer=hiit__pb2.RoutineChange.FromString,
+            response_serializer=hiit__pb2.Data.SerializeToString,
+        ),
+        'Pub': grpc.unary_unary_rpc_method_handler(
+            servicer.Pub,
+            request_deserializer=hiit__pb2.DataSession.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'CreateWaitingRoom': grpc.unary_stream_rpc_method_handler(
+            servicer.CreateWaitingRoom,
+            request_deserializer=hiit__pb2.CreateWaitingRoomRequest.FromString,
+            response_serializer=hiit__pb2.WaitingRoomResponse.SerializeToString,
+        ),
+        'JoinWaitingRoom': grpc.unary_stream_rpc_method_handler(
+            servicer.JoinWaitingRoom,
+            request_deserializer=hiit__pb2.WaitingRoomRequest.FromString,
+            response_serializer=hiit__pb2.WaitingRoomResponse.SerializeToString,
+        ),
+        'StartWaitingRoom': grpc.unary_unary_rpc_method_handler(
+            servicer.StartWaitingRoom,
+            request_deserializer=hiit__pb2.StartWaitingRoomRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'NotifyInvites': grpc.unary_unary_rpc_method_handler(
+            servicer.NotifyInvites,
+            request_deserializer=hiit__pb2.InviteWaitingRoomRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'SubInvites': grpc.unary_stream_rpc_method_handler(
+            servicer.SubInvites,
+            request_deserializer=hiit__pb2.WorkoutUser.FromString,
+            response_serializer=hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
+        ),
+        'CreateDuoHIIT': grpc.unary_stream_rpc_method_handler(
+            servicer.CreateDuoHIIT,
+            request_deserializer=hiit__pb2.CreateDuoHIITRequest.FromString,
+            response_serializer=hiit__pb2.HIITActivity.SerializeToString,
+        ),
+        'JoinDuoHIIT': grpc.unary_stream_rpc_method_handler(
+            servicer.JoinDuoHIIT,
+            request_deserializer=hiit__pb2.JoinDuoHIITRequest.FromString,
+            response_serializer=hiit__pb2.HIITActivity.SerializeToString,
+        ),
+        'HIITIntervalComplete': grpc.unary_unary_rpc_method_handler(
+            servicer.HIITIntervalComplete,
+            request_deserializer=hiit__pb2.HIITRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'HIITRoutineComplete': grpc.unary_unary_rpc_method_handler(
+            servicer.HIITRoutineComplete,
+            request_deserializer=hiit__pb2.HIITRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'DuoHIITSelectRoutine': grpc.unary_unary_rpc_method_handler(
+            servicer.DuoHIITSelectRoutine,
+            request_deserializer=hiit__pb2.HIITRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'hiit.HIITService', rpc_method_handlers)
+        'hiit.HIITService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
-
  # This class is part of an EXPERIMENTAL API.
+
+
 class HIITService(object):
     """Missing associated documentation comment in .proto file."""
 
@@ -236,10 +237,10 @@ class HIITService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/Sub',
-            hiit__pb2.RoutineChange.SerializeToString,
-            hiit__pb2.Data.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.RoutineChange.SerializeToString,
+                                              hiit__pb2.Data.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Pub(request,
@@ -253,177 +254,177 @@ class HIITService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/Pub',
-            hiit__pb2.DataSession.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.DataSession.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def CreateWaitingRoom(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                          target,
+                          options=(),
+                          channel_credentials=None,
+                          call_credentials=None,
+                          insecure=False,
+                          compression=None,
+                          wait_for_ready=None,
+                          timeout=None,
+                          metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/CreateWaitingRoom',
-            hiit__pb2.CreateWaitingRoomRequest.SerializeToString,
-            hiit__pb2.WaitingRoomResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.CreateWaitingRoomRequest.SerializeToString,
+                                              hiit__pb2.WaitingRoomResponse.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def JoinWaitingRoom(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                        target,
+                        options=(),
+                        channel_credentials=None,
+                        call_credentials=None,
+                        insecure=False,
+                        compression=None,
+                        wait_for_ready=None,
+                        timeout=None,
+                        metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/JoinWaitingRoom',
-            hiit__pb2.WaitingRoomRequest.SerializeToString,
-            hiit__pb2.WaitingRoomResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.WaitingRoomRequest.SerializeToString,
+                                              hiit__pb2.WaitingRoomResponse.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def StartWaitingRoom(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                         target,
+                         options=(),
+                         channel_credentials=None,
+                         call_credentials=None,
+                         insecure=False,
+                         compression=None,
+                         wait_for_ready=None,
+                         timeout=None,
+                         metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/StartWaitingRoom',
-            hiit__pb2.StartWaitingRoomRequest.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.StartWaitingRoomRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def NotifyInvites(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                      target,
+                      options=(),
+                      channel_credentials=None,
+                      call_credentials=None,
+                      insecure=False,
+                      compression=None,
+                      wait_for_ready=None,
+                      timeout=None,
+                      metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/NotifyInvites',
-            hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.InviteWaitingRoomRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SubInvites(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                   target,
+                   options=(),
+                   channel_credentials=None,
+                   call_credentials=None,
+                   insecure=False,
+                   compression=None,
+                   wait_for_ready=None,
+                   timeout=None,
+                   metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/SubInvites',
-            hiit__pb2.WorkoutUser.SerializeToString,
-            hiit__pb2.InviteWaitingRoomRequest.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.WorkoutUser.SerializeToString,
+                                              hiit__pb2.InviteWaitingRoomRequest.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def CreateDuoHIIT(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                      target,
+                      options=(),
+                      channel_credentials=None,
+                      call_credentials=None,
+                      insecure=False,
+                      compression=None,
+                      wait_for_ready=None,
+                      timeout=None,
+                      metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/CreateDuoHIIT',
-            hiit__pb2.CreateDuoHIITRequest.SerializeToString,
-            hiit__pb2.HIITActivity.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.CreateDuoHIITRequest.SerializeToString,
+                                              hiit__pb2.HIITActivity.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def JoinDuoHIIT(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                    target,
+                    options=(),
+                    channel_credentials=None,
+                    call_credentials=None,
+                    insecure=False,
+                    compression=None,
+                    wait_for_ready=None,
+                    timeout=None,
+                    metadata=None):
         return grpc.experimental.unary_stream(request, target, '/hiit.HIITService/JoinDuoHIIT',
-            hiit__pb2.JoinDuoHIITRequest.SerializeToString,
-            hiit__pb2.HIITActivity.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                              hiit__pb2.JoinDuoHIITRequest.SerializeToString,
+                                              hiit__pb2.HIITActivity.FromString,
+                                              options, channel_credentials,
+                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def HIITIntervalComplete(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                             target,
+                             options=(),
+                             channel_credentials=None,
+                             call_credentials=None,
+                             insecure=False,
+                             compression=None,
+                             wait_for_ready=None,
+                             timeout=None,
+                             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/HIITIntervalComplete',
-            hiit__pb2.HIITRequest.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.HIITRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def HIITRoutineComplete(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                            target,
+                            options=(),
+                            channel_credentials=None,
+                            call_credentials=None,
+                            insecure=False,
+                            compression=None,
+                            wait_for_ready=None,
+                            timeout=None,
+                            metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/HIITRoutineComplete',
-            hiit__pb2.HIITRequest.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.HIITRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def DuoHIITSelectRoutine(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                             target,
+                             options=(),
+                             channel_credentials=None,
+                             call_credentials=None,
+                             insecure=False,
+                             compression=None,
+                             wait_for_ready=None,
+                             timeout=None,
+                             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITSelectRoutine',
-            hiit__pb2.HIITRequest.SerializeToString,
-            hiit__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             hiit__pb2.HIITRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

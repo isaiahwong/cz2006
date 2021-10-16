@@ -147,6 +147,16 @@ class WorkoutRepo {
     );
   }
 
+  ResponseStream<InviteWaitingRoomRequest> subscribeInvites(User user) {
+    return hiitClient.subInvites(
+      WorkoutUser(
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      ),
+    );
+  }
+
   Future<void> duoHIITSelectRoutine(Routine routine, RoutineInterval interval) {
     final user = UserController.get().user.value!;
     return hiitClient.duoHIITSelectRoutine(
@@ -224,6 +234,28 @@ class WorkoutRepo {
           (document) =>
               Workout.fromJson(document.data()! as Map<String, dynamic>),
         );
+  }
+
+  Future<List<Workout>> getWorkouts() async {
+    final user = UserController.get().user.value!.id;
+    final result = await FirebaseFirestore.instance
+        .collection('/users/$user/workouts')
+        .get();
+
+    return result.docs.map((d) {
+      final data = d.data();
+      switch (Workout.intToType(data["type"])) {
+        case WorkoutType.UNKNOWN:
+          break;
+        case WorkoutType.CYCLING:
+          return Cycling.fromJson(data);
+        case WorkoutType.HIIT:
+          return HIIT.fromJson(data);
+      }
+      return Workout.fromJson(
+        data,
+      );
+    }).toList();
   }
 
   Stream<List<Workout>> streamWorkouts() {
