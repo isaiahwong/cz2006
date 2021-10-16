@@ -73,6 +73,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
     Get.toNamed(RoutePaths.HIIT_WAITING_ROOM, arguments: [
       WaitingRoomType.HOST,
       hiit.copyWith(),
+      hiit.type,
     ]);
   }
 

@@ -112,8 +112,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
         .toList();
   }
 
-  Container _mapboxUI(
-      BuildContext context, ValueNotifier<List<WayPoint>> wayPoints) {
+  Container _mapboxUI(BuildContext context) {
     return Container(
       child: MapWidget(),
     );
@@ -129,7 +128,7 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
           _appBar(context),
           Column(
             children: [
-              _mapboxUI(context, wayPoints),
+              _mapboxUI(context),
               _selectLocation(context, true),
               _selectLocation(context, false),
             ],

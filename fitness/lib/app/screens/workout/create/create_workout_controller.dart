@@ -80,6 +80,10 @@ class CreateWorkoutController extends GetxController
             : WorkoutName.dirty("Workout $workoutIncrement").value,
       ));
     } else {
+      if (coordinates.isEmpty || coordinates.length != 2) {
+        panelController.close();
+        return;
+      }
       workout = await repo.createWorkout(Cycling(
         host: UserController.get().user.value!.id,
         name: name.value.isNotEmpty
@@ -112,7 +116,7 @@ class CreateWorkoutController extends GetxController
   }
 
   Future<void> createCycling(Workout workout) async {
-    if (coordinates.isEmpty) return;
+    if (coordinates.isEmpty || coordinates.length != 2) return;
     repo.updateCycling(
       Cycling.fromWorkout(workout: workout).setCoordinates(
         coordinates.values.toList(),

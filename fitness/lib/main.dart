@@ -5,6 +5,7 @@ import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/controllers/workout/workout_controller.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/repo.dart';
+import 'package:fitness/repo/workout/cycling_repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,7 @@ void main() async {
       initWhenAuth: (User user) {
         WorkoutRepo workoutRepo =
             WorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
+        CyclingRepo cyclingRepo = CyclingRepo(userRepo: userRepo);
         ExerciseRepo exerciseRepo = ExerciseRepo();
         SocialRepo socialRepo = SocialRepo(userRepo.id);
         CoordinatesRepo coordinateRepo = CoordinatesRepo();
@@ -48,6 +50,7 @@ void main() async {
         Get.put<ExerciseRepo>(exerciseRepo, permanent: true);
         Get.put<CoordinatesRepo>(coordinateRepo, permanent: true);
         Get.put<WorkoutRepo>(workoutRepo, permanent: true);
+        Get.put<CyclingRepo>(cyclingRepo, permanent: true);
         Get.put<SocialRepo>(socialRepo, permanent: true);
         Get.put<WorkoutController>(
             WorkoutController(

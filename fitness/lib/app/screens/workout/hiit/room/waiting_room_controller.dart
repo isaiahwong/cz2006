@@ -8,6 +8,7 @@ import 'package:fitness/app/screens/friends/friends_delegate.dart';
 import 'package:fitness/app/screens/friends/friends_list_screen.dart';
 import 'package:fitness/app/screens/workout/hiit/active/active_hiit_controller.dart';
 import 'package:fitness/repo/repo.dart';
+import 'package:fitness/repo/workout/cycling_repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:get/get.dart';
 import 'package:hiit_api/hiit.dart';
@@ -20,7 +21,10 @@ enum WaitingRoomType {
 
 class WaitingRoomController extends GetxController with FriendsDelegate {
   late HIIT hiit;
+  late Cycling cycling;
+  late WorkoutType type;
   final WorkoutRepo workoutRepo;
+  final CyclingRepo cyclingRepo;
   final SlidingPanelController panelController;
 
   List<UserSnippet> users = [];
@@ -32,7 +36,8 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   late final WaitingRoomType waitingRoomType;
 
   WaitingRoomController({required this.panelController})
-      : this.workoutRepo = WorkoutRepo.get();
+      : this.workoutRepo = WorkoutRepo.get(),
+        this.cyclingRepo = CyclingRepo.get();
 
   @override
   Map<String, Friend> pendingFriends = {};
@@ -42,16 +47,27 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     super.onInit();
     print(Get.arguments);
     waitingRoomType = Get.arguments[0];
-    hiit = Get.arguments[1];
+    type = Get.arguments[2];
+    if (type == WorkoutType.HIIT) {
+      hiit = Get.arguments[1];
+    } else {
+      cycling = Get.arguments[1];
+    }
 
     switch (waitingRoomType) {
       case WaitingRoomType.HOST:
-        hostRoomStream = workoutRepo.createWaitingRoom(hiit);
-        hostSub = hostRoomStream?.listen(onHostRoomStream);
+        if (type == WorkoutType.HIIT)
+          workoutRepo.createWaitingRoom(hiit);
+        else
+          //cyclingRepo.createWaitingRoom(cycling);
+          hostSub = hostRoomStream?.listen(onHostRoomStream);
         break;
       case WaitingRoomType.INVITEE:
-        joinRoomStream = workoutRepo.joinWaitingRoom(hiit);
-        joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
+        if (type == WorkoutType.HIIT)
+          workoutRepo.joinWaitingRoom(hiit);
+        else
+          //cyclingRepo.joinWaitingRoom(cycling);
+          joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
         break;
     }
   }

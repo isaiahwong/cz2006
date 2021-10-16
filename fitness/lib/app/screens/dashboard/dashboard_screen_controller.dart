@@ -23,6 +23,10 @@ class DashboardScreenController extends GetxController {
     Get.toNamed(RoutePaths.HIIT_DETAILS, arguments: hiit.copyWith());
   }
 
+  void onCyclingSelected(Cycling cycling) {
+    Get.toNamed(RoutePaths.CYCLING_DETAILS, arguments: cycling.copyWith());
+  }
+
   void onCreate() {
     panelController.open(panel: CreateWorkoutScreen.get());
   }

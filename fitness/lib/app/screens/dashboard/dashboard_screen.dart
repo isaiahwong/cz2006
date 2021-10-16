@@ -22,8 +22,21 @@ class DashboardScreen extends GetView<DashboardScreenController> {
     );
   }
 
+  Widget _cyclingCard({required double height, required Cycling cycling}) {
+    return ColumnCard(
+      height: height,
+      title: cycling.name,
+      subtitle: "5th May",
+      statusBarSubtitle:
+          "${cycling.course.length > 1 ? "${cycling.course[0].start.name} to ${cycling.course[0].end.name}" : ""}",
+      onTap: () => controller.onCyclingSelected(cycling),
+    );
+  }
+
   Widget _mapCard({required Workout workout, required double height}) {
     if (workout is HIIT) return _hiitCard(height: height, hiit: workout);
+    if (workout is Cycling)
+      return _cyclingCard(height: height, cycling: workout);
     return SizedBox.shrink();
   }
 
