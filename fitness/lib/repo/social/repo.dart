@@ -152,6 +152,21 @@ class SocialRepo {
     return _groups;
   }
 
+  /// Update list of public workout
+  Stream<List<WorkoutGroupWithId>> streamPublicWorkout() {
+    return _store
+        .collection("workoutGroups")
+        .where("public", isEqualTo: true)
+        .snapshots(includeMetadataChanges: true)
+        .map((event) {
+      List<WorkoutGroupWithId> _workoutGroups = [];
+      for (var i = 0; i < event.docs.length; i++) {
+        _workoutGroups.add(WorkoutGroupWithId.fromJson(event.docs[i].data()));
+      }
+      return _workoutGroups;
+    });
+  }
+
   /// Show a list of workout invitation
   Future<List<GroupWorkout>> getWorkoutInvites() async {
     var result = await _store

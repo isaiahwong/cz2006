@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
+import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:get/get.dart';
 import 'package:hiit_api/hiit.dart';
@@ -183,6 +185,14 @@ class WorkoutRepo {
     final result = await collection.add(workout.toJson());
     // updates async
     collection.doc(result.id).update({"id": result.id});
+
+    final workoutGroup = WorkoutGroup(
+        workoutId: result.id,
+        creator: workout.host,
+        participants: [UserController.get().user.value!]);
+
+    ExerciseRepo.get().createGroupWorkout(workoutGroup);
+
     return workout.copyWith(id: result.id);
   }
 
