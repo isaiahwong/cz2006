@@ -141,7 +141,7 @@ class SocialScreen extends StatelessWidget {
       );
     }
     return Container(
-      decoration: BoxDecoration(color: Colors.black26),
+      // decoration: BoxDecoration(color: Colors.black26),
       height: 80,
       width: double.infinity,
       child: ListView.builder(
@@ -181,7 +181,7 @@ class SocialScreen extends StatelessWidget {
     }
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(color: Colors.black12),
+      // decoration: BoxDecoration(color: Colors.black12),
       width: double.infinity,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),

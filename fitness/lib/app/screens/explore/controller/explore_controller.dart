@@ -1,3 +1,4 @@
+import 'package:fitness/app/screens/explore/invitation_screen.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,8 +6,9 @@ import 'package:get/get.dart';
 /// Controls the social interaction of the app
 class ExploreController extends GetxController {
   PageController pageController = PageController();
+  Rx<int> _tabIndex = Rx<int>(0);
 
-  static ExploreController to = Get.find();
+  static ExploreController get to => Get.find();
 
   List<Widget> screens = [
     ExploreWorkoutScreen(),
@@ -30,7 +32,9 @@ class ExploreController extends GetxController {
     super.onClose();
   }
 
-  Rx<int> _tabIndex = Rx<int>(0);
+  viewInvitation() async {
+    await Get.bottomSheet(InvitationScreen());
+  }
 
   int get getTabIndex {
     update();
