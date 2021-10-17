@@ -22,6 +22,11 @@ class CyclingDetailsController extends GetxController with CoordinatesDelegate {
   bool editing = false;
   late MapBoxOptions mapboxOptions;
   late MapBoxNavigationViewController mapboxController;
+  late MapBoxNavigation directions;
+  late double _distanceRemaining, _durationRemaining;
+  late bool _isNavigating = false;
+  String _instruction = "";
+  late bool _routeBuilt = false;
 
   @override
   Map<String, Coordinates> coordinates = {};
@@ -35,6 +40,7 @@ class CyclingDetailsController extends GetxController with CoordinatesDelegate {
   void onInit() {
     super.onInit();
     cycling = Get.arguments;
+    directions = MapBoxNavigation(onRouteEvent: _onEmbeddedRouteEvent);
     initMapBoxOptions();
     cyclingNameController = TextEditingController(text: cycling.name);
     keyboardSub =
@@ -106,6 +112,51 @@ class CyclingDetailsController extends GetxController with CoordinatesDelegate {
       cycling.copyWith(),
       cycling.type,
     ]);
+  }
+
+  void startNavigation() async {
+    var wayPoints = <WayPoint>[];
+    for (Course c in cycling.course) {
+      wayPoints.add(WayPoint(
+          name: c.coordinates.name,
+          latitude: c.coordinates.x,
+          longitude: c.coordinates.y));
+    }
+    await directions.startNavigation(
+        wayPoints: wayPoints,
+        options: MapBoxOptions(
+            alternatives: true,
+            mapStyleUrlDay:
+                "mapbox://styles/zerotoxicity/cktzynfhd0zqh17phrqp14hyl",
+            mapStyleUrlNight:
+                "mapbox://styles/zerotoxicity/cktzynfhd0zqh17phrqp14hyl",
+            initialLatitude: wayPoints[0].latitude,
+            initialLongitude: wayPoints[0].longitude,
+            mode: MapBoxNavigationMode.cycling,
+            simulateRoute: false,
+            language: "en",
+            units: VoiceUnits.metric));
+  }
+
+  Future<void> _onEmbeddedRouteEvent(e) async {
+    _distanceRemaining = await directions.distanceRemaining;
+    _durationRemaining = await directions.durationRemaining;
+
+    switch (e.eventType) {
+      case MapBoxEvent.progress_change:
+        var progressEvent = e.data as RouteProgressEvent;
+        if (progressEvent.currentStepInstruction != null)
+          _instruction = progressEvent.currentStepInstruction!;
+        break;
+
+      case MapBoxEvent.on_arrival:
+        await Future.delayed(Duration(seconds: 3));
+        await mapboxController.finishNavigation();
+        break;
+
+      default:
+        break;
+    }
   }
 
   @override

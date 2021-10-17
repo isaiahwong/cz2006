@@ -149,7 +149,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
           textColor: Colors.white,
           radius: 100,
           width: width,
-          onPressed: controller.onStartHIIT,
+          onPressed: controller.onStartPressed,
         ),
       ],
     );

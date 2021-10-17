@@ -128,6 +128,13 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     );
   }
 
+  void onStartPressed() async {
+    if (type == WorkoutType.HIIT)
+      onStartHIIT();
+    else
+      onStartCycling();
+  }
+
   void onStartHIIT() async {
     if (users.length < 1) return;
     // if (waitingRoomType == WaitingRoomType.HOST)
@@ -135,6 +142,12 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
       hiit.copyWith(participants: users),
+    ]);
+  }
+
+  void onStartCycling() {
+    Get.offAndToNamed(RoutePaths.CYCLING_ACTIVE, arguments: [
+      cycling.copyWith(),
     ]);
   }
 
@@ -146,7 +159,10 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
 
     // If workout start
     if (response.start) {
-      onStartHIIT();
+      if (type == WorkoutType.HIIT)
+        onStartHIIT();
+      else
+        onStartCycling();
       return;
     }
 
