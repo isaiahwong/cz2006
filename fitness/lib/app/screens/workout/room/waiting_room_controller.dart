@@ -21,7 +21,6 @@ enum WaitingRoomType {
 
 class WaitingRoomController extends GetxController with FriendsDelegate {
   late Workout workout;
-  late WorkoutType type;
   final WorkoutRepo workoutRepo;
   final CyclingRepo cyclingRepo;
   final SlidingPanelController panelController;
@@ -120,7 +119,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   void onStartPressed() async {
-    if (type == WorkoutType.HIIT)
+    if (workout is HIIT)
       onStartHIIT();
     else
       onStartCycling();
@@ -142,6 +141,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   void onJoinRoomStream(WaitingRoomResponse response) {
+    print("here");
     // include host
     List<UserSnippet> users = [
       UserSnippet(response.host.id, response.host.name, "")
@@ -149,7 +149,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
 
     // If workout start
     if (response.start) {
-      if (type == WorkoutType.HIIT)
+      if (workout is HIIT)
         onStartHIIT();
       else
         onStartCycling();
