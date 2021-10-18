@@ -30,9 +30,10 @@ class UserCard extends StatelessWidget {
             CircleAvatar(
               minRadius: 20,
               maxRadius: 40,
-              backgroundImage: NetworkImage(profilePic != ""
-                  ? profilePic
-                  : "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"),
+              backgroundImage:
+                  profilePic.isNotEmpty ? NetworkImage(profilePic) : null,
+              backgroundColor: primaryColor,
+              child: Text(username[0]),
             ),
             SizedBox(width: 8),
             Text(

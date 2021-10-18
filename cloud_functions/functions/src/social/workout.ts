@@ -10,28 +10,28 @@ import m = require("../model/model");
  * * Owner should also be include in participant[]
  * @param {m.workout.WorkoutGroup} workoutGroup
  */
-exports.createGroupWorkout = functions
+exports.createWorkoutGroup = functions
     .region(helper.FUNCTION_REGION)
     .https
     .onCall(async (data, context) => {
-      if (!context.auth) {
-        throw new functions
-            .https
-            .HttpsError("unauthenticated", "User not authenticated");
-      }
-      if (data.publicWorkout == null) {
+      // if (!context.auth) {
+      //   throw new functions
+      //       .https
+      //       .HttpsError("unauthenticated", "User not authenticated");
+      // }
+      if (data.workoutGroup == null) {
         throw new functions
             .https
             .HttpsError("invalid-argument", "arguments invalid");
       }
-      const publicWorkout: m.workout.WorkoutGroup =
-            JSON.parse(JSON.stringify(data.publicWorkout));
+      const workoutGroup: m.workout.WorkoutGroup =
+            JSON.parse(JSON.stringify(data.workoutGroup));
 
       const workoutGroupRef: admin.firestore.CollectionReference = admin
           .firestore()
           .collection(p.Collection.workoutGroup);
 
-      await workoutGroupRef.add(publicWorkout);
+      await workoutGroupRef.add(workoutGroup);
 
 
       return Promise.resolve();
@@ -75,7 +75,7 @@ exports.joinWorkoutGroup = functions
       // Check if user eligible to join
       if (
         workoutGroup.participants.length >= workoutGroup.maxParticipants ||
-            !workoutGroup.public
+            !workoutGroup.isPublic
       ) {
         return {
           "result": false,
@@ -100,7 +100,7 @@ exports.joinWorkoutGroup = functions
       });
 
       // If workout is private, remove from user's invite sub collection
-      if (!workoutGroup.public) {
+      if (!workoutGroup.isPublic) {
         await admin
             .firestore()
             .collection(p.Collection.users)
@@ -110,10 +110,10 @@ exports.joinWorkoutGroup = functions
             .delete();
       }
 
-      // Update to their personal groupworkout collection
+      // Update to their personal workoutinvites collection
       await admin
           .firestore()
-          .collection(p.UserSubCollections.groupWorkouts)
+          .collection(p.UserSubCollections.workoutInvites)
           .add(<m.workout.GroupWorkout>{
             isActive: true,
             workoutGroupId: workoutGroupId,
@@ -256,7 +256,7 @@ exports.setWorkoutStatus = functions
         if (user.id != workoutGroup.creator) {
           await usersRef
               .doc(user.id)
-              .collection(p.UserSubCollections.groupWorkouts)
+              .collection(p.UserSubCollections.workoutInvites)
               .doc(workoutGroup.id)
               .update({"isActive": isActive});
         }

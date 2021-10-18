@@ -18,9 +18,15 @@ class SocialController extends GetxController {
   List<Friend> requests = [];
 
   List<User> foundUsers = [];
-  List<GroupWorkout> _workoutInvites = [];
+  List<WorkoutInvite> _workoutInvites = [];
 
   TextEditingController? searchTextController;
+
+  SocialController();
+
+  factory SocialController.get() {
+    return Get.find();
+  }
 
   @override
   void onInit() {
@@ -140,5 +146,5 @@ class SocialController extends GetxController {
   int get requestsLength => requests.length;
   int get workoutInviteLength => _workoutInvites.length;
 
-  List<GroupWorkout> get getWorkoutInvitation => _workoutInvites;
+  List<WorkoutInvite> get getWorkoutInvitation => _workoutInvites;
 }

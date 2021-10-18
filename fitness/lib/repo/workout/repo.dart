@@ -191,7 +191,7 @@ class WorkoutRepo {
         creator: workout.host,
         participants: [UserController.get().user.value!]);
 
-    ExerciseRepo.get().createGroupWorkout(workoutGroup);
+    await Get.find<SocialRepo>().createGroupWorkout(workoutGroup);
 
     return workout.copyWith(id: result.id);
   }

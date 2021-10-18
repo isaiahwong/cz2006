@@ -1,4 +1,6 @@
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/cycling/active/active_cycling_bindings.dart';
+import 'package:fitness/app/screens/workout/cycling/active/active_cycling_screen.dart';
 import 'package:fitness/app/screens/workout/hiit/active/pose/pose.dart';
 import 'package:fitness/app/screens/workout/hiit/room/waiting_room_screen.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ class RoutePaths {
   static const HIIT_ACTIVE = '/workout/hiit/active';
   static const HIIT_DETAILS = '/workout/hiit/details';
   static const HIIT_WAITING_ROOM = '/workout/hiit/room/waiting';
+  static const CYCLING_DETAILS = '/workout/cycling/details';
+  static const CYCLING_ACTIVE = '/workout/cycling/active';
 }
 
 class Routes {
@@ -51,6 +55,16 @@ class Routes {
       name: RoutePaths.HIIT_WAITING_ROOM,
       page: () => WaitingRoomScreen(),
       binding: WaitingRoomBindings(),
-    )
+    ),
+    GetPage(
+      name: RoutePaths.CYCLING_DETAILS,
+      page: () => CyclingDetailsScreen(),
+      binding: HIITDetailsBindings(),
+    ),
+    GetPage(
+      name: RoutePaths.CYCLING_ACTIVE,
+      page: () => ActiveCyclingScreen(),
+      binding: ActiveCyclingBindings(),
+    ),
   ];
 }

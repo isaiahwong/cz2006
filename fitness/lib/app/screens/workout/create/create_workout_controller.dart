@@ -3,9 +3,11 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
+import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
+import 'package:fitness/repo/social/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:formz/formz.dart';
@@ -70,7 +72,7 @@ class CreateWorkoutController extends GetxController
     panelController.close();
 
     final workoutIncrement = 0;
-    final workout;
+    final Workout workout;
     // Create initial workout
     if (this.type == WorkoutType.HIIT) {
       workout = await repo.createWorkout(HIIT(
@@ -80,6 +82,10 @@ class CreateWorkoutController extends GetxController
             : WorkoutName.dirty("Workout $workoutIncrement").value,
       ));
     } else {
+      if (coordinates.isEmpty || coordinates.length != 2) {
+        panelController.close();
+        return;
+      }
       workout = await repo.createWorkout(Cycling(
         host: UserController.get().user.value!.id,
         name: name.value.isNotEmpty
@@ -112,7 +118,7 @@ class CreateWorkoutController extends GetxController
   }
 
   Future<void> createCycling(Workout workout) async {
-    if (coordinates.isEmpty) return;
+    if (coordinates.isEmpty || coordinates.length != 2) return;
     repo.updateCycling(
       Cycling.fromWorkout(workout: workout).setCoordinates(
         coordinates.values.toList(),

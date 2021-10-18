@@ -9,7 +9,7 @@ export interface WorkoutGroupWithId extends WorkoutGroup{
 export interface WorkoutGroup{
     workoutId: string;
     creator: string;
-    public: boolean;
+    isPublic: boolean;
     isActive: boolean;
     participants: u.User[];
     maxParticipants: number;
