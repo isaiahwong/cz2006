@@ -83,7 +83,20 @@ class SocialController extends GetxController {
         requests.add(f[i]);
       }
     }
+    if (f.length > 1) {
+      Fluttertoast.showToast(msg: "New Requests");
+    }
     update(["SocialScreen"]);
+  }
+
+  /// Fetch all instance of friends
+  Future<List<Friend>> getAllFriends() async {
+    return await socialRepo.getFriends();
+  }
+
+  /// Fetch all instance of requests
+  Future<List<Friend>> getAllRequests() async {
+    return await socialRepo.getRequests();
   }
 
   /// Perform santization and search of users

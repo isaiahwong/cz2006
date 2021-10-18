@@ -125,9 +125,9 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
       onStartCycling();
   }
 
-  void onStartHIIT() async {
+  Future<void> onStartHIIT() async {
+    await _publicFlag();
     if (users.length < 1) return;
-    _publicFlag();
     Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
       workout.copyWith(participants: users),
@@ -170,14 +170,15 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     update();
   }
 
-  void _publicFlag() {
+  Future<void> _publicFlag() async {
     String? workoutId;
     if (!workout.isBlank!) {
       workoutId = workout.id;
     } else {
       workoutId = workout.id;
     }
-    SocialRepo.to.toggleWorkoutPublic(
+    print("Setting ${workoutId} to ${_isPublic}");
+    await SocialRepo.to.toggleWorkoutPublic(
       _isPublic,
       workoutId,
     );
