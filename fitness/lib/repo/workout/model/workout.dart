@@ -1,3 +1,4 @@
+import 'package:fitness/repo/repo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'workout.g.dart';
@@ -19,24 +20,30 @@ class Workout {
   final String host;
   final WorkoutType type;
 
+  @JsonKey(ignore: true)
+  final List<UserSnippet> participants;
+
   Workout({
     this.id = "",
     required this.name,
     required this.host,
+    List<UserSnippet>? participants,
     this.type = WorkoutType.HIIT,
-  });
+  }) : this.participants = participants == null ? [] : participants;
 
   Workout copyWith({
     String? id,
     String? name,
     String? host,
     WorkoutType? type,
+    List<UserSnippet>? participants,
   }) {
     return Workout(
       id: id ?? this.id,
       host: host ?? this.host,
       name: name ?? this.name,
       type: type ?? this.type,
+      participants: participants ?? this.participants,
     );
   }
 

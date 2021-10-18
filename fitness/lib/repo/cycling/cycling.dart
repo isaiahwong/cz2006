@@ -1,5 +1,6 @@
 import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/cycling/course/course.dart';
+import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/model/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fitness/common/common.dart';
@@ -15,8 +16,15 @@ class Cycling extends Workout {
     required String name,
     required String host,
     this.course = const [],
+    List<UserSnippet>? participants,
     WorkoutType type = WorkoutType.CYCLING, // used for json generator
-  }) : super(id: id, host: host, name: name, type: WorkoutType.CYCLING);
+  }) : super(
+          id: id,
+          host: host,
+          name: name,
+          type: WorkoutType.CYCLING,
+          participants: participants,
+        );
 
   factory Cycling.fromJson(Map<String, dynamic> json) =>
       _$CyclingFromJson(json);
@@ -56,12 +64,14 @@ class Cycling extends Workout {
     String? name,
     String? host,
     WorkoutType? type,
+    List<UserSnippet>? participants,
     List<Course>? course,
   }) {
     return Cycling(
       id: id ?? this.id,
       host: host ?? this.host,
       name: name ?? this.name,
+      participants: participants,
       course: List<Course>.from(course ?? this.course).toList(),
     );
   }

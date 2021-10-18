@@ -3,6 +3,7 @@ import 'package:fitness/app/components/image/image.dart';
 import 'package:fitness/app/components/panel/sliding_panel.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/room/waiting_room_controller.dart';
 import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

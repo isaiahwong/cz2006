@@ -20,8 +20,7 @@ enum WaitingRoomType {
 }
 
 class WaitingRoomController extends GetxController with FriendsDelegate {
-  late HIIT hiit;
-  late Cycling cycling;
+  late Workout workout;
   late WorkoutType type;
   final WorkoutRepo workoutRepo;
   final CyclingRepo cyclingRepo;
@@ -47,29 +46,19 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   @override
   void onInit() {
     super.onInit();
-    print(Get.arguments);
     waitingRoomType = Get.arguments[0];
-    type = Get.arguments[2];
-    if (type == WorkoutType.HIIT) {
-      hiit = Get.arguments[1];
-    } else {
-      cycling = Get.arguments[1];
-    }
+    workout = Get.arguments[1];
 
     switch (waitingRoomType) {
       case WaitingRoomType.HOST:
-        if (type == WorkoutType.HIIT)
-          workoutRepo.createWaitingRoom(hiit);
-        else
-          //cyclingRepo.createWaitingRoom(cycling);
-          hostSub = hostRoomStream?.listen(onHostRoomStream);
+        workoutRepo.createWaitingRoom(workout);
+        //cyclingRepo.createWaitingRoom(cycling);
+        hostSub = hostRoomStream?.listen(onHostRoomStream);
         break;
       case WaitingRoomType.INVITEE:
-        if (type == WorkoutType.HIIT)
-          workoutRepo.joinWaitingRoom(hiit);
-        else
-          //cyclingRepo.joinWaitingRoom(cycling);
-          joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
+        workoutRepo.joinWaitingRoom(workout);
+        //cyclingRepo.joinWaitingRoom(cycling);
+        joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
         break;
     }
   }
@@ -110,7 +99,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   @override
   void onFriendsSelected(Friend ex) async {
     pendingFriends[ex.friend.id] = ex;
-    await workoutRepo.notifyInvite(ex.friend, hiit);
+    await workoutRepo.notifyInvite(ex.friend, workout);
     update();
   }
 
@@ -142,13 +131,13 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     _publicFlag();
     Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
-      hiit.copyWith(participants: users),
+      workout.copyWith(participants: users),
     ]);
   }
 
   void onStartCycling() {
     Get.offAndToNamed(RoutePaths.CYCLING_ACTIVE, arguments: [
-      cycling.copyWith(),
+      workout.copyWith(),
     ]);
   }
 
@@ -184,10 +173,10 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
 
   void _publicFlag() {
     String? workoutId;
-    if (!hiit.isBlank!) {
-      workoutId = hiit.id;
+    if (!workout.isBlank!) {
+      workoutId = workout.id;
     } else {
-      workoutId = cycling.id;
+      workoutId = workout.id;
     }
     SocialRepo.to.toggleWorkoutPublic(
       _isPublic,

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/screens/screens.dart';
+import 'package:fitness/app/screens/workout/room/waiting_room_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/exercise/exercise.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
 import 'package:fitness/repo/exercise/model.dart';
 import 'package:fitness/repo/workout/workout.dart';

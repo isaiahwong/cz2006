@@ -96,6 +96,7 @@ class ActiveHIITController extends GetxController {
     final user = UserController.get().user.value!;
     if (user.id == hiit.host) {
       isHost = true;
+      // Create HIIT session
       hostHIITStream = workoutRepo.createDuoHIIT(hiit);
       hostSub = hostHIITStream!.listen(onHIITHostActivity);
     } else {

@@ -188,7 +188,7 @@ class SocialRepo {
 
   /// Function to toggle workout
   /// true to set public, false to set private
-  Future<void> setWorkoutPublic(bool isPublic, String workoutId) async {
+  Future<void> toggleWorkoutPublic(bool isPublic, String workoutId) async {
     /// Set isPublic workout flag from workoutGroups path
     await _store
         .collection("workoutgroups")

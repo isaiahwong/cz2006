@@ -2,7 +2,8 @@ import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/cycling/active/active_cycling_bindings.dart';
 import 'package:fitness/app/screens/workout/cycling/active/active_cycling_screen.dart';
 import 'package:fitness/app/screens/workout/hiit/active/pose/pose.dart';
-import 'package:fitness/app/screens/workout/hiit/room/waiting_room_screen.dart';
+import 'package:fitness/app/screens/workout/room/waiting_room_bindings.dart';
+import 'package:fitness/app/screens/workout/room/waiting_room_screen.dart';
 import 'package:get/get.dart';
 
 class RoutePaths {

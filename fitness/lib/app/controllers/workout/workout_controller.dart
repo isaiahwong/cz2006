@@ -1,7 +1,7 @@
 import 'package:fitness/app/controllers/auth/auth_controller.dart';
 import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
-import 'package:fitness/app/screens/workout/hiit/room/waiting_room_controller.dart';
+import 'package:fitness/app/screens/workout/room/waiting_room_controller.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:get/get.dart';

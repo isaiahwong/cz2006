@@ -34,11 +34,11 @@ class WorkoutRepo {
         }));
   }
 
-  ResponseStream<WaitingRoomResponse> createWaitingRoom(HIIT hiit) {
+  ResponseStream<WaitingRoomResponse> createWaitingRoom(Workout workout) {
     final user = UserController.get().user.value!;
     return hiitClient.createWaitingRoom(
       CreateWaitingRoomRequest(
-        workout: hiit.id,
+        workout: workout.id,
         host: WorkoutUser(
           id: user.id,
           name: user.name,
@@ -52,11 +52,11 @@ class WorkoutRepo {
     );
   }
 
-  ResponseStream<WaitingRoomResponse> joinWaitingRoom(HIIT hiit) {
+  ResponseStream<WaitingRoomResponse> joinWaitingRoom(Workout workout) {
     final user = UserController.get().user.value!;
     return hiitClient.joinWaitingRoom(
       WaitingRoomRequest(
-          workout: hiit.id,
+          workout: workout.id,
           user: WorkoutUser(
             email: user.email,
             id: user.id,
@@ -196,13 +196,13 @@ class WorkoutRepo {
     return workout.copyWith(id: result.id);
   }
 
-  Future<void> notifyInvite(UserSnippet friend, HIIT hiit) async {
+  Future<void> notifyInvite(UserSnippet friend, Workout workout) async {
     final user = UserController.get().user.value!;
     await hiitClient.notifyInvites(
       InviteWaitingRoomRequest(
         from: WorkoutUser(id: user.id, name: user.name),
         to: WorkoutUser(id: friend.id, name: friend.name),
-        workout: hiit.id,
+        workout: workout.id,
       ),
     );
   }

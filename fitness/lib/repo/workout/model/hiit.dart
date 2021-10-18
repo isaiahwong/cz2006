@@ -10,9 +10,6 @@ part 'hiit.g.dart';
 class HIIT extends Workout {
   final List<Routine> routines;
 
-  @JsonKey(ignore: true)
-  final List<UserSnippet> participants;
-
   HIIT({
     String id = "",
     required String name,
@@ -20,8 +17,13 @@ class HIIT extends Workout {
     WorkoutType type = WorkoutType.HIIT, // used for json generator
     List<UserSnippet>? participants,
     this.routines = const [],
-  })  : this.participants = participants == null ? [] : participants,
-        super(id: id, host: host, name: name, type: WorkoutType.HIIT);
+  }) : super(
+          id: id,
+          host: host,
+          name: name,
+          type: WorkoutType.HIIT,
+          participants: participants,
+        );
 
   factory HIIT.fromJson(Map<String, dynamic> json) => _$HIITFromJson(json);
 
@@ -92,8 +94,8 @@ class HIIT extends Workout {
       id: id ?? this.id,
       host: host ?? this.host,
       name: name ?? this.name,
-      participants: participants ?? this.participants,
       routines: List<Routine>.from(routines ?? this.routines).toList(),
+      participants: participants,
     );
   }
 

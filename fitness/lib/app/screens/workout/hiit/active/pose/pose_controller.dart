@@ -12,7 +12,7 @@ class PoseController extends _.GetxController {
   static PoseController get() => _.Get.find();
 
   final _address = Uri.parse(
-    'http://192.168.31.109:8080/offer',
+    'http://172.21.146.189:8080/offer',
   );
   RTCPeerConnection? _peerConnection;
   final localRenderer = RTCVideoRenderer();
