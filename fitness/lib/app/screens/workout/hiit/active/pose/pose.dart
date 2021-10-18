@@ -14,7 +14,7 @@ class P2PVideo extends StatefulWidget {
 
 class _P2PVideoState extends State<P2PVideo> {
   final _address = Uri.parse(
-    'http://172.21.146.189:8080/offer',
+    'http://192.168.31.109:8080/offer',
   );
   RTCPeerConnection? _peerConnection;
   final _localRenderer = RTCVideoRenderer();
