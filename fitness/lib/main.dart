@@ -26,7 +26,7 @@ void main() async {
   ]);
   await Firebase.initializeApp();
   final hiitClient = HIITServiceClient(ClientChannel(
-    '172.21.146.189',
+    '192.168.31.109',
     port: 50051,
     options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   ));
