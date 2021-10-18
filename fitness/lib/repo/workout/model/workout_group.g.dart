@@ -13,7 +13,7 @@ WorkoutGroup _$WorkoutGroupFromJson(Map<String, dynamic> json) {
     participants: (json['participants'] as List<dynamic>)
         .map((e) => User.fromJson(e as Map<String, dynamic>))
         .toList(),
-    public: json['public'] as bool,
+    isPublic: json['isPublic'] as bool,
     isActive: json['isActive'] as bool,
     maxParticipants: json['maxParticipants'] as int,
   );
@@ -23,7 +23,7 @@ Map<String, dynamic> _$WorkoutGroupToJson(WorkoutGroup instance) =>
     <String, dynamic>{
       'workoutId': instance.workoutId,
       'creator': instance.creator,
-      'public': instance.public,
+      'isPublic': instance.isPublic,
       'isActive': instance.isActive,
       'participants': instance.participants.map((e) => e.toJson()).toList(),
       'maxParticipants': instance.maxParticipants,
@@ -37,7 +37,7 @@ WorkoutGroupWithId _$WorkoutGroupWithIdFromJson(Map<String, dynamic> json) {
     participants: (json['participants'] as List<dynamic>)
         .map((e) => User.fromJson(e as Map<String, dynamic>))
         .toList(),
-    public: json['public'] as bool,
+    isPublic: json['isPublic'] as bool,
     isActive: json['isActive'] as bool,
     maxParticipants: json['maxParticipants'] as int,
   );
@@ -48,21 +48,21 @@ Map<String, dynamic> _$WorkoutGroupWithIdToJson(WorkoutGroupWithId instance) =>
       'id': instance.id,
       'workoutId': instance.workoutId,
       'creator': instance.creator,
-      'public': instance.public,
+      'isPublic': instance.isPublic,
       'isActive': instance.isActive,
       'participants': instance.participants.map((e) => e.toJson()).toList(),
       'maxParticipants': instance.maxParticipants,
     };
 
-GroupWorkout _$GroupWorkoutFromJson(Map<String, dynamic> json) {
-  return GroupWorkout(
+WorkoutInvite _$WorkoutInviteFromJson(Map<String, dynamic> json) {
+  return WorkoutInvite(
     creator: json['creator'] as String,
     workoutGroupId: json['workoutGroupId'] as String,
     isActive: json['isActive'] as bool,
   );
 }
 
-Map<String, dynamic> _$GroupWorkoutToJson(GroupWorkout instance) =>
+Map<String, dynamic> _$WorkoutInviteToJson(WorkoutInvite instance) =>
     <String, dynamic>{
       'creator': instance.creator,
       'workoutGroupId': instance.workoutGroupId,

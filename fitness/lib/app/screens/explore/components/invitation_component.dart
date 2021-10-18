@@ -10,12 +10,14 @@ class InvitationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        width: Get.width,
+        margin: EdgeInsets.symmetric(horizontal: 8),
         padding: EdgeInsets.symmetric(horizontal: 8),
         height: Get.height * 0.1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("${creatorName} invite you to workout!"),
+            Text("${creatorName} sent u an invite"),
             SizedBox(width: 8),
             ...actionWidgets,
             SizedBox(width: 8)

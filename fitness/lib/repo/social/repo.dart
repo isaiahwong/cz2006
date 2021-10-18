@@ -3,19 +3,22 @@ import 'package:fitness/repo/repo.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness/repo/workout/workout.dart';
+import 'package:get/get.dart';
 
 /// Sub collection of user
 class SocialRepo {
   final FirebaseFirestore _store;
   final FirebaseFunctions _functions;
   final String userId;
-  late final DocumentReference docRef;
+  late final DocumentReference userDocRef;
 
   SocialRepo(this.userId)
       : _store = FirebaseFirestore.instance,
         _functions = FirebaseFunctions.instanceFor(region: "asia-east2") {
-    docRef = FirebaseFirestore.instance.collection("users").doc(userId);
+    userDocRef = FirebaseFirestore.instance.collection("users").doc(userId);
   }
+
+  static SocialRepo get to => Get.find();
 
   /// Find users based on name field
   Future<List<User>> findUsers(String name) async {
@@ -33,7 +36,7 @@ class SocialRepo {
 
   /// Get users from current user sub collecion
   Future<List<Friend>> getFriends() async {
-    var snapshots = await docRef
+    var snapshots = await userDocRef
         .collection("friends")
         .where("status", isEqualTo: "FRIEND")
         .get();
@@ -46,7 +49,7 @@ class SocialRepo {
 
   /// Get user's friend in stream
   Stream<List<Friend>> streamFriends() {
-    return docRef
+    return userDocRef
         .collection("friends")
         .where("status", isEqualTo: "FRIEND")
         .limit(10)
@@ -62,7 +65,7 @@ class SocialRepo {
 
   /// Get all the request from collection
   Future<List<Friend>> getRequests() async {
-    var snapshots = await docRef
+    var snapshots = await userDocRef
         .collection("friends")
         .where("responder.id", isEqualTo: userId)
         .where("status", isEqualTo: SocialStatus.PENDING.toString())
@@ -81,7 +84,7 @@ class SocialRepo {
 
   /// Stream version of friend requests
   Stream<List<Friend>> streamRequest() {
-    return docRef
+    return userDocRef
         .collection("friends")
         .limit(10)
         .where("responder.id", isEqualTo: userId)
@@ -168,21 +171,120 @@ class SocialRepo {
   }
 
   /// Show a list of workout invitation
-  Future<List<GroupWorkout>> getWorkoutInvites() async {
+  Future<List<WorkoutInvite>> getWorkoutInvites() async {
     var result = await _store
         .collection("users")
         .doc(userId)
         .collection("invites")
-        .where(
-          "isActive",
-          isEqualTo: true,
-        )
+        .where("isActive", isEqualTo: true)
         .get();
-    List<GroupWorkout> _invites = [];
+    List<WorkoutInvite> _invites = [];
 
     for (var i = 0; i < result.size; i++) {
-      _invites.add(GroupWorkout.fromJson(result.docs[i].data()));
+      _invites.add(WorkoutInvite.fromJson(result.docs[i].data()));
     }
     return _invites;
+  }
+
+  /// Function to toggle workout
+  /// true to set public, false to set private
+  Future<void> setWorkoutPublic(bool isPublic, String workoutId) async {
+    /// Set isPublic workout flag from workoutGroups path
+    await _store
+        .collection("workoutgroups")
+        .doc(workoutId)
+        .update({"isPublic": isPublic});
+    return;
+  }
+
+  /// Functin to toggle workout isActive
+  Future<void> toggleWorkoutActive(bool isActive, String workoutId) async {
+    await _store
+        .collection("workoutgroups")
+        .doc(workoutId)
+        .update({"isActive": isActive});
+    return;
+  }
+
+  /// Add a workout to group (allowing > 1 users)
+  Future<void> createGroupWorkout(WorkoutGroup group) async {
+    try {
+      await FirebaseFunctions.instanceFor(region: "asia-east2")
+          .httpsCallable("workout-createWorkoutGroup")
+          .call({"workoutGroup": group.toJson()});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /// Takes in id for workoutGroup document
+  Future<ResponseMessage> joinWorkout(String workoutGroupId) async {
+    var result;
+    try {
+      result = await _functions.httpsCallable("workout-joinWorkoutGroup").call({
+        "workoutGroupId": workoutGroupId,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    return ResponseMessage.fromJson(result.data);
+  }
+
+  /// Invite user to workout session
+  Future<ResponseMessage> inviteWorkout({
+    required String workoutGroupId,
+    required String userId,
+  }) async {
+    var result;
+    try {
+      result = await _functions.httpsCallable("workout-inviteWorkout").call({
+        "workoutGroupId": workoutGroupId,
+        "userId": userId,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    return ResponseMessage.fromJson(result.data);
+  }
+
+  /// Toggle workout (isActive) status
+  /// e.g. When workout has ended
+  Future<void> setWorkoutStatus({
+    required String workoutGroupId,
+    bool isActive = false,
+  }) async {
+    try {
+      _functions.httpsCallable("workout-setWorkoutStatus").call({
+        "workoutGroupId": workoutGroupId,
+        "isActive": isActive,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /// Fetch workout from user sub collection
+  Future<dynamic> fetchWorkout({
+    required String workoutId,
+    required creatorId,
+  }) async {
+    var result = await _store
+        .collection("users")
+        .doc(creatorId)
+        .collection("workouts")
+        .doc(workoutId)
+        .get();
+    // Determine if exercise is cycling / HIIT
+    if (!result.exists) {
+      return null;
+    }
+    var exercsie = Workout.fromJson(result.data()!);
+    if (exercsie.type == WorkoutType.CYCLING) {
+      return Cycling.fromJson(result.data()!);
+    }
+    if (exercsie.type == WorkoutType.HIIT) {
+      return HIIT.fromJson(result.data()!);
+    }
+    return null;
   }
 }

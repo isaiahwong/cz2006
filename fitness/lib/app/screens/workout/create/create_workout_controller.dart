@@ -3,9 +3,11 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
+import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
+import 'package:fitness/repo/social/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:formz/formz.dart';
@@ -70,7 +72,7 @@ class CreateWorkoutController extends GetxController
     panelController.close();
 
     final workoutIncrement = 0;
-    final workout;
+    final Workout workout;
     // Create initial workout
     if (this.type == WorkoutType.HIIT) {
       workout = await repo.createWorkout(HIIT(

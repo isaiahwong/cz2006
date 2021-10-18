@@ -52,14 +52,18 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: screenPadding,
-        child: Text(
-          "Waiting\nRoom",
-          style: Theme.of(context).textTheme.headline1!.copyWith(
-                color: black,
-                fontWeight: FontWeight.w900,
-                fontSize: 50,
-              ),
-        ),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(
+            "Waiting\nRoom",
+            style: Theme.of(context).textTheme.headline1!.copyWith(
+                  color: black,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 50,
+                ),
+          ),
+          _publicWorkoutSwitch()
+        ]),
       ),
     );
   }
@@ -91,6 +95,22 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _publicWorkoutSwitch() {
+    return Column(
+      children: [
+        Text(
+          "Public",
+          style: Get.theme.textTheme.headline6!.copyWith(color: black),
+        ),
+        CupertinoSwitch(
+          activeColor: primaryColor,
+          value: controller.isPublic,
+          onChanged: (value) => controller.togglePublicSwitch(value),
+        ),
+      ],
     );
   }
 

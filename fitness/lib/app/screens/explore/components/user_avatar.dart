@@ -20,11 +20,8 @@ class UserAvatar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ProfileImage(
-            imageProvider: NetworkImage(
-              profileImage.isEmpty
-                  ? "https://indianmemetemplates.com/wp-content/uploads/smug-pepe.jpg"
-                  : profileImage,
-            ),
+            imageProvider:
+                profileImage.isNotEmpty ? NetworkImage(profileImage) : null,
             size: size,
           ),
           SizedBox(height: 4),

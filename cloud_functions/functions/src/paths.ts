@@ -4,6 +4,7 @@
  */
 export class Collection {
     static users = "users";
+    // Workout > 1 person
     static workoutGroup = "workoutgroups";
 }
 
@@ -13,6 +14,7 @@ export class Collection {
 export class UserSubCollections {
     static friends = "friends";
     static workouts = "workouts";
-    static groupWorkouts = "groupworkouts";
+    // List of workouts from inviation
+    static workoutInvites = "workoutInvites";
     static invites = "invites"
 }

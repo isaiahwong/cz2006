@@ -35,6 +35,8 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   StreamSubscription? joinRoomSub;
   late final WaitingRoomType waitingRoomType;
 
+  bool _isPublic = false;
+
   WaitingRoomController({required this.panelController})
       : this.workoutRepo = WorkoutRepo.get(),
         this.cyclingRepo = CyclingRepo.get();
@@ -137,8 +139,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
 
   void onStartHIIT() async {
     if (users.length < 1) return;
-    // if (waitingRoomType == WaitingRoomType.HOST)
-    //   await workoutRepo.startWaitingRoom(hiit);
+    _publicFlag();
     Get.offAndToNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.DUO,
       hiit.copyWith(participants: users),
@@ -175,6 +176,25 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     update();
   }
 
+  /// Toggle isPublic switch
+  void togglePublicSwitch(bool result) {
+    _isPublic = result;
+    update();
+  }
+
+  void _publicFlag() {
+    String? workoutId;
+    if (!hiit.isBlank!) {
+      workoutId = hiit.id;
+    } else {
+      workoutId = cycling.id;
+    }
+    SocialRepo.to.toggleWorkoutPublic(
+      _isPublic,
+      workoutId,
+    );
+  }
+
   void onHostRoomStream(WaitingRoomResponse response) {
     //  Include host
     List<UserSnippet> users = [];
@@ -186,4 +206,6 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     this.users = users;
     update();
   }
+
+  bool get isPublic => _isPublic;
 }
