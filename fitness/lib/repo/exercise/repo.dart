@@ -34,9 +34,10 @@ class ExerciseRepo {
   Future<ResponseMessage> createGroupWorkout(WorkoutGroup group) async {
     var result;
     try {
-      result = await _functions
-          .httpsCallable("workout-createGroupWorkout")
-          .call(group.toJson());
+      result =
+          await _functions.httpsCallable("workout-createGroupWorkout").call({
+        "publicWorkout": group.toJson(),
+      });
     } catch (e) {
       print(e.toString());
     }
