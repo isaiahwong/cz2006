@@ -50,12 +50,12 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
 
     switch (waitingRoomType) {
       case WaitingRoomType.HOST:
-        workoutRepo.createWaitingRoom(workout);
+        hostRoomStream = workoutRepo.createWaitingRoom(workout);
         //cyclingRepo.createWaitingRoom(cycling);
         hostSub = hostRoomStream?.listen(onHostRoomStream);
         break;
       case WaitingRoomType.INVITEE:
-        workoutRepo.joinWaitingRoom(workout);
+        joinRoomStream = workoutRepo.joinWaitingRoom(workout);
         //cyclingRepo.joinWaitingRoom(cycling);
         joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
         break;
@@ -141,7 +141,6 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   void onJoinRoomStream(WaitingRoomResponse response) {
-    print("here");
     // include host
     List<UserSnippet> users = [
       UserSnippet(response.host.id, response.host.name, "")
