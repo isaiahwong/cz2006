@@ -2,6 +2,7 @@ import 'package:fitness/app/screens/explore/components/components.dart';
 import 'package:fitness/app/screens/explore/components/user_avatar.dart';
 import 'package:fitness/app/screens/explore/search_result_screen.dart';
 import 'package:fitness/app/screens/explore/explore.dart';
+import 'package:fitness/repo/repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -153,8 +154,9 @@ class SocialScreen extends StatelessWidget {
             : _.friendsLength,
         itemBuilder: (context, index) {
           if (index > maxFriends - 1) {
-            return ViewMore(() {
-              print("View more from friend listview");
+            return ViewMore(() async {
+              List<Friend> _users = await _.getAllFriends();
+              await Get.to(() => AllUsersScreen(_users, "All Friends"));
             });
           }
           var user = _.friends[index];
@@ -195,8 +197,9 @@ class SocialScreen extends StatelessWidget {
 
           /// Return more button added
           if (index == maxRequests) {
-            return ViewMore(() {
-              print("View more from request");
+            return ViewMore(() async {
+              List<Friend> _users = await _.getAllRequests();
+              Get.to(() => AllUsersScreen(_users, "Requests"));
             });
           }
           var requestDocument = _.requests[index];

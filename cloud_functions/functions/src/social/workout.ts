@@ -14,6 +14,7 @@ exports.createWorkoutGroup = functions
     .region(helper.FUNCTION_REGION)
     .https
     .onCall(async (data, context) => {
+      console.log("createWorkoutGroup()");
       // if (!context.auth) {
       //   throw new functions
       //       .https
@@ -31,7 +32,7 @@ exports.createWorkoutGroup = functions
           .firestore()
           .collection(p.Collection.workoutGroup);
 
-      await workoutGroupRef.add(workoutGroup);
+      await workoutGroupRef.doc(workoutGroup.workoutId).set(workoutGroup);
 
 
       return Promise.resolve();

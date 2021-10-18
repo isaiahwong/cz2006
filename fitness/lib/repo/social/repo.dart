@@ -190,11 +190,14 @@ class SocialRepo {
   /// true to set public, false to set private
   Future<void> toggleWorkoutPublic(bool isPublic, String workoutId) async {
     /// Set isPublic workout flag from workoutGroups path
-    await _store
-        .collection("workoutgroups")
-        .doc(workoutId)
-        .update({"isPublic": isPublic});
-    return;
+    try {
+      await _store
+          .collection("workoutgroups")
+          .doc(workoutId)
+          .update({"isPublic": isPublic});
+    } catch (e) {
+      print(e);
+    }
   }
 
   /// Functin to toggle workout isActive
@@ -209,7 +212,7 @@ class SocialRepo {
   /// Add a workout to group (allowing > 1 users)
   Future<void> createGroupWorkout(WorkoutGroup group) async {
     try {
-      await FirebaseFunctions.instanceFor(region: "asia-east2")
+      await _functions
           .httpsCallable("workout-createWorkoutGroup")
           .call({"workoutGroup": group.toJson()});
     } catch (e) {
