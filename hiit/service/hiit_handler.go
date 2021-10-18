@@ -176,7 +176,6 @@ func (svc *Service) HIITRoutineComplete(ctx context.Context, req *hiit.HIITReque
 	// reset highestUser
 	highestUser.User.Score = 0
 	return &hiit.Empty{}, nil
-
 }
 
 func (svc *Service) HIITIntervalComplete(ctx context.Context, req *hiit.HIITRequest) (*hiit.Empty, error) {

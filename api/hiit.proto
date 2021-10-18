@@ -122,4 +122,7 @@ service HIITService {
   rpc HIITRoutineComplete(HIITRequest) returns (Empty);
 
   rpc DuoHIITSelectRoutine(HIITRequest) returns (Empty);
+
+  rpc HIITWinnerSelectRoutine(HIITRequest) returns (Empty);
+
 }

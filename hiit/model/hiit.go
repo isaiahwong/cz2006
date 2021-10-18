@@ -8,9 +8,9 @@ type HIITSession struct {
 	HIITActivitySub chan (*hiit.HIITActivity)
 	// UserJoinSub     chan (*hiit.WorkoutUser)
 	// Ensures that scores are not assigned Twice
-	AssignedScore  map[string]string
-	Joined         int
-	PreviousWinner *HIITUserSession
+	AssignedScore map[string]string
+	Joined        int
+	Winner        *HIITUserSession
 }
 
 type HIITUserSession struct {
