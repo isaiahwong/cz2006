@@ -174,6 +174,7 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
               radius: 100,
               backgroundColor: red,
               textColor: Colors.white,
+              onPressed: controller.onHIITEnd,
             ),
           ],
         ),
