@@ -97,8 +97,8 @@ class Routine {
     );
   }
 
-  RoutineInterval? nextInterval(RoutineInterval? current) {
-    if (current == null) return current;
+  RoutineInterval? nextInterval({RoutineInterval? current}) {
+    if (current == null) return intervals.first;
     final i = intervals.indexWhere((r) => r.id == current.id);
     if (i == -1 || i == intervals.length - 1) return null;
     return intervals[i + 1].copyWith();

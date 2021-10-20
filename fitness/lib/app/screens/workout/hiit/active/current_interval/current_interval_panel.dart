@@ -45,7 +45,7 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
     final currentRoutine = controller.currentRoutine;
 
     final nextInterval =
-        controller.currentRoutine?.nextInterval(currentInterval);
+        controller.currentRoutine?.nextInterval(current: currentInterval);
     final nextRoutine = controller.hiit.nextRoutine(currentRoutine);
     final name =
         currentRoutine?.exercise.name ?? nextRoutine?.exercise.name ?? "";
@@ -128,11 +128,16 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
     ];
   }
 
+  List<Widget> _duoWinnerPage() {
+    return [
+      CurrentIntervalDuoRoutineSelection(),
+    ];
+  }
+
   List<Widget> _duoPages() {
     return [
       CurrentIntervalPanelWorking(),
       CurrentIntervalDuoWaiting(),
-      CurrentIntervalDuoRoutineSelection(),
       CurrentIntervalPanelRest(),
     ];
   }
@@ -161,6 +166,9 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
                         case ActiveHIITType.SINGLE:
                           return _pages()[index % 2];
                         case ActiveHIITType.DUO:
+                          if (controller.state is ActiveWorkoutComplete)
+                            return _duoWinnerPage()[0];
+                          print("index: $index");
                           return _duoPages()[index % 3];
                       }
                     },

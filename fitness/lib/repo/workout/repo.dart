@@ -127,6 +127,24 @@ class WorkoutRepo {
     );
   }
 
+  Future<void> duoHIITRoutineComplete(Routine routine) {
+    final user = UserController.get().user.value!;
+    return hiitClient.hIITRoutineComplete(
+      HIITRequest(
+        user: WorkoutUser(
+          email: user.email,
+          id: user.id,
+          name: user.name,
+        ),
+        hiit: routine.workout,
+        routine: HIITRoutine(
+          exercise: routine.exercise.id,
+          id: routine.id,
+        ),
+      ),
+    );
+  }
+
   Future<void> duoHIITIntervalComplete(
       Routine routine, RoutineInterval interval) {
     final user = UserController.get().user.value!;

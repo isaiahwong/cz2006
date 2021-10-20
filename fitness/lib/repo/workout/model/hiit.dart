@@ -95,7 +95,7 @@ class HIIT extends Workout {
       host: host ?? this.host,
       name: name ?? this.name,
       routines: List<Routine>.from(routines ?? this.routines).toList(),
-      participants: participants,
+      participants: participants ?? this.participants,
     );
   }
 
@@ -118,7 +118,7 @@ class HIIT extends Workout {
     return routines[i + 1].copyWith();
   }
 
-  bool isLastInterval(RoutineInterval interval) {
+  bool isLastRoutine(RoutineInterval interval) {
     for (int i = 0; i < routines.length; i++)
       if (!routines[i].isLastInterval(interval)) return false;
     return true;

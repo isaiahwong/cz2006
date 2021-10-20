@@ -71,7 +71,7 @@ class Cycling extends Workout {
       id: id ?? this.id,
       host: host ?? this.host,
       name: name ?? this.name,
-      participants: participants,
+      participants: participants ?? this.participants,
       course: List<Course>.from(course ?? this.course).toList(),
     );
   }

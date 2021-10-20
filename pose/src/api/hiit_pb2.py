@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\005hiit/',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"6\n\x04\x44\x61ta\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x10\n\x08interval\x18\x03 \x01(\t\"G\n\x0b\x44\x61taSession\x12\x18\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\n.hiit.Data\x12\x1e\n\x07session\x18\x02 \x01(\x0b\x32\r.hiit.Session\" \n\rRoutineChange\x12\x0f\n\x07routine\x18\x01 \x01(\t\"\'\n\x07Session\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\"E\n\x0bWorkoutUser\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\r\n\x05score\x18\x04 \x01(\x05\"L\n\x18\x43reateWaitingRoomRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x02 \x01(\t\"F\n\x12WaitingRoomRequest\x12\x1f\n\x04user\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x02 \x01(\t\"g\n\x13WaitingRoomResponse\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12 \n\x05users\x18\x02 \x03(\x0b\x32\x11.hiit.WorkoutUser\x12\r\n\x05start\x18\x03 \x01(\x08\"k\n\x18InviteWaitingRoomRequest\x12\x1f\n\x04\x66rom\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x1d\n\x02to\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x03 \x01(\t\"K\n\x17StartWaitingRoomRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x03 \x01(\t\"E\n\x14\x43reateDuoHIITRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"C\n\x12JoinDuoHIITRequest\x12\x1f\n\x04user\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"\xf7\x01\n\x0cHIITActivity\x12\x0c\n\x04hiit\x18\x01 \x01(\t\x12\x1f\n\x04user\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\"\n\x07routine\x18\x03 \x01(\x0b\x32\x11.hiit.HIITRoutine\x12%\n\x04type\x18\x04 \x01(\x0e\x32\x17.hiit.HIITActivity.Type\x12!\n\x06winner\x18\x05 \x01(\x0b\x32\x11.hiit.WorkoutUser\"J\n\x04Type\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x12\n\x0eROUTINE_CHANGE\x10\x01\x12\x15\n\x11INTERVAL_COMPLETE\x10\x02\x12\n\n\x06WINNER\x10\x03\"!\n\x13HIITRoutineInterval\x12\n\n\x02id\x18\x01 \x01(\t\"X\n\x0bHIITRoutine\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\x12+\n\x08interval\x18\x03 \x01(\x0b\x32\x19.hiit.HIITRoutineInterval\"`\n\x0bHIITRequest\x12\x0c\n\x04hiit\x18\x01 \x01(\t\x12\x1f\n\x04user\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\"\n\x07routine\x18\x03 \x01(\x0b\x32\x11.hiit.HIITRoutine2\xe4\x05\n\x0bHIITService\x12(\n\x03Sub\x12\x13.hiit.RoutineChange\x1a\n.hiit.Data0\x01\x12%\n\x03Pub\x12\x11.hiit.DataSession\x1a\x0b.hiit.Empty\x12P\n\x11\x43reateWaitingRoom\x12\x1e.hiit.CreateWaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12H\n\x0fJoinWaitingRoom\x12\x18.hiit.WaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12>\n\x10StartWaitingRoom\x12\x1d.hiit.StartWaitingRoomRequest\x1a\x0b.hiit.Empty\x12<\n\rNotifyInvites\x12\x1e.hiit.InviteWaitingRoomRequest\x1a\x0b.hiit.Empty\x12\x41\n\nSubInvites\x12\x11.hiit.WorkoutUser\x1a\x1e.hiit.InviteWaitingRoomRequest0\x01\x12\x41\n\rCreateDuoHIIT\x12\x1a.hiit.CreateDuoHIITRequest\x1a\x12.hiit.HIITActivity0\x01\x12=\n\x0bJoinDuoHIIT\x12\x18.hiit.JoinDuoHIITRequest\x1a\x12.hiit.HIITActivity0\x01\x12\x36\n\x14HIITIntervalComplete\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.Empty\x12\x35\n\x13HIITRoutineComplete\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.Empty\x12\x36\n\x14\x44uoHIITSelectRoutine\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.EmptyB\x07Z\x05hiit/b\x06proto3'
+  serialized_pb=b'\n\nhiit.proto\x12\x04hiit\"\x07\n\x05\x45mpty\"6\n\x04\x44\x61ta\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\x12\x10\n\x08interval\x18\x03 \x01(\t\"G\n\x0b\x44\x61taSession\x12\x18\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\n.hiit.Data\x12\x1e\n\x07session\x18\x02 \x01(\x0b\x32\r.hiit.Session\" \n\rRoutineChange\x12\x0f\n\x07routine\x18\x01 \x01(\t\"\'\n\x07Session\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\"T\n\x0bWorkoutUser\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\r\n\x05score\x18\x05 \x01(\x05\"L\n\x18\x43reateWaitingRoomRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x02 \x01(\t\"F\n\x12WaitingRoomRequest\x12\x1f\n\x04user\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x02 \x01(\t\"g\n\x13WaitingRoomResponse\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12 \n\x05users\x18\x02 \x03(\x0b\x32\x11.hiit.WorkoutUser\x12\r\n\x05start\x18\x03 \x01(\x08\"k\n\x18InviteWaitingRoomRequest\x12\x1f\n\x04\x66rom\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x1d\n\x02to\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x03 \x01(\t\"K\n\x17StartWaitingRoomRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0f\n\x07workout\x18\x03 \x01(\t\"E\n\x14\x43reateDuoHIITRequest\x12\x1f\n\x04host\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"C\n\x12JoinDuoHIITRequest\x12\x1f\n\x04user\x18\x01 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\x0c\n\x04hiit\x18\x02 \x01(\t\"\x8d\x02\n\x0cHIITActivity\x12\x0c\n\x04hiit\x18\x01 \x01(\t\x12\x1f\n\x04user\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\"\n\x07routine\x18\x03 \x01(\x0b\x32\x11.hiit.HIITRoutine\x12%\n\x04type\x18\x04 \x01(\x0e\x32\x17.hiit.HIITActivity.Type\x12!\n\x06winner\x18\x05 \x01(\x0b\x32\x11.hiit.WorkoutUser\"`\n\x04Type\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x12\n\x0eROUTINE_CHANGE\x10\x01\x12\x15\n\x11INTERVAL_COMPLETE\x10\x02\x12\x14\n\x10ROUTINE_COMPLETE\x10\x03\x12\n\n\x06WINNER\x10\x04\"!\n\x13HIITRoutineInterval\x12\n\n\x02id\x18\x01 \x01(\t\"X\n\x0bHIITRoutine\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x65xercise\x18\x02 \x01(\t\x12+\n\x08interval\x18\x03 \x01(\x0b\x32\x19.hiit.HIITRoutineInterval\"`\n\x0bHIITRequest\x12\x0c\n\x04hiit\x18\x01 \x01(\t\x12\x1f\n\x04user\x18\x02 \x01(\x0b\x32\x11.hiit.WorkoutUser\x12\"\n\x07routine\x18\x03 \x01(\x0b\x32\x11.hiit.HIITRoutine2\x9f\x06\n\x0bHIITService\x12(\n\x03Sub\x12\x13.hiit.RoutineChange\x1a\n.hiit.Data0\x01\x12%\n\x03Pub\x12\x11.hiit.DataSession\x1a\x0b.hiit.Empty\x12P\n\x11\x43reateWaitingRoom\x12\x1e.hiit.CreateWaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12H\n\x0fJoinWaitingRoom\x12\x18.hiit.WaitingRoomRequest\x1a\x19.hiit.WaitingRoomResponse0\x01\x12>\n\x10StartWaitingRoom\x12\x1d.hiit.StartWaitingRoomRequest\x1a\x0b.hiit.Empty\x12<\n\rNotifyInvites\x12\x1e.hiit.InviteWaitingRoomRequest\x1a\x0b.hiit.Empty\x12\x41\n\nSubInvites\x12\x11.hiit.WorkoutUser\x1a\x1e.hiit.InviteWaitingRoomRequest0\x01\x12\x41\n\rCreateDuoHIIT\x12\x1a.hiit.CreateDuoHIITRequest\x1a\x12.hiit.HIITActivity0\x01\x12=\n\x0bJoinDuoHIIT\x12\x18.hiit.JoinDuoHIITRequest\x1a\x12.hiit.HIITActivity0\x01\x12\x36\n\x14HIITIntervalComplete\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.Empty\x12\x35\n\x13HIITRoutineComplete\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.Empty\x12\x36\n\x14\x44uoHIITSelectRoutine\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.Empty\x12\x39\n\x17HIITWinnerSelectRoutine\x12\x11.hiit.HIITRequest\x1a\x0b.hiit.EmptyB\x07Z\x05hiit/b\x06proto3'
 )
 
 
@@ -47,15 +47,20 @@ _HIITACTIVITY_TYPE = _descriptor.EnumDescriptor(
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='WINNER', index=3, number=3,
+      name='ROUTINE_COMPLETE', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='WINNER', index=4, number=4,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1059,
-  serialized_end=1133,
+  serialized_start=1074,
+  serialized_end=1170,
 )
 _sym_db.RegisterEnumDescriptor(_HIITACTIVITY_TYPE)
 
@@ -257,22 +262,29 @@ _WORKOUTUSER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='name', full_name='hiit.WorkoutUser.name', index=1,
+      name='image', full_name='hiit.WorkoutUser.image', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='email', full_name='hiit.WorkoutUser.email', index=2,
+      name='name', full_name='hiit.WorkoutUser.name', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='score', full_name='hiit.WorkoutUser.score', index=3,
-      number=4, type=5, cpp_type=1, label=1,
+      name='email', full_name='hiit.WorkoutUser.email', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='score', full_name='hiit.WorkoutUser.score', index=4,
+      number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -290,7 +302,7 @@ _WORKOUTUSER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=233,
-  serialized_end=302,
+  serialized_end=317,
 )
 
 
@@ -328,8 +340,8 @@ _CREATEWAITINGROOMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=304,
-  serialized_end=380,
+  serialized_start=319,
+  serialized_end=395,
 )
 
 
@@ -367,8 +379,8 @@ _WAITINGROOMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=382,
-  serialized_end=452,
+  serialized_start=397,
+  serialized_end=467,
 )
 
 
@@ -413,8 +425,8 @@ _WAITINGROOMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=454,
-  serialized_end=557,
+  serialized_start=469,
+  serialized_end=572,
 )
 
 
@@ -459,8 +471,8 @@ _INVITEWAITINGROOMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=559,
-  serialized_end=666,
+  serialized_start=574,
+  serialized_end=681,
 )
 
 
@@ -498,8 +510,8 @@ _STARTWAITINGROOMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=668,
-  serialized_end=743,
+  serialized_start=683,
+  serialized_end=758,
 )
 
 
@@ -537,8 +549,8 @@ _CREATEDUOHIITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=745,
-  serialized_end=814,
+  serialized_start=760,
+  serialized_end=829,
 )
 
 
@@ -576,8 +588,8 @@ _JOINDUOHIITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=816,
-  serialized_end=883,
+  serialized_start=831,
+  serialized_end=898,
 )
 
 
@@ -637,8 +649,8 @@ _HIITACTIVITY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=886,
-  serialized_end=1133,
+  serialized_start=901,
+  serialized_end=1170,
 )
 
 
@@ -669,8 +681,8 @@ _HIITROUTINEINTERVAL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1135,
-  serialized_end=1168,
+  serialized_start=1172,
+  serialized_end=1205,
 )
 
 
@@ -715,8 +727,8 @@ _HIITROUTINE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1170,
-  serialized_end=1258,
+  serialized_start=1207,
+  serialized_end=1295,
 )
 
 
@@ -761,8 +773,8 @@ _HIITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1260,
-  serialized_end=1356,
+  serialized_start=1297,
+  serialized_end=1393,
 )
 
 _DATASESSION.fields_by_name['data'].message_type = _DATA
@@ -932,8 +944,8 @@ _HIITSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1359,
-  serialized_end=2099,
+  serialized_start=1396,
+  serialized_end=2195,
   methods=[
   _descriptor.MethodDescriptor(
     name='Sub',
@@ -1049,6 +1061,16 @@ _HIITSERVICE = _descriptor.ServiceDescriptor(
     name='DuoHIITSelectRoutine',
     full_name='hiit.HIITService.DuoHIITSelectRoutine',
     index=11,
+    containing_service=None,
+    input_type=_HIITREQUEST,
+    output_type=_EMPTY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HIITWinnerSelectRoutine',
+    full_name='hiit.HIITService.HIITWinnerSelectRoutine',
+    index=12,
     containing_service=None,
     input_type=_HIITREQUEST,
     output_type=_EMPTY,

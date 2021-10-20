@@ -180,7 +180,8 @@ class CurrentIntervalPanelWorking extends GetView<ActiveHIITController> {
   }
 
   Widget _addSetBtn(BuildContext context) {
-    if (controller.currentRoutine?.nextInterval(controller.currentInterval) !=
+    if (controller.currentRoutine
+            ?.nextInterval(current: controller.currentInterval) !=
         null) return SizedBox.shrink();
 
     return CustomButton(

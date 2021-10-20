@@ -64,14 +64,15 @@ const WorkoutUser$json = const {
   '1': 'WorkoutUser',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'email', '3': 3, '4': 1, '5': 9, '10': 'email'},
-    const {'1': 'score', '3': 4, '4': 1, '5': 5, '10': 'score'},
+    const {'1': 'image', '3': 2, '4': 1, '5': 9, '10': 'image'},
+    const {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'email', '3': 4, '4': 1, '5': 9, '10': 'email'},
+    const {'1': 'score', '3': 5, '4': 1, '5': 5, '10': 'score'},
   ],
 };
 
 /// Descriptor for `WorkoutUser`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List workoutUserDescriptor = $convert.base64Decode('CgtXb3Jrb3V0VXNlchIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIUCgVlbWFpbBgDIAEoCVIFZW1haWwSFAoFc2NvcmUYBCABKAVSBXNjb3Jl');
+final $typed_data.Uint8List workoutUserDescriptor = $convert.base64Decode('CgtXb3Jrb3V0VXNlchIOCgJpZBgBIAEoCVICaWQSFAoFaW1hZ2UYAiABKAlSBWltYWdlEhIKBG5hbWUYAyABKAlSBG5hbWUSFAoFZW1haWwYBCABKAlSBWVtYWlsEhQKBXNjb3JlGAUgASgFUgVzY29yZQ==');
 @$core.Deprecated('Use createWaitingRoomRequestDescriptor instead')
 const CreateWaitingRoomRequest$json = const {
   '1': 'CreateWaitingRoomRequest',
@@ -171,12 +172,13 @@ const HIITActivity_Type$json = const {
     const {'1': 'UNKNOWN', '2': 0},
     const {'1': 'ROUTINE_CHANGE', '2': 1},
     const {'1': 'INTERVAL_COMPLETE', '2': 2},
-    const {'1': 'WINNER', '2': 3},
+    const {'1': 'ROUTINE_COMPLETE', '2': 3},
+    const {'1': 'WINNER', '2': 4},
   ],
 };
 
 /// Descriptor for `HIITActivity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hIITActivityDescriptor = $convert.base64Decode('CgxISUlUQWN0aXZpdHkSEgoEaGlpdBgBIAEoCVIEaGlpdBIlCgR1c2VyGAIgASgLMhEuaGlpdC5Xb3Jrb3V0VXNlclIEdXNlchIrCgdyb3V0aW5lGAMgASgLMhEuaGlpdC5ISUlUUm91dGluZVIHcm91dGluZRIrCgR0eXBlGAQgASgOMhcuaGlpdC5ISUlUQWN0aXZpdHkuVHlwZVIEdHlwZRIpCgZ3aW5uZXIYBSABKAsyES5oaWl0LldvcmtvdXRVc2VyUgZ3aW5uZXIiSgoEVHlwZRILCgdVTktOT1dOEAASEgoOUk9VVElORV9DSEFOR0UQARIVChFJTlRFUlZBTF9DT01QTEVURRACEgoKBldJTk5FUhAD');
+final $typed_data.Uint8List hIITActivityDescriptor = $convert.base64Decode('CgxISUlUQWN0aXZpdHkSEgoEaGlpdBgBIAEoCVIEaGlpdBIlCgR1c2VyGAIgASgLMhEuaGlpdC5Xb3Jrb3V0VXNlclIEdXNlchIrCgdyb3V0aW5lGAMgASgLMhEuaGlpdC5ISUlUUm91dGluZVIHcm91dGluZRIrCgR0eXBlGAQgASgOMhcuaGlpdC5ISUlUQWN0aXZpdHkuVHlwZVIEdHlwZRIpCgZ3aW5uZXIYBSABKAsyES5oaWl0LldvcmtvdXRVc2VyUgZ3aW5uZXIiYAoEVHlwZRILCgdVTktOT1dOEAASEgoOUk9VVElORV9DSEFOR0UQARIVChFJTlRFUlZBTF9DT01QTEVURRACEhQKEFJPVVRJTkVfQ09NUExFVEUQAxIKCgZXSU5ORVIQBA==');
 @$core.Deprecated('Use hIITRoutineIntervalDescriptor instead')
 const HIITRoutineInterval$json = const {
   '1': 'HIITRoutineInterval',

@@ -29,9 +29,10 @@ message Session {
 
 message WorkoutUser {
   string id = 1;
-  string name = 2;
-  string email = 3;
-  int32 score = 4;
+  string image = 2;
+  string name = 3;
+  string email = 4;
+  int32 score = 5;
 }
 
 message CreateWaitingRoomRequest {
@@ -76,7 +77,8 @@ message HIITActivity {
     UNKNOWN = 0;
     ROUTINE_CHANGE = 1;
     INTERVAL_COMPLETE = 2;
-    WINNER = 3;
+    ROUTINE_COMPLETE = 3;
+    WINNER = 4;
   }
   string hiit = 1;
   WorkoutUser user = 2;

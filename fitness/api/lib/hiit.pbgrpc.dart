@@ -75,6 +75,11 @@ class HIITServiceClient extends $grpc.Client {
           '/hiit.HIITService/DuoHIITSelectRoutine',
           ($0.HIITRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$hIITWinnerSelectRoutine =
+      $grpc.ClientMethod<$0.HIITRequest, $0.Empty>(
+          '/hiit.HIITService/HIITWinnerSelectRoutine',
+          ($0.HIITRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   HIITServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -157,6 +162,12 @@ class HIITServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Empty> duoHIITSelectRoutine($0.HIITRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$duoHIITSelectRoutine, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Empty> hIITWinnerSelectRoutine($0.HIITRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$hIITWinnerSelectRoutine, request,
+        options: options);
   }
 }
 
@@ -256,6 +267,13 @@ abstract class HIITServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.HIITRequest.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HIITRequest, $0.Empty>(
+        'HIITWinnerSelectRoutine',
+        hIITWinnerSelectRoutine_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.HIITRequest.fromBuffer(value),
+        ($0.Empty value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.Data> sub_Pre(
@@ -320,6 +338,11 @@ abstract class HIITServiceBase extends $grpc.Service {
     return duoHIITSelectRoutine(call, await request);
   }
 
+  $async.Future<$0.Empty> hIITWinnerSelectRoutine_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HIITRequest> request) async {
+    return hIITWinnerSelectRoutine(call, await request);
+  }
+
   $async.Stream<$0.Data> sub($grpc.ServiceCall call, $0.RoutineChange request);
   $async.Future<$0.Empty> pub($grpc.ServiceCall call, $0.DataSession request);
   $async.Stream<$0.WaitingRoomResponse> createWaitingRoom(
@@ -341,5 +364,7 @@ abstract class HIITServiceBase extends $grpc.Service {
   $async.Future<$0.Empty> hIITRoutineComplete(
       $grpc.ServiceCall call, $0.HIITRequest request);
   $async.Future<$0.Empty> duoHIITSelectRoutine(
+      $grpc.ServiceCall call, $0.HIITRequest request);
+  $async.Future<$0.Empty> hIITWinnerSelectRoutine(
       $grpc.ServiceCall call, $0.HIITRequest request);
 }

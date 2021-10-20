@@ -74,6 +74,11 @@ class HIITServiceStub(object):
             request_serializer=hiit__pb2.HIITRequest.SerializeToString,
             response_deserializer=hiit__pb2.Empty.FromString,
         )
+        self.HIITWinnerSelectRoutine = channel.unary_unary(
+            '/hiit.HIITService/HIITWinnerSelectRoutine',
+            request_serializer=hiit__pb2.HIITRequest.SerializeToString,
+            response_deserializer=hiit__pb2.Empty.FromString,
+        )
 
 
 class HIITServiceServicer(object):
@@ -151,6 +156,12 @@ class HIITServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def HIITWinnerSelectRoutine(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HIITServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -211,6 +222,11 @@ def add_HIITServiceServicer_to_server(servicer, server):
         ),
         'DuoHIITSelectRoutine': grpc.unary_unary_rpc_method_handler(
             servicer.DuoHIITSelectRoutine,
+            request_deserializer=hiit__pb2.HIITRequest.FromString,
+            response_serializer=hiit__pb2.Empty.SerializeToString,
+        ),
+        'HIITWinnerSelectRoutine': grpc.unary_unary_rpc_method_handler(
+            servicer.HIITWinnerSelectRoutine,
             request_deserializer=hiit__pb2.HIITRequest.FromString,
             response_serializer=hiit__pb2.Empty.SerializeToString,
         ),
@@ -424,6 +440,23 @@ class HIITService(object):
                              timeout=None,
                              metadata=None):
         return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/DuoHIITSelectRoutine',
+                                             hiit__pb2.HIITRequest.SerializeToString,
+                                             hiit__pb2.Empty.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def HIITWinnerSelectRoutine(request,
+                                target,
+                                options=(),
+                                channel_credentials=None,
+                                call_credentials=None,
+                                insecure=False,
+                                compression=None,
+                                wait_for_ready=None,
+                                timeout=None,
+                                metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hiit.HIITService/HIITWinnerSelectRoutine',
                                              hiit__pb2.HIITRequest.SerializeToString,
                                              hiit__pb2.Empty.FromString,
                                              options, channel_credentials,

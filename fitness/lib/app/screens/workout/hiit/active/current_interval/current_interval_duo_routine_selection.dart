@@ -14,17 +14,45 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: screenPadding,
-        child: Column(children: [
-          Text(
-            "Winner 🎉",
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  color: black,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 50,
+        child: UserController.get().user.value!.id == controller.winner!.id
+            ? Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "You are \nthe Winner 🎉",
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: black,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 40,
+                      ),
                 ),
-          ),
-          UserImage(user: controller.winner),
-        ]),
+              )
+            : Column(
+                children: [
+                  Text(
+                    "Winner 🎉",
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          color: black,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 50,
+                        ),
+                  ),
+                  SizedBox(height: 20),
+                  Column(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        child: UserImage(user: controller.winner),
+                      ),
+                      Text(
+                        controller.winner!.name,
+                        style:
+                            Theme.of(context).textTheme.headline5!.copyWith(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
       ),
     );
   }
@@ -62,6 +90,7 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
     return _item(
       context,
       title: routine.exercise.name,
+      onPressed: () => controller.onDouRoutineWinnerSelection(routine),
       trailing: Row(
         children: [
           Text(
@@ -86,8 +115,7 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
     );
   }
 
-  Widget body(BuildContext context) {
-    print(controller.hiit.getIncompleteRoutines());
+  Widget winnerView(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: screenPadding,
@@ -109,6 +137,58 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
     );
   }
 
+  Widget standardView(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: screenPadding.copyWith(
+          left: 20,
+          right: 20,
+        ),
+        child: Center(
+          child: Text(
+            "Waiting for ${controller.winner!.name} to select workout",
+            style: Theme.of(context).textTheme.headline4,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _end(BuildContext context) {
+    final width = MediaQuery.of(context).size.width * 0.8;
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: screenPadding,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "HIIT workout ended! 🎉🎉🎉",
+              style: Theme.of(context).textTheme.headline3,
+            ),
+            SizedBox(height: 20),
+            CustomButton(
+              "End",
+              width: width,
+              radius: 100,
+              backgroundColor: red,
+              textColor: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget body(BuildContext context) {
+    if (controller.hiit.getIncompleteRoutines().isEmpty) return _end(context);
+
+    return controller.winner!.id == UserController.get().user.value!.id
+        ? winnerView(context)
+        : standardView(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,7 +197,7 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
         slivers: [
           _title(context),
           SliverToBoxAdapter(
-            child: SizedBox(height: 80),
+            child: SizedBox(height: 40),
           ),
           body(context),
         ],

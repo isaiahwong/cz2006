@@ -13,12 +13,14 @@ class HIITActivity_Type extends $pb.ProtobufEnum {
   static const HIITActivity_Type UNKNOWN = HIITActivity_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
   static const HIITActivity_Type ROUTINE_CHANGE = HIITActivity_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROUTINE_CHANGE');
   static const HIITActivity_Type INTERVAL_COMPLETE = HIITActivity_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INTERVAL_COMPLETE');
-  static const HIITActivity_Type WINNER = HIITActivity_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WINNER');
+  static const HIITActivity_Type ROUTINE_COMPLETE = HIITActivity_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROUTINE_COMPLETE');
+  static const HIITActivity_Type WINNER = HIITActivity_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WINNER');
 
   static const $core.List<HIITActivity_Type> values = <HIITActivity_Type> [
     UNKNOWN,
     ROUTINE_CHANGE,
     INTERVAL_COMPLETE,
+    ROUTINE_COMPLETE,
     WINNER,
   ];
 

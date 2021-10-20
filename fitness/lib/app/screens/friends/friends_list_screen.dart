@@ -43,7 +43,7 @@ class FriendsListScreen extends GetView<FriendsController> {
       shape:
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       pinned: true,
-      toolbarHeight: 22.0,
+      toolbarHeight: 50.0,
       backgroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
         title: Padding(

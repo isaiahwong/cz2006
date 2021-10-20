@@ -98,26 +98,26 @@ class ActiveHIITController extends GetxController {
       isHost = true;
       // Create HIIT session
       hostHIITStream = workoutRepo.createDuoHIIT(hiit);
-      hostSub = hostHIITStream!.listen(onHIITHostActivity);
+      hostSub = hostHIITStream!.listen(onHIITActivity);
     } else {
       // join room if not
       isHost = false;
       joinHIITStream = workoutRepo.joinDuoHIIT(hiit);
-      joinRoomSub = joinHIITStream!.listen(onHIITInviteeActivity);
+      joinRoomSub = joinHIITStream!.listen(onHIITActivity);
     }
   }
 
-  /// Host handler
-  void onHIITHostActivity(HIITActivity activity) {
-    switch (activity.type) {
-      case HIITActivity_Type.INTERVAL_COMPLETE:
-        onParticipantIntervalCompleted(activity);
-        break;
-    }
-  }
+  // /// Host handler
+  // void onHIITHostActivity(HIITActivity activity) {
+  //   switch (activity.type) {
+  //     case HIITActivity_Type.INTERVAL_COMPLETE:
+  //       onParticipantIntervalCompleted(activity);
+  //       break;
+  //   }
+  // }
 
   /// Users who join room handler
-  void onHIITInviteeActivity(HIITActivity activity) {
+  void onHIITActivity(HIITActivity activity) {
     switch (activity.type) {
       case HIITActivity_Type.ROUTINE_CHANGE:
         onDUORoutineChange(activity);
@@ -125,11 +125,17 @@ class ActiveHIITController extends GetxController {
       case HIITActivity_Type.INTERVAL_COMPLETE:
         onParticipantIntervalCompleted(activity);
         break;
+      case HIITActivity_Type.ROUTINE_COMPLETE:
+        onParticipantRoutineComplete(activity);
+        break;
     }
   }
 
   // The function changes routines automatically
   void onDUORoutineChange(HIITActivity activity) {
+    // ignore if its invoked by current user
+    // if (activity.user.id == UserController.get().user.value!.id) return;
+    state = ActiveWorkoutWorking();
     final routine = hiit.getRoutine(activity.routine.id);
     if (routine == null) return;
     final interval = routine.getInterval(activity.routine.interval.id);
@@ -141,6 +147,7 @@ class ActiveHIITController extends GetxController {
     update();
   }
 
+  /// pose net stream
   void onHIITStream(Data data) {
     currentReps = data.count;
     update();
@@ -198,8 +205,7 @@ class ActiveHIITController extends GetxController {
     if (activeHIITType == ActiveHIITType.DUO) {
       if (!isHost) return;
       await workoutRepo.duoHIITSelectRoutine(routine, interval);
-      // for duo
-      startPose();
+      return;
     }
     currentInterval = interval;
     currentRoutine = routine;
@@ -216,26 +222,27 @@ class ActiveHIITController extends GetxController {
     );
     currentInterval = interval.copyWith();
 
-    // Update server
-    await workoutRepo.duoHIITIntervalComplete(currentRoutine!, interval);
-
     // Update current interval
     _updateWorkout(interval: interval);
-    // return complete
-    if (hiit.isLastInterval(interval)) {
-      state = ActiveWorkoutComplete();
-      return;
-    }
 
-    state = ActiveWorkoutWait();
-    // Increment page
-    page += 1;
-
-    // Navigate to wait room
-    if (usersCompleted.length != hiit.participants.length) {
-      pageController.animateToPage(page,
+    // Navigate to waiting room when not everyone has completed
+    if (!allUsersCompleted()) {
+      pageController.animateToPage(1,
           duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     }
+
+    // This has to be called last in the event onParticipantInteval gets called first
+    await workoutRepo.duoHIITIntervalComplete(currentRoutine!, interval);
+    update();
+  }
+
+  void onParticipantRoutineComplete(HIITActivity activity) {
+    // This might be null grpc has no support for null safety yet
+    winner = UserSnippet(activity.winner.id, activity.winner.name, "");
+    state = ActiveWorkoutComplete();
+    // We increment index to prepare for next set of duoPages
+    pageController.animateToPage(0,
+        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     update();
   }
 
@@ -247,16 +254,25 @@ class ActiveHIITController extends GetxController {
       usersCompleted.add(UserSnippet(user.id, user.name, ""));
 
     // Check if all participants completed
-    if (currentInterval!.currentLog.completed && usersAllCompleted()) {
+    if (currentInterval!.currentLog.completed && allUsersCompleted()) {
       usersCompleted = [];
-      // onRest();
-      // Navigate to winner page
-      pageController.animateToPage(++page,
-          duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+      if (currentRoutine!.isLastInterval(currentInterval!)) {
+        // Only host notifies server
+        if (isHost) workoutRepo.duoHIITRoutineComplete(currentRoutine!);
+
+        return;
+      }
+
+      onRest();
     }
   }
 
-  bool usersAllCompleted() {
+  void onDouRoutineWinnerSelection(Routine nextRoutine) async {
+    await workoutRepo.duoHIITSelectRoutine(
+        nextRoutine, nextRoutine.getCurrentInterval()!);
+  }
+
+  bool allUsersCompleted() {
     return usersCompleted.length == hiit.participants.length;
   }
 
@@ -271,19 +287,27 @@ class ActiveHIITController extends GetxController {
     _updateWorkout(interval: interval);
 
     // return complete
-    if (hiit.isLastInterval(interval)) {
+    if (hiit.isLastRoutine(interval)) {
       state = ActiveWorkoutComplete();
       return;
     }
 
     onRest();
 
-    pageController.animateToPage(++page,
-        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     update();
   }
 
   void onRest() {
+    switch (activeHIITType) {
+      case ActiveHIITType.DUO:
+        pageController.animateToPage(2,
+            duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+        break;
+      case ActiveHIITType.SINGLE:
+        pageController.animateToPage(1,
+            duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+        break;
+    }
     // update state
     state = ActiveWorkoutRest();
     // Start rest timer
@@ -310,27 +334,23 @@ class ActiveHIITController extends GetxController {
 
   void _onDuoNext() {
     RoutineInterval? nextInterval =
-        currentRoutine!.nextInterval(currentInterval);
-
+        currentRoutine!.nextInterval(current: currentInterval);
     // Attempt to get next routine if next interval is null
-    if (nextInterval == null) {
-      final nextRoutine = hiit.nextRoutine(currentRoutine);
-      // end fn call if both next routine and interval is null
-      if (nextRoutine == null) return;
-
-      // TODO show case next routine to choose from
-      nextInterval = nextRoutine.getCurrentInterval();
+    // assume routine is set by winner
+    if (nextInterval == null && currentRoutine == null) {
+      nextInterval = currentRoutine!.getCurrentInterval();
       if (nextInterval == null) return;
-
-      currentRoutine = nextRoutine.copyWith();
     }
-    currentInterval = nextInterval.copyWith();
+    currentInterval = nextInterval!.copyWith();
 
     startPose();
 
     fullscreenController.open();
-    pageController.animateToPage(++page,
-        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+    pageController.animateToPage(
+      0,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+    );
     state = ActiveWorkoutWorking();
     update();
   }
@@ -342,7 +362,8 @@ class ActiveHIITController extends GetxController {
 
     if (interval == null && currentRoutine == null) return;
 
-    RoutineInterval? nextInterval = currentRoutine!.nextInterval(_interval);
+    RoutineInterval? nextInterval =
+        currentRoutine!.nextInterval(current: _interval);
 
     // Attempt to get next routine if next interval is null
     if (nextInterval == null) {
@@ -361,7 +382,7 @@ class ActiveHIITController extends GetxController {
     startPose();
 
     fullscreenController.open();
-    pageController.animateToPage(++page,
+    pageController.animateToPage(0,
         duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     state = ActiveWorkoutWorking();
     update();
@@ -381,6 +402,7 @@ class ActiveHIITController extends GetxController {
     }
 
     hiit = hiit.updateRoutine(routine!);
+    currentRoutine = routine;
     update();
   }
 

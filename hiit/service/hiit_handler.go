@@ -170,7 +170,7 @@ func (svc *Service) HIITRoutineComplete(ctx context.Context, req *hiit.HIITReque
 		User:    user,
 		Routine: routine,
 		Winner:  highestUser.User,
-		Type:    hiit.HIITActivity_INTERVAL_COMPLETE,
+		Type:    hiit.HIITActivity_ROUTINE_COMPLETE,
 	}
 
 	// reset highestUser

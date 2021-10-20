@@ -29,6 +29,7 @@ type HIITServiceClient interface {
 	HIITIntervalComplete(ctx context.Context, in *HIITRequest, opts ...grpc.CallOption) (*Empty, error)
 	HIITRoutineComplete(ctx context.Context, in *HIITRequest, opts ...grpc.CallOption) (*Empty, error)
 	DuoHIITSelectRoutine(ctx context.Context, in *HIITRequest, opts ...grpc.CallOption) (*Empty, error)
+	HIITWinnerSelectRoutine(ctx context.Context, in *HIITRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type hIITServiceClient struct {
@@ -285,6 +286,15 @@ func (c *hIITServiceClient) DuoHIITSelectRoutine(ctx context.Context, in *HIITRe
 	return out, nil
 }
 
+func (c *hIITServiceClient) HIITWinnerSelectRoutine(ctx context.Context, in *HIITRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/hiit.HIITService/HIITWinnerSelectRoutine", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HIITServiceServer is the server API for HIITService service.
 // All implementations must embed UnimplementedHIITServiceServer
 // for forward compatibility
@@ -301,6 +311,7 @@ type HIITServiceServer interface {
 	HIITIntervalComplete(context.Context, *HIITRequest) (*Empty, error)
 	HIITRoutineComplete(context.Context, *HIITRequest) (*Empty, error)
 	DuoHIITSelectRoutine(context.Context, *HIITRequest) (*Empty, error)
+	HIITWinnerSelectRoutine(context.Context, *HIITRequest) (*Empty, error)
 	mustEmbedUnimplementedHIITServiceServer()
 }
 
@@ -343,6 +354,9 @@ func (UnimplementedHIITServiceServer) HIITRoutineComplete(context.Context, *HIIT
 }
 func (UnimplementedHIITServiceServer) DuoHIITSelectRoutine(context.Context, *HIITRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DuoHIITSelectRoutine not implemented")
+}
+func (UnimplementedHIITServiceServer) HIITWinnerSelectRoutine(context.Context, *HIITRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HIITWinnerSelectRoutine not implemented")
 }
 func (UnimplementedHIITServiceServer) mustEmbedUnimplementedHIITServiceServer() {}
 
@@ -591,6 +605,24 @@ func _HIITService_DuoHIITSelectRoutine_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HIITService_HIITWinnerSelectRoutine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HIITRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HIITServiceServer).HIITWinnerSelectRoutine(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/hiit.HIITService/HIITWinnerSelectRoutine",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HIITServiceServer).HIITWinnerSelectRoutine(ctx, req.(*HIITRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _HIITService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "hiit.HIITService",
 	HandlerType: (*HIITServiceServer)(nil),
@@ -618,6 +650,10 @@ var _HIITService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DuoHIITSelectRoutine",
 			Handler:    _HIITService_DuoHIITSelectRoutine_Handler,
+		},
+		{
+			MethodName: "HIITWinnerSelectRoutine",
+			Handler:    _HIITService_HIITWinnerSelectRoutine_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -14,8 +14,8 @@ class CurrentIntervalPanelHeader extends GetView<ActiveHIITController> {
 
   Widget restWorkoutBar(BuildContext context) {
     if (controller.currentInterval == null) return SizedBox.shrink();
-    final next =
-        controller.currentRoutine?.nextInterval(controller.currentInterval);
+    final next = controller.currentRoutine
+        ?.nextInterval(current: controller.currentInterval);
     final nextRoutine = controller.hiit.nextRoutine(controller.currentRoutine);
     final name = controller.currentRoutine?.exercise.name ??
         nextRoutine?.exercise.name ??
