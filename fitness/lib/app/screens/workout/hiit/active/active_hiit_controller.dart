@@ -103,7 +103,7 @@ class ActiveHIITController extends GetxController {
       // join room if not
       isHost = false;
       joinHIITStream = workoutRepo.joinDuoHIIT(hiit);
-      joinRoomSub = joinHIITStream!.listen(onHIITJoinActivity);
+      joinRoomSub = joinHIITStream!.listen(onHIITInviteeActivity);
     }
   }
 
@@ -117,7 +117,7 @@ class ActiveHIITController extends GetxController {
   }
 
   /// Users who join room handler
-  void onHIITJoinActivity(HIITActivity activity) {
+  void onHIITInviteeActivity(HIITActivity activity) {
     switch (activity.type) {
       case HIITActivity_Type.ROUTINE_CHANGE:
         onDUORoutineChange(activity);
@@ -241,7 +241,7 @@ class ActiveHIITController extends GetxController {
 
   void onParticipantIntervalCompleted(HIITActivity activity) {
     final user = activity.user;
-    print(user.score);
+
     // Don't add current user
     if (user.id != UserController.get().user.value!.id)
       usersCompleted.add(UserSnippet(user.id, user.name, ""));
@@ -249,8 +249,8 @@ class ActiveHIITController extends GetxController {
     // Check if all participants completed
     if (currentInterval!.currentLog.completed && usersAllCompleted()) {
       usersCompleted = [];
-      onRest();
-      // Navigate to rest
+      // onRest();
+      // Navigate to winner page
       pageController.animateToPage(++page,
           duration: Duration(milliseconds: 400), curve: Curves.easeIn);
     }

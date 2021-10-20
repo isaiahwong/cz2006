@@ -130,9 +130,9 @@ class CurrentIntervalPanel extends GetView<ActiveHIITController> {
 
   List<Widget> _duoPages() {
     return [
-      CurrentIntervalDuoRoutineSelection(),
       CurrentIntervalPanelWorking(),
       CurrentIntervalDuoWaiting(),
+      CurrentIntervalDuoRoutineSelection(),
       CurrentIntervalPanelRest(),
     ];
   }
