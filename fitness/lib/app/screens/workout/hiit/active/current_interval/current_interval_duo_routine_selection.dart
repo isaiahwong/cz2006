@@ -29,7 +29,7 @@ class CurrentIntervalDuoRoutineSelection extends GetView<ActiveHIITController> {
             : Column(
                 children: [
                   Text(
-                    "Winner 🎉",
+                    "Winner is",
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           color: black,
                           fontWeight: FontWeight.w900,

@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get/instance_manager.dart';
 
 import 'model.dart';
 
@@ -15,6 +18,10 @@ class UserRepo {
   String get id => _id;
 
   set id(String id) => _id = id;
+
+  factory UserRepo.get() {
+    return Get.find<UserRepo>();
+  }
 
   UserRepo() : _store = FirebaseFirestore.instance {
     collection = FirebaseFirestore.instance.collection('users');

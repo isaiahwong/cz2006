@@ -19,6 +19,8 @@ import 'package:fitness/app/theme/theme.dart';
 import 'package:grpc/grpc.dart';
 import 'package:hiit_api/hiit.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -68,6 +70,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigatorKey,
       builder: (context, widget) => widget,
       theme: theme(context),
       title: "SoFit",
