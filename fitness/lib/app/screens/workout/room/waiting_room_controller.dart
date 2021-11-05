@@ -62,6 +62,21 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     }
   }
 
+  void createWaitingRoom() {
+    switch (waitingRoomType) {
+      case WaitingRoomType.HOST:
+        hostRoomStream = workoutRepo.createWaitingRoom(workout);
+        //cyclingRepo.createWaitingRoom(cycling);
+        hostSub = hostRoomStream?.listen(onHostRoomStream);
+        break;
+      case WaitingRoomType.INVITEE:
+        joinRoomStream = workoutRepo.joinWaitingRoom(workout);
+        //cyclingRepo.joinWaitingRoom(cycling);
+        joinRoomSub = joinRoomStream?.listen(onJoinRoomStream);
+        break;
+    }
+  }
+
   @override
   void onClose() {
     hostRoomStream?.cancel();

@@ -1,3 +1,4 @@
+import 'package:fitness/app/components/card/bar_chart.dart';
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/theme/theme.dart';
@@ -17,7 +18,8 @@ class DashboardScreen extends GetView<DashboardScreenController> {
       title: hiit.name,
       subtitle: "5th May",
       statusBarTitle: "${hiit.routines.length}",
-      statusBarSubtitle: "${hiit.routines.length > 1 ? "Routines" : "Routine"}",
+      statusBarSubtitle:
+          "${hiit.routines.length > 1 ? "Routines 🤸🏻‍♂️" : "Routine 🤸🏻‍♂️"}",
       onTap: () => controller.onHIITSelected(hiit),
     );
   }
@@ -27,8 +29,9 @@ class DashboardScreen extends GetView<DashboardScreenController> {
       height: height,
       title: cycling.name,
       subtitle: "5th May",
+      statusBarTitle: "${cycling.course.length}",
       statusBarSubtitle:
-          "${cycling.course.length > 1 ? "${cycling.course[0].start.name} to ${cycling.course[0].end.name}" : ""}",
+          "${cycling.course.length > 1 ? "Routes 🚴🏻‍♂️" : "Route 🚴🏻‍♂️"}",
       onTap: () => controller.onCyclingSelected(cycling),
     );
   }
@@ -92,6 +95,7 @@ class DashboardScreen extends GetView<DashboardScreenController> {
                       "Dashboard",
                       style: Theme.of(context).textTheme.headline3,
                     ),
+                    BarChartSample1(),
                     MetricCard(
                       title: "Weight",
                       text: "68",

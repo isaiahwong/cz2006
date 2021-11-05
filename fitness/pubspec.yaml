@@ -49,6 +49,7 @@ dependencies:
   path_provider: ^2.0.0
   http: ^0.13.0
   collection: ^1.0.0
+  fl_chart: ^0.40.2
 
   
 

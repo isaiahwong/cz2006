@@ -11,24 +11,34 @@ class ExploreScreen extends StatelessWidget {
     print("Explore Screen Build");
 
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: lightGrey,
-          elevation: 1,
-          title: Text(
-            "Explore",
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () async {
-                await Get.find<SocialController>().fetchInvitations();
-                Get.find<ExploreController>().viewInvitation();
-              },
-              icon: Icon(Icons.more_vert_outlined, color: Colors.black),
-            )
-          ]),
-      body: ExploreBodyScreen(),
+      // appBar: AppBar(
+      //     centerTitle: true,
+      //     backgroundColor: lightGrey,
+      //     elevation: 1,
+      //     title: Text(
+      //       "Explore",
+      //       style: Theme.of(context).textTheme.headline3,
+      //     ),
+      //     actions: [
+      //       IconButton(
+      //         onPressed: () async {
+      //           await Get.find<SocialController>().fetchInvitations();
+      //           Get.find<ExploreController>().viewInvitation();
+      //         },
+      //         icon: Icon(Icons.more_vert_outlined, color: Colors.black),
+      //       )
+      //     ]),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              "Friends",
+              style: Theme.of(context).textTheme.headline3,
+            ),
+            SafeArea(child: SocialScreen()),
+          ],
+        ),
+      ),
     );
   }
 }

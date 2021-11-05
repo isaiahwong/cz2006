@@ -1,4 +1,6 @@
+import 'package:fitness/app/components/card/bar_chart.dart';
 import 'package:fitness/app/theme/theme.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'card.dart';
 

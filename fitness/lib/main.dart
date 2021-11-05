@@ -6,6 +6,7 @@ import 'package:fitness/app/controllers/workout/workout_controller.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/repo.dart';
 import 'package:fitness/repo/workout/cycling_repo.dart';
+import 'package:fitness/repo/workout/firebase.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +44,7 @@ void main() async {
       hiitClient: hiitClient,
       initWhenAuth: (User user) {
         WorkoutRepo workoutRepo =
-            WorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
+            FireWorkoutRepo(userRepo: userRepo, hiitClient: hiitClient);
         CyclingRepo cyclingRepo = CyclingRepo(userRepo: userRepo);
         ExerciseRepo exerciseRepo = ExerciseRepo();
         SocialRepo socialRepo = SocialRepo(userRepo.id);
