@@ -1,4 +1,5 @@
 import 'package:fitness/app/components/image/image.dart';
+import 'package:fitness/app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 /// Minimum details shown about user
@@ -23,9 +24,16 @@ class UserAvatar extends StatelessWidget {
             imageProvider:
                 profileImage.isNotEmpty ? NetworkImage(profileImage) : null,
             size: size,
+            name: name,
           ),
           SizedBox(height: 4),
-          Text(name),
+          Text(
+            name,
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(color: black, fontSize: 15),
+          ),
         ],
       ),
     );

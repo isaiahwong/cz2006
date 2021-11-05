@@ -28,15 +28,17 @@ class ExploreScreen extends StatelessWidget {
       //         icon: Icon(Icons.more_vert_outlined, color: Colors.black),
       //       )
       //     ]),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              "Friends",
-              style: Theme.of(context).textTheme.headline3,
+      body: SafeArea(
+        child: Padding(
+          padding: screenPadding,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SocialScreen(),
+              ],
             ),
-            SafeArea(child: SocialScreen()),
-          ],
+          ),
         ),
       ),
     );

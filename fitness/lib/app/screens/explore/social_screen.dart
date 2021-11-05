@@ -143,7 +143,7 @@ class SocialScreen extends StatelessWidget {
     }
     return Container(
       // decoration: BoxDecoration(color: Colors.black26),
-      height: 80,
+      height: 90,
       width: double.infinity,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
@@ -161,7 +161,7 @@ class SocialScreen extends StatelessWidget {
           }
           var user = _.friends[index];
           return UserAvatar(
-              name: user.name, profileImage: user.profilePicture, size: 40);
+              name: user.name, profileImage: user.profilePicture, size: 50);
         },
       ),
     );

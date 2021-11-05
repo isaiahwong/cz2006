@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 class ProfileImage extends StatelessWidget {
   final ImageProvider? imageProvider;
   final double size;
-  ProfileImage({this.imageProvider, this.size = 100});
+  final String name;
+
+  ProfileImage({this.imageProvider, this.size = 100, this.name = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +17,22 @@ class ProfileImage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Get.theme.primaryColor.withOpacity(1),
         shape: BoxShape.circle,
-        border: Border.all(color: Get.theme.primaryColor, width: 4),
       ),
       child: imageProvider == null
-          ? placeholder()
+          ? placeholder(context)
           : CircleAvatar(backgroundImage: imageProvider),
     );
   }
 
-  static Widget placeholder() {
-    return Container(
-        color: Get.theme.primaryColor,
-        child: Icon(Icons.people_rounded, color: Colors.white));
+  Widget placeholder(BuildContext context) {
+    return Center(
+      child: Text(
+        "${name[0].toUpperCase()}",
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Colors.white,
+              fontSize: 30,
+            ),
+      ),
+    );
   }
 }

@@ -19,31 +19,34 @@ class UserCard extends StatelessWidget {
     if (age != null) {
       ageString = ", " + getAge(age!).toString();
     }
-    print("Username: ${username}");
+    print("Username: $username");
     print("Is profileimage blank: ${profilePic.isEmpty}");
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            CircleAvatar(
-              minRadius: 20,
-              maxRadius: 40,
-              backgroundImage:
-                  profilePic.isNotEmpty ? NetworkImage(profilePic) : null,
-              backgroundColor: primaryColor,
-              child: Text(username[0]),
-            ),
-            SizedBox(width: 8),
-            Text(
-              username.isNotEmpty ? username + ageString : "Unknown",
-              style: Get.textTheme.headline3!.copyWith(color: darkGrey),
-            ),
-            Spacer(),
-            actions(),
-            SizedBox(width: 10),
-          ],
+    return Container(
+      height: 100,
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              CircleAvatar(
+                minRadius: 20,
+                maxRadius: 30,
+                backgroundImage:
+                    profilePic.isNotEmpty ? NetworkImage(profilePic) : null,
+                backgroundColor: primaryColor,
+                child: Text(username[0]),
+              ),
+              SizedBox(width: 8),
+              Text(
+                username.isNotEmpty ? username + ageString : "Unknown",
+                style: Get.textTheme.headline3!.copyWith(color: darkGrey),
+              ),
+              Spacer(),
+              actions(),
+              SizedBox(width: 10),
+            ],
+          ),
         ),
       ),
     );
