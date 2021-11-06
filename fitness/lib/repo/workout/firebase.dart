@@ -6,6 +6,7 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
 import 'package:fitness/repo/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiit_api/hiit.dart';
 import 'package:grpc/grpc.dart';
@@ -34,6 +35,20 @@ class FireWorkoutRepo implements WorkoutRepo {
           "id": UserController.get().user.value!.id,
         }));
   }
+
+// ResponseStream createWaitingRoom(String name, WorkoutType type, Account[] participants) {
+//   if (workout is HIIT) {
+//     if (workout.routines.length > 10)
+//       throw new ErrorDescription("invalid routines");
+//   } else {
+//     if ((workout as Cycling).course.coordinates < 1 ||
+//         (workout as Cycling).course.coordinates > 10)
+//       throw new ErrorDescription("invalid Coordinates");
+//   }
+//   if (participants.length > 10)
+//     throw new ErrorDescription("too many pariticpants");
+//   hiitClient.createWaitingRoom(workout.toJson())
+// }
 
   ResponseStream<WaitingRoomResponse> createWaitingRoom(Workout workout) {
     final user = UserController.get().user.value!;
@@ -198,6 +213,27 @@ class FireWorkoutRepo implements WorkoutRepo {
       ),
     );
   }
+
+  // Future<Workout> createWorkout(Workout workout) async {
+  //   if (workout.name.length < 3 || workout.name.length > 60) {
+  //     if (workout.name.length != 0)
+  //       throw new ErrorDescription("invalid workout name");
+  //     workout = workout.copyWith(name: generateName());
+  //   }
+
+  //   if (workout is HIIT) {
+  //     if (workout.routines.length > 10)
+  //       throw new ErrorDescription("invalid routines");
+  //   } else {
+  //     if ((workout as Cycling).course.coordinates < 1 ||
+  //         (workout as Cycling).course.coordinates > 10)
+  //       throw new ErrorDescription("invalid Coordinates");
+  //   }
+  //   if (participants.length > 10)
+  //     throw new ErrorDescription("too many pariticpants");
+  //   await collection.add(workout.toJson());
+  //   return;
+  // }
 
   Future<Workout> createWorkout(Workout workout) async {
     // FirebaseFirestore.instance.collection('/users/${_userRepo.id}/workouts');

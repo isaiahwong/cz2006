@@ -120,20 +120,22 @@ class CreateWorkoutCyclingScreen extends GetView<CoordinatesController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(),
-      color: Colors.white,
-      child: Column(
-        children: [
-          _appBar(context),
-          Column(
-            children: [
-              _mapboxUI(context),
-              _selectLocation(context, true),
-              _selectLocation(context, false),
-            ],
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        constraints: BoxConstraints(),
+        color: Colors.white,
+        child: Column(
+          children: [
+            _appBar(context),
+            Column(
+              children: [
+                _mapboxUI(context),
+                _selectLocation(context, true),
+                _selectLocation(context, false),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

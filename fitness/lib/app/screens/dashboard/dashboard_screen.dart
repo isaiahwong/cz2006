@@ -55,19 +55,23 @@ class DashboardScreen extends GetView<DashboardScreenController> {
           runSpacing: 12,
           maxMainAxisCount: 2,
           children: [
-            FractionallySizedBox(
-              widthFactor: 0.48,
-              child: ColumnCard(
-                height: height,
-                type: CardType.NEW_CARD,
-                onTap: controller.onCreate,
+            Flexible(
+              child: FractionallySizedBox(
+                widthFactor: 0.48,
+                child: ColumnCard(
+                  height: height,
+                  type: CardType.NEW_CARD,
+                  onTap: controller.onCreate,
+                ),
               ),
             ),
             ...dashboardController.workouts
                 .map(
-                  (w) => FractionallySizedBox(
-                    widthFactor: 0.48,
-                    child: _mapCard(workout: w, height: height),
+                  (w) => Flexible(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.48,
+                      child: _mapCard(workout: w, height: height),
+                    ),
                   ),
                 )
                 .toList(),

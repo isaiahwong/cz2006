@@ -40,17 +40,20 @@ class ColumnCard extends StatelessWidget {
         // ),
         // SizedBox(width: 6.0),
         Container(
+          width: height - 50,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(color: black),
-                maxLines: 2,
+              Container(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.clip,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: black),
+                  maxLines: 2,
+                ),
               ),
               Text(
                 subtitle,

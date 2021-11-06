@@ -20,9 +20,7 @@ enum CreateWorkoutRoute {
   NEW_WORKOUT_CYCLING_PATHS,
 }
 
-enum NewWorkoutError {
-  TOO_LONG,
-}
+enum NewWorkoutError { TOO_LONG, TOO_SHORT }
 
 // Validation Field Class
 class WorkoutName extends FormzInput<String, NewWorkoutError> {
@@ -33,6 +31,9 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
   NewWorkoutError? validator(String value) {
     if (value.length > 20) {
       return NewWorkoutError.TOO_LONG;
+    }
+    if (value.length > 0 && value.length < 3) {
+      return NewWorkoutError.TOO_SHORT;
     }
     return null;
   }
@@ -49,6 +50,7 @@ class CreateWorkoutController extends GetxController
   late WorkoutName name;
   late WorkoutType type;
   late FormzStatus status;
+  late bool invalidCoordinate = false;
 
   @override
   Map<String, Exercise> exercises = {};
@@ -68,11 +70,15 @@ class CreateWorkoutController extends GetxController
   }
 
   void onSubmit() async {
+    if (!name.valid || status.isSubmissionInProgress) {
+      update();
+      return;
+    }
     status = FormzStatus.submissionInProgress;
-    panelController.close();
 
     final workoutIncrement = 0;
     final Workout workout;
+
     // Create initial workout
     if (this.type == WorkoutType.HIIT) {
       workout = await repo.createWorkout(HIIT(
@@ -83,7 +89,9 @@ class CreateWorkoutController extends GetxController
       ));
     } else {
       if (coordinates.isEmpty || coordinates.length != 2) {
-        panelController.close();
+        invalidCoordinate = true;
+        update();
+        status = FormzStatus.submissionFailure;
         return;
       }
       workout = await repo.createWorkout(Cycling(
@@ -94,6 +102,7 @@ class CreateWorkoutController extends GetxController
       ));
     }
 
+    panelController.close();
     switch (this.type) {
       case WorkoutType.HIIT:
         createHIIT(workout);
@@ -178,6 +187,7 @@ class CreateWorkoutController extends GetxController
   @override
   void onCoordinatesSelected(Coordinates c) {
     coordinates[c.id] = c;
+    invalidCoordinate = false;
     update();
   }
 

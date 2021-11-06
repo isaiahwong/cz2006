@@ -65,8 +65,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
       ),
       child: NakedTextField(
         hintText: "Workout Name 🏃🏼‍♂️",
-        errorText:
-            controller.name.invalid ? "Workout name is too long 🤯" : null,
+        errorText: controller.name.invalid ? "Invalid workout name 🤯" : null,
         onChanged: (value) => controller.onNameChanged(value),
       ),
     );
@@ -115,17 +114,35 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
   }
 
   Widget _cyclingTile(BuildContext context) {
-    return CustomTile(
-      title: "Add cycling paths",
-      leading: Icon(CupertinoIcons.graph_circle, color: darkGrey),
-      trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
-      onTap: () {
-        context
-            .flow<CreateWorkoutRoute>()
-            .update((_) => CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS);
-      },
-      child:
-          controller.coordinates.isNotEmpty ? _coordinatesGrid(context) : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomTile(
+          title: "Add cycling paths",
+          leading: Icon(CupertinoIcons.graph_circle, color: darkGrey),
+          trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
+          onTap: () {
+            context
+                .flow<CreateWorkoutRoute>()
+                .update((_) => CreateWorkoutRoute.NEW_WORKOUT_CYCLING_PATHS);
+          },
+          child: controller.coordinates.isNotEmpty
+              ? _coordinatesGrid(context)
+              : null,
+        ),
+        controller.invalidCoordinate
+            ? Padding(
+                padding: const EdgeInsets.only(left: 60),
+                child: Text(
+                  "Please select at least 2 paths.",
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: red,
+                        fontSize: 15,
+                      ),
+                ),
+              )
+            : SizedBox.shrink(),
+      ],
     );
   }
 
@@ -155,25 +172,27 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // decoration: boxShadowTop,
-      child: CustomScrollView(
-        controller: ScrollController(),
-        slivers: <Widget>[
-          _appBar(context),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                _nameField(context),
-                Divider(color: lightGrey),
-                _typeTile(context),
-                Divider(color: lightGrey),
-                _activityTile(context),
-                Divider(color: lightGrey),
-              ],
+    return GetBuilder<CreateWorkoutController>(
+      builder: (_) => Container(
+        // decoration: boxShadowTop,
+        child: CustomScrollView(
+          controller: ScrollController(),
+          slivers: <Widget>[
+            _appBar(context),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  _nameField(context),
+                  Divider(color: lightGrey),
+                  _typeTile(context),
+                  Divider(color: lightGrey),
+                  _activityTile(context),
+                  Divider(color: lightGrey),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
