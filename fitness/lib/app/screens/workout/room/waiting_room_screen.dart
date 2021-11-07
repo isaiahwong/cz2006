@@ -1,6 +1,7 @@
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/image/image.dart';
 import 'package:fitness/app/components/panel/sliding_panel.dart';
+import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/workout/room/waiting_room_controller.dart';
@@ -220,7 +221,9 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
                         _title(context),
                         SliverToBoxAdapter(child: SizedBox(height: 30)),
                         _peopleRow(context),
-                        _pendingRow(context),
+                        if (controller.workout.host ==
+                            UserController.get().user.value!.id)
+                          _pendingRow(context),
                       ],
                     ),
                     Align(

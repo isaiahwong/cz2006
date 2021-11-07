@@ -40,6 +40,7 @@ class Cycling extends Workout {
       host: workout.host,
       name: workout.name,
       course: course != null ? List<Course>.from(course).toList() : [],
+      participants: workout.participants,
     );
   }
 

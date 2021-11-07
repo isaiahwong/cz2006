@@ -38,6 +38,7 @@ class HIIT extends Workout {
       host: workout.host,
       name: workout.name,
       routines: routines != null ? List<Routine>.from(routines).toList() : [],
+      participants: workout.participants,
     );
   }
 

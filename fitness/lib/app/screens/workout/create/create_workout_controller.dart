@@ -94,8 +94,8 @@ class CreateWorkoutController extends GetxController
               ? name.value
               : WorkoutName.dirty("Workout $workoutIncrement").value,
           participants: pendingFriends.values
-              .map((e) =>
-                  UserSnippet(e.id, e.friend.name, e.friend.profilePicture))
+              .map((e) => UserSnippet(
+                  e.friend.id, e.friend.name, e.friend.profilePicture))
               .toList()));
     } else {
       if (coordinates.isEmpty || coordinates.length != 2) {

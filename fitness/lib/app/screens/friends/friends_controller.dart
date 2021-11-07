@@ -36,7 +36,7 @@ class FriendsController extends GetxController {
     if (userSnippetAddToPending.isNotEmpty)
       friends.forEach((friend) {
         userSnippetAddToPending.forEach((us) {
-          if (friend.id == us.id)
+          if (friend.friend.id == us.id)
             delegateController.onFriendsSelectedWithParam(friend, false);
         });
       });
