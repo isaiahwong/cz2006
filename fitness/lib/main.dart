@@ -1,5 +1,6 @@
 // @dart=2.9
 
+import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:fitness/app/components/components.dart';
 import 'package:fitness/app/components/panel/sliding_panel_controller.dart';
 import 'package:fitness/app/controllers/workout/workout_controller.dart';
@@ -28,6 +29,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await Firebase.initializeApp();
+  // fbAuth.FirebaseAuth.instance.signOut();
   final hiitClient = HIITServiceClient(ClientChannel(
     '192.168.31.109',
     port: 50051,
