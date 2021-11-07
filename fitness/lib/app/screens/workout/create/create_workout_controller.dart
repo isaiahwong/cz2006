@@ -3,10 +3,12 @@ import 'package:fitness/app/controllers/user/user_controller.dart';
 import 'package:fitness/app/routes/routes.dart';
 import 'package:fitness/app/screens/cycling/coordinates_delegate.dart';
 import 'package:fitness/app/screens/exercise/exercise_delegate.dart';
+import 'package:fitness/app/screens/friends/friends_delegate.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/repo/cycling/coordinates_model.dart';
 import 'package:fitness/repo/cycling/coordinates_repo.dart';
 import 'package:fitness/repo/exercise/exercise.dart';
+import 'package:fitness/repo/social/model.dart';
 import 'package:fitness/repo/social/repo.dart';
 import 'package:fitness/repo/workout/workout.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -18,6 +20,7 @@ enum CreateWorkoutRoute {
   NEW_WORKOUT_TYPE,
   NEW_WORKOUT_EXERCISE,
   NEW_WORKOUT_CYCLING_PATHS,
+  PARTICIPANTS,
 }
 
 enum NewWorkoutError { TOO_LONG, TOO_SHORT }
@@ -40,7 +43,7 @@ class WorkoutName extends FormzInput<String, NewWorkoutError> {
 }
 
 class CreateWorkoutController extends GetxController
-    with ExerciseDelegate, CoordinatesDelegate {
+    with ExerciseDelegate, CoordinatesDelegate, FriendsDelegate {
   final FlowController<CreateWorkoutRoute> flowController =
       FlowController(CreateWorkoutRoute.NEW_WORKOUT_MAIN);
   final panelController = SlidingPanelController.get(RoutePaths.APP);
@@ -53,8 +56,12 @@ class CreateWorkoutController extends GetxController
   late bool invalidCoordinate = false;
 
   @override
+  final int friendsLimit = 10;
+
+  @override
   Map<String, Exercise> exercises = {};
   Map<String, Coordinates> coordinates = {};
+  Map<String, Friend> pendingFriends = {};
 
   @override
   void onInit() {
@@ -82,11 +89,14 @@ class CreateWorkoutController extends GetxController
     // Create initial workout
     if (this.type == WorkoutType.HIIT) {
       workout = await repo.createWorkout(HIIT(
-        host: UserController.get().user.value!.id,
-        name: name.value.isNotEmpty
-            ? name.value
-            : WorkoutName.dirty("Workout $workoutIncrement").value,
-      ));
+          host: UserController.get().user.value!.id,
+          name: name.value.isNotEmpty
+              ? name.value
+              : WorkoutName.dirty("Workout $workoutIncrement").value,
+          participants: pendingFriends.values
+              .map((e) =>
+                  UserSnippet(e.id, e.friend.name, e.friend.profilePicture))
+              .toList()));
     } else {
       if (coordinates.isEmpty || coordinates.length != 2) {
         invalidCoordinate = true;
@@ -95,11 +105,14 @@ class CreateWorkoutController extends GetxController
         return;
       }
       workout = await repo.createWorkout(Cycling(
-        host: UserController.get().user.value!.id,
-        name: name.value.isNotEmpty
-            ? name.value
-            : WorkoutName.dirty("Workout $workoutIncrement").value,
-      ));
+          host: UserController.get().user.value!.id,
+          name: name.value.isNotEmpty
+              ? name.value
+              : WorkoutName.dirty("Workout $workoutIncrement").value,
+          participants: pendingFriends.values
+              .map((e) =>
+                  UserSnippet(e.id, e.friend.name, e.friend.profilePicture))
+              .toList()));
     }
 
     panelController.close();
@@ -143,12 +156,12 @@ class CreateWorkoutController extends GetxController
   }
 
   @override
-  bool exists(Exercise ex) {
+  bool exerciseExists(Exercise ex) {
     return exercises[ex.id] != null;
   }
 
   @override
-  bool notExists(Exercise ex) {
+  bool exerciseNotExists(Exercise ex) {
     return exercises[ex.id] == null;
   }
 
@@ -160,14 +173,14 @@ class CreateWorkoutController extends GetxController
 
   @override
   void onExerciseRemoved(Exercise ex) {
-    if (notExists(ex)) return;
+    if (exerciseNotExists(ex)) return;
     exercises.remove(ex.id);
     update();
   }
 
   @override
   void onExerciseChanged(Exercise ex) {
-    if (notExists(ex)) return;
+    if (exerciseNotExists(ex)) return;
     exercises[ex.id] = ex.copyWith();
     update();
   }
@@ -218,5 +231,42 @@ class CreateWorkoutController extends GetxController
   @override
   void onCoordinatesSelectionDone() {
     flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
+  }
+
+  @override
+  bool friendExists(Friend ex) {
+    return pendingFriends[ex.friend.id] != null;
+  }
+
+  @override
+  bool friendNotExists(Friend ex) {
+    return pendingFriends[ex.friend.id] == null;
+  }
+
+  @override
+  void onFriendsChanged(Friend ex) {
+    if (friendNotExists(ex)) return;
+    pendingFriends[ex.friend.id] = ex.copyWith();
+    update();
+  }
+
+  @override
+  void onFriendsRemoved(Friend ex) {
+    if (friendNotExists(ex)) return;
+    pendingFriends.remove(ex.friend.id);
+    update();
+  }
+
+  @override
+  void onFriendsSelected(Friend ex) async {
+    pendingFriends[ex.friend.id] = ex;
+    // await workoutRepo.notifyInvite(ex.friend, workout);
+    update();
+  }
+
+  @override
+  void onFriendsSelectionDone() {
+    flowController.update((_) => CreateWorkoutRoute.NEW_WORKOUT_MAIN);
+    update();
   }
 }

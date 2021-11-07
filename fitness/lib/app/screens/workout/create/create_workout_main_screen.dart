@@ -85,6 +85,42 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
     );
   }
 
+  Widget _participantsGrid(BuildContext context) {
+    return ReorderableWrap(
+      onReorder: (oldIndex, newIndex) {},
+      spacing: 10.0,
+      runSpacing: 10.0,
+      maxMainAxisCount: 2,
+      children: controller.pendingFriends
+          .map((k, e) => MapEntry(
+              k,
+              Container(
+                width: 35,
+                height: 35,
+                child: UserImage(user: e.friend),
+              )))
+          .values
+          .toList(),
+    );
+  }
+
+  Widget _participantsTitle(BuildContext context) {
+    return CustomTile(
+      title: "Add Participants",
+      leading: Icon(CupertinoIcons.person_2, color: darkGrey),
+      trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
+      onTap: () {
+        // context.read<SlidingPanelBloc>().add(SlidingPanelSticky());
+        context
+            .flow<CreateWorkoutRoute>()
+            .update((_) => CreateWorkoutRoute.PARTICIPANTS);
+      },
+      child: controller.pendingFriends.isNotEmpty
+          ? _participantsGrid(context)
+          : null,
+    );
+  }
+
   Widget _exercisesGrid(BuildContext context) {
     return ReorderableWrap(
       onReorder: (oldIndex, newIndex) {},
@@ -100,7 +136,7 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
 
   Widget _exerciseTile(BuildContext context) {
     return CustomTile(
-      title: "Add exercise",
+      title: "Add Routines",
       leading: Icon(CupertinoIcons.graph_circle, color: darkGrey),
       trailing: Icon(CupertinoIcons.chevron_forward, color: darkGrey),
       onTap: () {
@@ -185,6 +221,8 @@ class CreateWorkoutMainScreen extends GetView<CreateWorkoutController> {
                   _nameField(context),
                   Divider(color: lightGrey),
                   _typeTile(context),
+                  Divider(color: lightGrey),
+                  _participantsTitle(context),
                   Divider(color: lightGrey),
                   _activityTile(context),
                   Divider(color: lightGrey),

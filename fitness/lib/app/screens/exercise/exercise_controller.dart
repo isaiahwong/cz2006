@@ -28,7 +28,7 @@ class ExerciseController extends GetxController {
     super.onInit();
     exercises = await exerciseRepo.getExercises();
     exercises = List.from(exercises)
-      ..map((e) => delegateController.exists(e)
+      ..map((e) => delegateController.exerciseExists(e)
           ? delegateController.exercises[e.id]
           : e);
     filteredExercises = List.from(exercises);
@@ -36,7 +36,7 @@ class ExerciseController extends GetxController {
   }
 
   bool isSelected(Exercise ex) {
-    return delegateController.exists(ex);
+    return delegateController.exerciseExists(ex);
   }
 
   void onFilter(String query) {

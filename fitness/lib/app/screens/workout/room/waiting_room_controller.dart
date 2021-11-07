@@ -24,6 +24,7 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   final WorkoutRepo workoutRepo;
   final CyclingRepo cyclingRepo;
   final SlidingPanelController panelController;
+  late final FriendsController friendsController;
 
   List<UserSnippet> users = [];
   ResponseStream<WaitingRoomResponse>? hostRoomStream;
@@ -47,6 +48,12 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     super.onInit();
     waitingRoomType = Get.arguments[0];
     workout = Get.arguments[1];
+
+    this.friendsController = FriendsController(
+      delegateController: this,
+      userSnippetAddToPending: workout.participants,
+    );
+    this.friendsController.onInit();
 
     switch (waitingRoomType) {
       case WaitingRoomType.HOST:
@@ -87,33 +94,39 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
   }
 
   @override
-  bool exists(Friend ex) {
+  bool friendExists(Friend ex) {
     return pendingFriends[ex.friend.id] != null;
   }
 
   @override
-  bool notExists(Friend ex) {
+  bool friendNotExists(Friend ex) {
     return pendingFriends[ex.friend.id] == null;
   }
 
   @override
   void onFriendsChanged(Friend ex) {
-    if (notExists(ex)) return;
+    if (friendNotExists(ex)) return;
     pendingFriends[ex.friend.id] = ex.copyWith();
     update();
   }
 
   @override
   void onFriendsRemoved(Friend ex) {
-    if (notExists(ex)) return;
+    if (friendNotExists(ex)) return;
     pendingFriends.remove(ex.friend.id);
+    update();
+  }
+
+  @override
+  void onFriendsSelectedWithParam(Friend ex, bool notify) {
+    pendingFriends[ex.friend.id] = ex;
     update();
   }
 
   @override
   void onFriendsSelected(Friend ex) async {
     pendingFriends[ex.friend.id] = ex;
-    await workoutRepo.notifyInvite(ex.friend, workout);
+    await notifyIntive(ex);
     update();
   }
 
@@ -123,12 +136,14 @@ class WaitingRoomController extends GetxController with FriendsDelegate {
     update();
   }
 
+  Future<void> notifyIntive(Friend friend) {
+    return workoutRepo.notifyInvite(friend.friend, workout);
+  }
+
   void onViewFriends() {
     panelController.open(
       panel: FriendsListScreen.component(
-        exerciseController: FriendsController(
-          delegateController: this,
-        ),
+        exerciseController: friendsController,
       ),
     );
   }

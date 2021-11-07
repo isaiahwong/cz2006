@@ -11,6 +11,10 @@ Workout _$WorkoutFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     name: json['name'] as String,
     host: json['host'] as String? ?? '',
+    participants: (json['participants'] as List<dynamic>?)
+            ?.map((e) => UserSnippet.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [],
     type: _$enumDecode(_$WorkoutTypeEnumMap, json['type']),
   );
 }
@@ -20,6 +24,7 @@ Map<String, dynamic> _$WorkoutToJson(Workout instance) => <String, dynamic>{
       'name': instance.name,
       'host': instance.host,
       'type': _$WorkoutTypeEnumMap[instance.type],
+      'participants': instance.participants.map((e) => e.toJson()).toList(),
     };
 
 K _$enumDecode<K, V>(

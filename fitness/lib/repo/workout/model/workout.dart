@@ -20,7 +20,7 @@ class Workout {
   final String host;
   final WorkoutType type;
 
-  @JsonKey(ignore: true)
+  @JsonKey(defaultValue: [])
   final List<UserSnippet> participants;
 
   Workout({

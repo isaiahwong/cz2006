@@ -83,13 +83,26 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
             ),
             SizedBox(height: 10),
             Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.2,
               child: GridView.count(
                 scrollDirection: Axis.vertical,
-                shrinkWrap: true,
                 crossAxisCount: 6,
+                childAspectRatio: 0.5,
                 children: controller.users
-                    .map<Widget>((e) => UserImage(user: e))
+                    .map<Widget>((u) => Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              child: UserImage(user: u),
+                            ),
+                            // IconButton(
+                            //   icon: Icon(CupertinoIcons.add_circled),
+                            //   onPressed: () =>
+                            //       controller.notifyIntiveUserSnippet(u),
+                            // )
+                          ],
+                        ))
                     .toList(),
               ),
             )
@@ -123,21 +136,33 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pending Request",
+              "Pending Requests",
               style:
                   Theme.of(context).textTheme.headline3!.copyWith(color: black),
             ),
             SizedBox(height: 10),
             Container(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: GridView.count(
                 scrollDirection: Axis.vertical,
-                shrinkWrap: true,
                 crossAxisCount: 6,
-                childAspectRatio: 1,
+                childAspectRatio: 0.5,
                 children: controller.pendingFriends
-                    .map<String, Widget>(
-                        (s, u) => MapEntry(s, UserImage(user: u.friend)))
+                    .map<String, Widget>((s, u) => MapEntry(
+                        s,
+                        Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              child: UserImage(user: u.friend),
+                            ),
+                            IconButton(
+                              icon: Icon(CupertinoIcons.add_circled),
+                              onPressed: () => controller.notifyIntive(u),
+                            )
+                          ],
+                        )))
                     .values
                     .toList(),
               ),
@@ -195,7 +220,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
                         _title(context),
                         SliverToBoxAdapter(child: SizedBox(height: 30)),
                         _peopleRow(context),
-                        // _pendingRow(context),
+                        _pendingRow(context),
                       ],
                     ),
                     Align(

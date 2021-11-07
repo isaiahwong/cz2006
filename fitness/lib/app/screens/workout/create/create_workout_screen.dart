@@ -1,6 +1,9 @@
 import 'package:fitness/app/components/components.dart';
+import 'package:fitness/app/components/image/image.dart';
 import 'package:fitness/app/screens/cycling/coordinates_controller.dart';
 import 'package:fitness/app/screens/exercise/exercise_controller.dart';
+import 'package:fitness/app/screens/friends/friends_controller.dart';
+import 'package:fitness/app/screens/friends/friends_list_screen.dart';
 import 'package:fitness/app/screens/screens.dart';
 import 'package:fitness/app/screens/cycling/coordinates.dart';
 import 'package:fitness/app/screens/workout/create/create_workout_controller.dart';
@@ -43,6 +46,14 @@ class CreateWorkoutScreen extends StatefulWidget {
             coordinatesController: CoordinatesController(
               delegateController: controller,
             ),
+          ),
+        ];
+      case CreateWorkoutRoute.PARTICIPANTS:
+        return [
+          CreateWorkoutMainScreen.page(),
+          FriendsListScreen.page(
+            friendsController:
+                FriendsController(delegateController: controller),
           ),
         ];
       default:

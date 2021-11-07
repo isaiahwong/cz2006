@@ -5,7 +5,7 @@ abstract class ExerciseDelegate {
   void onExerciseSelected(Exercise ex);
   void onExerciseRemoved(Exercise ex);
   void onExerciseChanged(Exercise ex);
-  bool exists(Exercise ex);
-  bool notExists(Exercise ex);
+  bool exerciseExists(Exercise ex);
+  bool exerciseNotExists(Exercise ex);
   void onExerciseSelectionDone();
 }

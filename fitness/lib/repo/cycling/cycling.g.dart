@@ -14,6 +14,10 @@ Cycling _$CyclingFromJson(Map<String, dynamic> json) {
     course: (json['course'] as List<dynamic>)
         .map((e) => Course.fromJson(e as Map<String, dynamic>))
         .toList(),
+    participants: (json['participants'] as List<dynamic>?)
+            ?.map((e) => UserSnippet.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [],
     type: _$enumDecode(_$WorkoutTypeEnumMap, json['type']),
   );
 }
@@ -23,6 +27,7 @@ Map<String, dynamic> _$CyclingToJson(Cycling instance) => <String, dynamic>{
       'name': instance.name,
       'host': instance.host,
       'type': _$WorkoutTypeEnumMap[instance.type],
+      'participants': instance.participants.map((e) => e.toJson()).toList(),
       'course': instance.course.map((e) => e.toJson()).toList(),
     };
 

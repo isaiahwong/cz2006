@@ -100,16 +100,32 @@ class HIITDetailsScreen extends GetView<HIITDetailsController> {
   }
 
   Widget _newRoutine(BuildContext context) {
-    return _item(
-      context,
-      onPressed: controller.onNewRoutine,
-      title: "New",
-      trailing: IconButton(
-        onPressed: () {},
-        color: primaryColor,
-        alignment: Alignment.centerRight,
-        icon: Icon(CupertinoIcons.add_circled_solid),
-      ),
+    return Column(
+      children: [
+        _item(
+          context,
+          onPressed: controller.onNewRoutine,
+          title: "New",
+          trailing: IconButton(
+            onPressed: () {},
+            color: primaryColor,
+            alignment: Alignment.centerRight,
+            icon: Icon(CupertinoIcons.add_circled_solid),
+          ),
+        ),
+        SizedBox(height: 10),
+        controller.hasNoRoutines
+            ? Text(
+                "Need to add at least one routine before starting!",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                      color: green,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+              )
+            : SizedBox.shrink()
+      ],
     );
   }
 

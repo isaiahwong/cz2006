@@ -22,6 +22,8 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
 
   bool editing = false;
 
+  bool hasNoRoutines = false;
+
   @override
   Map<String, Exercise> exercises = {};
 
@@ -41,6 +43,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
     hiitNameController = TextEditingController(text: hiit.name);
     keyboardSub =
         KeyboardVisibilityController().onChange.listen(onKeyboardDismiss);
+    hasNoRoutines = hiit.routines.isEmpty;
   }
 
   @override
@@ -63,6 +66,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   }
 
   void onSoloStart() {
+    if (hiit.routines.isEmpty) return;
     Get.toNamed(RoutePaths.HIIT_ACTIVE, arguments: [
       ActiveHIITType.SINGLE,
       hiit.copyWith(),
@@ -70,6 +74,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   }
 
   void onDuoStart() {
+    if (hiit.routines.isEmpty) return;
     Get.toNamed(RoutePaths.HIIT_WAITING_ROOM, arguments: [
       WaitingRoomType.HOST,
       hiit.copyWith(),
@@ -88,25 +93,25 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   }
 
   @override
-  bool exists(Exercise ex) {
+  bool exerciseExists(Exercise ex) {
     return exercises[ex.id] != null;
   }
 
   @override
-  bool notExists(Exercise ex) {
+  bool exerciseNotExists(Exercise ex) {
     return exercises[ex.id] == null;
   }
 
   @override
   void onExerciseChanged(Exercise ex) {
-    if (notExists(ex)) return;
+    if (exerciseNotExists(ex)) return;
     exercises[ex.id] = ex.copyWith();
     update();
   }
 
   @override
   void onExerciseRemoved(Exercise ex) {
-    if (notExists(ex)) return;
+    if (exerciseNotExists(ex)) return;
     exercises.remove(ex.id);
     update();
   }
@@ -121,6 +126,7 @@ class HIITDetailsController extends GetxController with ExerciseDelegate {
   void onExerciseSelectionDone() async {
     hiit = hiit.setExercises(exercises.values.toList());
     await workoutRepo.updateHIIT(hiit);
+    hasNoRoutines = hiit.routines.isEmpty;
     panelController.close();
     update();
   }

@@ -29,7 +29,7 @@ class CustomTile extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
           children: [
             DefaultWidget(widget: leading),
             SizedBox(width: 20.0),

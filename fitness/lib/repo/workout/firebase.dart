@@ -242,9 +242,10 @@ class FireWorkoutRepo implements WorkoutRepo {
     collection.doc(result.id).update({"id": result.id});
 
     final workoutGroup = WorkoutGroup(
-        workoutId: result.id,
-        creator: workout.host,
-        participants: [UserController.get().user.value!]);
+      workoutId: result.id,
+      creator: workout.host,
+      participants: [UserController.get().user.value!],
+    );
 
     await Get.find<SocialRepo>().createGroupWorkout(workoutGroup);
 

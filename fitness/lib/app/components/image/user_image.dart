@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class UserImage extends StatelessWidget {
   final UserSnippet? user;
+  final double fontSize;
 
-  const UserImage({Key? key, required this.user}) : super(key: key);
+  const UserImage({Key? key, required this.user, this.fontSize = 20})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class UserImage extends StatelessWidget {
                 "${user!.name[0].toUpperCase()}",
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: fontSize,
                     ),
               ),
             ),
