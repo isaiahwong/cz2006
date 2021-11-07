@@ -137,7 +137,7 @@ class WaitingRoomScreen extends GetView<WaitingRoomController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pending Requests",
+              "Invites",
               style:
                   Theme.of(context).textTheme.headline3!.copyWith(color: black),
             ),

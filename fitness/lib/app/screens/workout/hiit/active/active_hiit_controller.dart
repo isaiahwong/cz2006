@@ -277,6 +277,7 @@ class ActiveHIITController extends GetxController {
   }
 
   void onIntervalCompleted() {
+    if (activeHIITType == ActiveHIITType.DUO) return;
     if (currentInterval == null) return;
 
     final interval = currentInterval!.copyWith(
@@ -327,6 +328,7 @@ class ActiveHIITController extends GetxController {
   }
 
   void onRoutineSkip() {
+    if (activeHIITType == ActiveHIITType.DUO) return;
     // Cancel any pending timers
     timerController.onTimerCancel();
     _onNext();
