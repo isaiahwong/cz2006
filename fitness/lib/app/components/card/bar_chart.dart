@@ -104,19 +104,25 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 10);
+            return makeGroupData(0, Random().nextInt(10).toDouble() + 6);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 9, isTouched: i == touchedIndex);
+            return makeGroupData(2, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, 12.5, isTouched: i == touchedIndex);
+            return makeGroupData(6, Random().nextInt(10).toDouble() + 6,
+                isTouched: i == touchedIndex);
           default:
             return throw Error();
         }

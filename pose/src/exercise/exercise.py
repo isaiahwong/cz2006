@@ -55,7 +55,7 @@ class Squat(Movement):
         right_angle = self.calculate_angle(right_hip, right_knee, right_ankle)
         left_angle = self.calculate_angle(left_hip, left_knee, left_ankle)
 
-        if right_angle < 110 and left_angle < 110 and self.state == 'up':
+        if right_angle < 120 and left_angle < 120 and self.state == 'up':
             self.state = "down"
         if right_angle > 120 and left_angle > 120 and self.state == 'down':
             self.count += 1
