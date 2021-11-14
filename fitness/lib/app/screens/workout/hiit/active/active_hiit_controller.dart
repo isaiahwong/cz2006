@@ -264,6 +264,7 @@ class ActiveHIITController extends GetxController {
       }
 
       onRest();
+      stopPose();
     }
   }
 
@@ -311,6 +312,7 @@ class ActiveHIITController extends GetxController {
     }
     // update state
     state = ActiveWorkoutRest();
+
     // Start rest timer
     timerController
         .onTimerStart(Duration(seconds: currentInterval!.defaultRestDuration));
